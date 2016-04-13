@@ -5,7 +5,7 @@
 <cfparam name="rc.edit" type="boolean" />
 
 <cfoutput>
-	<hb:HibachiPropertyRow>	
+	<hb:HibachiPropertyRow>
 		<hb:HibachiPropertyList>
 			<hb:HibachiPropertyDisplay object="#rc.priceGroupRate#" property="amountType" fieldType="select" edit="#rc.edit#" />
 			<hb:HibachiPropertyDisplay object="#rc.priceGroupRate#" property="amount" edit="#rc.edit#" />

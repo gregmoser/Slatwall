@@ -62,6 +62,8 @@ Notes:
 	<hb:HibachiEntityDetailForm object="#rc.shippingMethod#" edit="#rc.edit#"
 								saveActionQueryString="fulfillmentMethodID=#rc.fulfillmentMethod.getFulfillmentMethodID()#">
 		<hb:HibachiEntityActionBar type="detail" object="#rc.shippingMethod#" edit="#rc.edit#"
+					cancelAction="admin:entity.detailfulfillmentMethod"
+					cancelQueryString="fulfillmentMethodID=#rc.fulfillmentMethod.getFulfillmentMethodID()#"
 					backAction="admin:entity.detailfulfillmentMethod"
 					backQueryString="fulfillmentMethodID=#rc.fulfillmentMethod.getFulfillmentMethodID()#"
 					deleteQueryString="fulfillmentMethodID=#rc.fulfillmentMethod.getFulfillmentMethodID()#&redirectAction=admin:entity.detailfulfillmentMethod">
