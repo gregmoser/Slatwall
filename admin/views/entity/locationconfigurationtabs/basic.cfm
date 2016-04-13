@@ -10,7 +10,7 @@
 		<hb:HibachiPropertyList>
 			<hb:HibachiPropertyDisplay object="#rc.locationConfiguration#" property="activeFlag" edit="#rc.edit#">
 			<hb:HibachiPropertyDisplay object="#rc.locationConfiguration#" property="locationConfigurationName" edit="#rc.edit#">
-			<hb:HibachiPropertyDisplay object="#rc.locationConfiguration#" property="locationConfigurationCapacity" edit="#rc.edit#">				
+			<hb:HibachiPropertyDisplay object="#rc.locationConfiguration#" property="locationConfigurationCapacity" edit="#rc.edit#">
 		</hb:HibachiPropertyList>
 	</hb:HibachiPropertyRow>
 </cfoutput>

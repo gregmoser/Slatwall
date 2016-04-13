@@ -805,4 +805,3 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 	// ===================  END: Deprecated Functions =========================
 
 }
-

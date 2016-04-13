@@ -7,7 +7,7 @@
 <cfoutput>
 	<hb:HibachiPropertyRow>
 		<hb:HibachiPropertyList divclass="col-md-6">
-			
+
 			<!--- Account --->
 			<cfif rc.edit>
 				<hb:HibachiPropertyDisplay object="#rc.order#" property="account" fieldtype="textautocomplete" autocompletePropertyIdentifiers="adminIcon,fullName,company,emailAddress,phoneNumber,address.simpleRepresentation" edit="true">
@@ -16,32 +16,32 @@
 				<hb:HibachiPropertyDisplay object="#rc.order.getAccount()#" property="emailAddress" valuelink="mailto:#rc.order.getAccount().getEmailAddress()#">
 				<hb:HibachiPropertyDisplay object="#rc.order.getAccount()#" property="phoneNumber">
 			</cfif>
-			
+
 			<!--- Origin --->
 			<hb:HibachiPropertyDisplay object="#rc.order#" property="orderOrigin" edit="#rc.edit#">
-			
+
 			<!--- Order Type --->
 			<hb:HibachiPropertyDisplay object="#rc.order#" property="orderType" edit="#rc.edit#">
 
 			<!--- Default Stock Location --->
 			<hb:HibachiPropertyDisplay object="#rc.order#" property="defaultStockLocation" edit="#rc.edit#">
-			
+
 			<!--- Referenced Order --->
 			<cfif !isNull(rc.order.getReferencedOrder())>
 				<hb:HibachiPropertyDisplay object="#rc.order#" property="referencedOrder" valuelink="?slatAction=admin:entity.detailorder&orderID=#rc.order.getReferencedOrder().getOrderID()#">
 				<hb:HibachiPropertyDisplay object="#rc.order#" property="referencedOrderType">
 			</cfif>
-			
+
 			<!--- Assigned Account --->
 			<cfif rc.edit>
 				<hb:HibachiPropertyDisplay object="#rc.order#" property="assignedAccount" fieldtype="textautocomplete" autocompletePropertyIdentifiers="adminIcon,fullName,company,emailAddress,phoneNumber,address.simpleRepresentation" edit="true">
 			<cfelseif !isNull(rc.order.getAssignedAccount())>
 				<hb:HibachiPropertyDisplay object="#rc.order.getAssignedAccount()#" property="fullName" valuelink="?slatAction=admin:entity.detailaccount&accountID=#rc.order.getAssignedAccount().getAccountID()#" title="#$.slatwall.rbKey('entity.order.assignedAccount')#">
 			</cfif>
-			
+
 		</hb:HibachiPropertyList>
 		<hb:HibachiPropertyList divclass="col-md-6">
-			
+
 			<!--- Totals --->
 			<hb:HibachiPropertyTable>
 				<hb:HibachiPropertyTableBreak header="#$.slatwall.rbKey('admin.entity.detailorder.overview')#" />
@@ -71,8 +71,8 @@
 				</cfif>
 				<hb:HibachiPropertyDisplay object="#rc.order#" property="paymentAmountDue" edit="false" displayType="table" titleClass="table-total" valueClass="table-total">
 			</hb:HibachiPropertyTable>
-			
+
 		</hb:HibachiPropertyList>
-		
+
 	</hb:HibachiPropertyRow>
 </cfoutput>

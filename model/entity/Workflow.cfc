@@ -15,12 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this library statically or dynamically with other modules is
     making a combined work based on this library.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
- 
+
     As a special exception, the copyright holders of this library give you
     permission to link this library with independent modules to produce an
     executable, regardless of the license terms of these independent
@@ -38,7 +38,7 @@ Notes:
 */
 
 component displayname="Workflow" entityname="SlatwallWorkflow" table="SwWorkflow" persistent="true" accessors="true" extends="HibachiEntity" hb_serviceName="workflowService" hb_permission="this" {
-	
+
 	// Persistent Properties
 	property name="workflowID" ormtype="string" length="32" fieldtype="id" generator="uuid" unsavedvalue="" default="";
 	property name="activeFlag" ormtype="boolean" hb_formatType="yesno";
@@ -48,30 +48,30 @@ component displayname="Workflow" entityname="SlatwallWorkflow" table="SwWorkflow
 	// Calculated Properties
 
 	// Related Object Properties (many-to-one)
-	
+
 	// Related Object Properties (one-to-many)
 	property name="workflowTasks" singularname="workflowTask" cfc="WorkflowTask" type="array" fieldtype="one-to-many" fkcolumn="workflowID" cascade="all-delete-orphan" inverse="true";
 	property name="workflowTriggers" singularname="workflowTrigger" cfc="WorkflowTrigger" type="array" fieldtype="one-to-many" fkcolumn="workflowID" cascade="all-delete-orphan" inverse="true";
-	
+
 	// Related Object Properties (many-to-many - owner)
 
 	// Related Object Properties (many-to-many - inverse)
-	
+
 	// Remote Properties
 	property name="remoteID" hb_populateEnabled="false" ormtype="string";
-	
+
 	// Audit Properties
 	property name="createdDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="createdByAccountID" hb_populateEnabled="false" ormtype="string";
 	property name="modifiedDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="modifiedByAccountID" hb_populateEnabled="false" ormtype="string";
-	
+
 	// Non-Persistent Properties
 	property name="workflowObjectOptions" persistent="false";
 	// Deprecated Properties
 
 	// ============ START: Non-Persistent Property Methods =================
-	
+
 	public array function getWorkflowObjectOptions(){
 		if(!structKeyExists(variables,'workflowObjectOptions')){
 			var entitiesMetaData = getService("hibachiService").getEntitiesMetaData();
@@ -85,10 +85,10 @@ component displayname="Workflow" entityname="SlatwallWorkflow" table="SwWorkflow
 				arrayAppend(variables.workflowObjectOptions,entityMetaDataStruct);
 			}
 		}
-		
+
 		return variables.workflowObjectOptions;
 	}
-	
+
 	// WorkflowTask (one-to-many)
 	public void function addWorkflowTask(required any WorkflowTask) {
 		arguments.WorkflowTask.setWorkflow( this );
@@ -103,38 +103,38 @@ component displayname="Workflow" entityname="SlatwallWorkflow" table="SwWorkflow
 	public void function removeWorkflowTrigger(required any WorkflowTrigger) {
 		arguments.WorkflowTrigger.removeWorkflow( this );
 	}
-	
+
 	// ============  END:  Non-Persistent Property Methods =================
-		
+
 	// ============= START: Bidirectional Helper Methods ===================
-	
+
 	// =============  END:  Bidirectional Helper Methods ===================
 
 	// =============== START: Custom Validation Methods ====================
-	
+
 	// ===============  END: Custom Validation Methods =====================
-	
+
 	// =============== START: Custom Formatting Methods ====================
-	
+
 	// ===============  END: Custom Formatting Methods =====================
-	
+
 	// ============== START: Overridden Implicit Getters ===================
-	
+
 	// ==============  END: Overridden Implicit Getters ====================
-	
+
 	// ============= START: Overridden Smart List Getters ==================
-	
+
 	// =============  END: Overridden Smart List Getters ===================
 
 	// ================== START: Overridden Methods ========================
-	
+
 	// ==================  END:  Overridden Methods ========================
-	
+
 	// =================== START: ORM Event Hooks  =========================
-	
+
 	// ===================  END:  ORM Event Hooks  =========================
-	
+
 	// ================== START: Deprecated Methods ========================
-	
+
 	// ==================  END:  Deprecated Methods ========================
 }

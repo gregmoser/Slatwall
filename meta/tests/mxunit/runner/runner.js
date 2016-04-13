@@ -13,23 +13,23 @@
 			componentPath: 'mxunit.tests.samples'
 		}
 	};
-	
+
 	$test = $('#test');
 	$componentPath = $('#componentPath');
-	
+
 	$examples = $('<p>Examples: <a href="#">TestCase</a> <a href="#">TestSuite</a> <a href="#">Directory</a></p>');
-	
+
 	$('a', $examples).click(function() {
 		option = examples[$(this).html()];
-		
+
 		$test.val(option.test);
 		$componentPath.val(option.componentPath);
-		
+
 		return false;
 	});
-	
+
 	$('#btnRun').before( $examples );
-	
+
 	$('#btnClear').click( function(){
 		$('.mxunitResults').html('');
 	} );

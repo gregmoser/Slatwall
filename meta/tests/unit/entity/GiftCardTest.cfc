@@ -118,9 +118,9 @@ component extends="Slatwall.meta.tests.unit.entity.SlatwallEntityTestBase" {
 		var giftCard = createPersistedTestEntity('giftCard', giftCardData);
 
 		giftCard.setGiftCardExpirationTerm(term);
-		
+
 		assertTrue(giftCard.hasGiftCardExpirationTerm());
-		
+
 		term.removeGiftCard(giftCard);
 
 		assertFalse(giftCard.hasGiftCardExpirationTerm(term));

@@ -10,16 +10,16 @@ function gigyaAdminUnregisteredUser( eventObj ) {
 }
 
 function gigyaOnLogin( eventObj ) {
-	
+
 	if( eventObj.user.isSiteUID ) {
-		
+
 		var thisData = {
 			'slatAction': 			'gigya:main.loginGigyaUser',
 			'uid':					eventObj.UID,
 			'uidSignature':			eventObj.UIDSignature,
 			'signatureTimestamp':	eventObj.signatureTimestamp,
 		};
-		
+
 		jQuery.ajax({
 			url: $.slatwall.getConfig().baseURL + '/',
 			method: 'post',
@@ -30,7 +30,7 @@ function gigyaOnLogin( eventObj ) {
 				alert( 'An Unexpected Error Occured' );
 			},
 			success: function( result ) {
-				
+
 				if( 'context' in eventObj && 'accountLoginFormID' in eventObj.context ) {
 					var redirectURL = jQuery('#' + eventObj.context.accountLoginFormID ).find('input[name="sRedirectURL"]').val();
 					if(redirectURL != undefined) {
@@ -39,29 +39,29 @@ function gigyaOnLogin( eventObj ) {
 						window.location.reload();
 					}
 				}
-				
+
 			}
 		});
-		
+
 	} else {
-		
+
 		// Create the gigya inputs to add to the form
 		var gigyaInputs = '<input type="hidden" name="gigyaUID" value="' + encodeURIComponent(eventObj.UID) + '" /><input type="hidden" name="gigyaUIDSignature" value="' + encodeURIComponent(eventObj.UIDSignature) + '" /><input type="hidden" name="gigyaSignatureTimestamp" value="' + encodeURIComponent(eventObj.signatureTimestamp) + '" />';
-		
+
 		// Add the gigya inputs to the login form if it exists
 		if( 'context' in eventObj && 'accountLoginFormID' in eventObj.context ) {
 			jQuery('#' + eventObj.context.accountLoginFormID).prepend( gigyaInputs );
 		}
-		
+
 		// Add the gigya input to the create form if it exists
 		if( 'context' in eventObj && 'accountCreateFormID' in eventObj.context ) {
 			jQuery('#' + eventObj.context.accountCreateFormID).prepend( gigyaInputs );
 		}
-		
+
 		if( 'context' in eventObj && 'unregisterdUserCallback' in eventObj.context ) {
 			window[ eventObj.context.unregisterdUserCallback ]( eventObj );
 		}
-		
-	}	
-	
+
+	}
+
 }

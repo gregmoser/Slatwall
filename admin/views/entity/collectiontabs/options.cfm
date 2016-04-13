@@ -5,5 +5,5 @@
 		  ng-controller="collections"
 		  toggleoption="true"
 		  >
-		
+
 	</span>

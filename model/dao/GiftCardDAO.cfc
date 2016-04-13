@@ -72,4 +72,3 @@ Notes:
 		<cfreturn totalLiability />
 	</cffunction>
 </cfcomponent>
-

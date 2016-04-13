@@ -5,7 +5,7 @@
 <div class="row s-body-nav">
     <nav class="navbar navbar-default" role="navigation">
       <div class="col-md-4 s-header-info">
-		
+
 			<!--- Page Title --->
 			<h1 class="actionbar-title">#$.slatwall.rbKey('admin.entity.listAudit')#</h1>
 		</div>
@@ -67,7 +67,7 @@
 <cfsilent>
 	<cfset local.pageStart = 1 />
 	<cfset local.pageCount = 2 />
-	
+
 	<cfif auditSmartList.getTotalPages() gt 6>
 		<cfif auditSmartList.getCurrentPage() lte 3>
 			<cfset local.pageCount = 4 />
@@ -80,7 +80,7 @@
 	<cfelse>
 		<cfset local.pageCount = auditSmartList.getTotalPages() - 1 />
 	</cfif>
-	
+
 	<cfset local.pageEnd = local.pageStart + local.pageCount />
 </cfsilent>
 

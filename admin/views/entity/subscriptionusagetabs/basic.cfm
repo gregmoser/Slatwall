@@ -48,4 +48,3 @@
 	</hb:HibachiPropertyRow>
 
 </cfoutput>
-

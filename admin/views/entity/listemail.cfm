@@ -66,4 +66,3 @@ Notes:
 </hb:HibachiListingDisplay>
 
 </cfoutput>
-

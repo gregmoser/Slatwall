@@ -15,12 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this library statically or dynamically with other modules is
     making a combined work based on this library.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
- 
+
     As a special exception, the copyright holders of this library give you
     permission to link this library with independent modules to produce an
     executable, regardless of the license terms of these independent
@@ -37,15 +37,15 @@ Notes:
 
 */
 component displayname="AccountLoyaltyTransaction" entityname="SlatwallAccountLoyaltyTransaction" table="SwAccountLoyaltyTransaction" persistent="true"  extends="HibachiEntity" cacheuse="transactional" hb_serviceName="accountService" hb_permission="account.accountLoyaltyTransaction" hb_processContext="create" {
-	
+
 	// Persistent Properties
 	property name="accountLoyaltyTransactionID" ormtype="string" length="32" fieldtype="id" generator="uuid" unsavedvalue="" default="";
 	property name="accruementType" ormType="string";
 	property name="redemptionType" ormType="string";
 	property name="pointsIn" ormType="integer";
-	property name="pointsOut" ormType="integer";		
+	property name="pointsOut" ormType="integer";
 	property name="expirationDateTime" ormtype="timestamp";
-	
+
 	// Related Object Properties (many-to-one)
 	property name="accountLoyalty" cfc="AccountLoyalty" fieldtype="many-to-one" fkcolumn="accountLoyaltyID";
 	property name="loyaltyAccruement" cfc="LoyaltyAccruement" fieldtype="many-to-one" fkcolumn="loyaltyAccruementID";
@@ -53,21 +53,21 @@ component displayname="AccountLoyaltyTransaction" entityname="SlatwallAccountLoy
 	property name="order" cfc="Order" fieldtype="many-to-one" fkcolumn="orderID";
 	property name="orderItem" cfc="OrderItem" fieldtype="many-to-one" fkcolumn="orderItemID";
 	property name="orderFulfillment" cfc="OrderFulfillment" fieldtype="many-to-one" fkcolumn="orderFulfillmentID";
-	
-	
+
+
 	// Remote Properties
 	property name="remoteID" ormtype="string";
-	
+
 	// Audit Properties
 	property name="createdDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="createdByAccountID" hb_populateEnabled="false" ormtype="string";
 	property name="modifiedDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="modifiedByAccountID" hb_populateEnabled="false" ormtype="string";
-	
+
 	// Non-Persistent Properties
-	
+
 	// ============ START: Non-Persistent Property Methods =================
-	
+
 	public array function getAccruementTypeOptions() {
 		return [
 			{name=rbKey('entity.accountLoyaltyAccruement.accruementType.itemFulfilled'), value="itemFulfilled"},
@@ -76,7 +76,7 @@ component displayname="AccountLoyaltyTransaction" entityname="SlatwallAccountLoy
 			{name=rbKey('entity.accountLoyaltyAccruement.accruementType.enrollment'), value="enrollment"}
 		];
 	}
-	
+
 	public array function getRedemptionTypeOptions() {
 		return [
 			{name=rbKey('entity.accountLoyaltyAccruement.redemptionType.productPurchase'), value="productPurchase"},
@@ -84,11 +84,11 @@ component displayname="AccountLoyaltyTransaction" entityname="SlatwallAccountLoy
 			{name=rbKey('entity.accountLoyaltyAccruement.redemptionType.priceGroupAssignment'), value="priceGroupAssignment"}
 		];
 	}
-	
+
 	// ============  END:  Non-Persistent Property Methods =================
-		
+
 	// ============= START: Bidirectional Helper Methods ===================
-	
+
 	// Account Loyalty Program (many-to-one)
 	public void function setAccountLoyalty(required any accountLoyalty) {
 		variables.accountLoyalty = arguments.accountLoyalty;
@@ -106,7 +106,7 @@ component displayname="AccountLoyaltyTransaction" entityname="SlatwallAccountLoy
        }
        structDelete(variables,"accountLoyalty");
     }
-    
+
     // Loyalty Program Accruement (many-to-one)
 	public void function setLoyaltyAccruement(required any loyaltyAccruement) {
 		variables.loyaltyAccruement = arguments.loyaltyAccruement;
@@ -124,25 +124,25 @@ component displayname="AccountLoyaltyTransaction" entityname="SlatwallAccountLoy
        }
        structDelete(variables,"loyaltyAccruement");
     }
-    
- 	// Loyalty Program Redemption (many-to-one) 
- 	public void function setLoyaltyRedemption(required any loyaltyRedemption) { 
- 		variables.loyaltyRedemption = arguments.loyaltyRedemption; 
- 		if(isNew() or !arguments.loyaltyRedemption.hasAccountLoyaltyTransaction( this )) { 
- 			arrayAppend(arguments.loyaltyRedemption.getAccountLoyaltyTransactions(), this); 
- 		} 
- 	} 
- 	public void function removeLoyaltyRedemption(any loyaltyRedemption) { 
- 		if(!structKeyExists(arguments, "loyaltyRedemption")) { 
- 			arguments.loyaltyRedemption = variables.loyaltyRedemption; 
- 		} 
- 		var index = arrayFind(arguments.loyaltyRedemption.getAccountLoyaltyTransactions(), this); 
- 		if(index > 0) { 
- 			arrayDeleteAt(arguments.loyaltyRedemption.getAccountLoyaltyTransactions(), index); 
- 		} 
- 		structDelete(variables, "loyaltyRedemption"); 
- 	}   
-    
+
+ 	// Loyalty Program Redemption (many-to-one)
+ 	public void function setLoyaltyRedemption(required any loyaltyRedemption) {
+ 		variables.loyaltyRedemption = arguments.loyaltyRedemption;
+ 		if(isNew() or !arguments.loyaltyRedemption.hasAccountLoyaltyTransaction( this )) {
+ 			arrayAppend(arguments.loyaltyRedemption.getAccountLoyaltyTransactions(), this);
+ 		}
+ 	}
+ 	public void function removeLoyaltyRedemption(any loyaltyRedemption) {
+ 		if(!structKeyExists(arguments, "loyaltyRedemption")) {
+ 			arguments.loyaltyRedemption = variables.loyaltyRedemption;
+ 		}
+ 		var index = arrayFind(arguments.loyaltyRedemption.getAccountLoyaltyTransactions(), this);
+ 		if(index > 0) {
+ 			arrayDeleteAt(arguments.loyaltyRedemption.getAccountLoyaltyTransactions(), index);
+ 		}
+ 		structDelete(variables, "loyaltyRedemption");
+ 	}
+
     // Order (many-to-one)
 	public void function setOrder(required any order) {
 		variables.order = arguments.order;
@@ -160,7 +160,7 @@ component displayname="AccountLoyaltyTransaction" entityname="SlatwallAccountLoy
 		}
 		structDelete(variables, "order");
 	}
-	
+
 	// Order Item (many-to-one)
 	public void function setOrderItem(required any orderItem) {
 		variables.orderItem = arguments.orderItem;
@@ -178,7 +178,7 @@ component displayname="AccountLoyaltyTransaction" entityname="SlatwallAccountLoy
 		}
 		structDelete(variables, "orderItem");
 	}
-	
+
 	// Order Fulfillment (many-to-one)
 	public void function setOrderFulfillment(required any orderFulfillment) {
 		variables.orderFulfillment = arguments.orderFulfillment;
@@ -196,30 +196,30 @@ component displayname="AccountLoyaltyTransaction" entityname="SlatwallAccountLoy
 		}
 		structDelete(variables, "orderFulfillment");
 	}
-	
+
 	// =============  END:  Bidirectional Helper Methods ===================
 
 	// =============== START: Custom Validation Methods ====================
-	
+
 	// ===============  END: Custom Validation Methods =====================
-	
+
 	// =============== START: Custom Formatting Methods ====================
-	
+
 	// ===============  END: Custom Formatting Methods =====================
-	
+
 	// ============== START: Overridden Implicet Getters ===================
-	
+
 	// ==============  END: Overridden Implicet Getters ====================
 
 	// ================== START: Overridden Methods ========================
-	
+
 	// ==================  END:  Overridden Methods ========================
-	
+
 	// =================== START: ORM Event Hooks  =========================
-	
+
 	// ===================  END:  ORM Event Hooks  =========================
-	
+
 	// ================== START: Deprecated Methods ========================
-	
+
 	// ==================  END:  Deprecated Methods ========================
 }

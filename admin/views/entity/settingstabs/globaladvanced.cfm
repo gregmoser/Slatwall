@@ -67,4 +67,3 @@ Notes:
 		<swa:SlatwallSetting settingName="globalDisplayIntegrationProcessingErrors">
 	</swa:SlatwallSettingTable>
 </cfoutput>
-

@@ -2,24 +2,24 @@
 
 
  <cffunction name="testGetQueryResults" returntype="void" access="public">
-  <cfscript> 
+  <cfscript>
    //debug(q.getQueryResults());
    assertIsQuery(q.getQueryResults());
    assertEquals(q.getQueryResults().recordcount,4,"Should return 21 rows - but should use something more static that AssertTest");
-  </cfscript>		
+  </cfscript>
 </cffunction>
 
 <cffunction name="testMetaData">
- <cfscript> 
+ <cfscript>
    //debug(q);
    assertEquals(q.testRuns, 4,"Should return 4 rows");
    assertEquals(q.successes, 3,"Should 3 successes");
    assertEquals(q.failures, 1,"Should 1 failure");
-  </cfscript>		
+  </cfscript>
 </cffunction>
-  
-  
-  
+
+
+
 <cffunction name="setUp" returntype="void" access="public">
   <cfscript>
    suite = createObject("component","mxunit.framework.TestSuite").TestSuite();

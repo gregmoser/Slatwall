@@ -27,7 +27,7 @@
 		<cfset result.Query = q>
 		<cfreturn result>
 	</cffunction>
-	
+
 	<cffunction name="readCSVToArray" output="false" access="public" returntype="array" hint="returns a 2D array of data">
 		<cfargument name="filePath" required="true" type="string" hint="full path to file">
 		<cfargument name="hasHeaderRow" required="false" type="boolean" default="false" hint="whether the first row is a header row. If so, the values in the first row will be used as column names; otherwise, columns will be derived">
@@ -40,7 +40,7 @@
 		for(row=1; row LTE q.RecordCount; row=row+1){
 			for(col=1; col LTE ArrayLen(cols); col=col+1){
 				a[row][col] = q[ cols[col] ][row];
-			}			
+			}
 		}
 		return a;
 		</cfscript>

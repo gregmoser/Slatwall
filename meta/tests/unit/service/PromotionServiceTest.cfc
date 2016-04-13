@@ -1737,5 +1737,3 @@ component extends="Slatwall.meta.tests.unit.SlatwallUnitTestBase" {
 		assertEquals(orderItemQualificationCount,7);
 	}
 }
-
-

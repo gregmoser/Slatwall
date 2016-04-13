@@ -133,4 +133,3 @@ component displayname="Stock" entityname="SlatwallStock" table="SwStock" persist
 
 	// ===================  END:  ORM Event Hooks  =========================
 }
-

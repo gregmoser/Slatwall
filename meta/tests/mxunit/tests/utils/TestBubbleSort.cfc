@@ -16,7 +16,7 @@
 			var myArray = arrayNew(1);
 			var actual = "";
 			var expected = "";
-			
+
 			myStruct1.value = "apple";
 			myStruct1.order="4";
 

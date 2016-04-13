@@ -1,5 +1,5 @@
  <cfcomponent  extends="mxunit.framework.TestCase">
- 
+
 
 
 <cffunction name="testThatAssertEqualsFailureMessageIsMessageActualExpected">
@@ -10,7 +10,7 @@
      catch(any e){
       actual = e.getMessage();
      }
-     expected = "my message::[1] NOT EQUAL TO [2]"; 
+     expected = "my message::[1] NOT EQUAL TO [2]";
      debug(expected);
      debug(actual);
       assertEquals(expected, actual, "Failure message outputs should be the same");
@@ -25,9 +25,9 @@
     args.expected = 1;
     args.actual = 2;
     args.message ="my message";
-    newArgs = pub.normalizeArguments("equals",args); 
+    newArgs = pub.normalizeArguments("equals",args);
     debug(newArgs);
-    
+
   </cfscript>
 
 </cffunction>
@@ -38,6 +38,6 @@
     <cfset this.setTestStyle("default") />
   </cffunction>
 
-  
+
 
 </cfcomponent>

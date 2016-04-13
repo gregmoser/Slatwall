@@ -1,11 +1,11 @@
 <cfcomponent output="false" extends="BaseTest">
 
 
-<!--- 
+<!---
 
 IMPORTANT (7.15.10)
- 
-Matching still does not work; 
+
+Matching still does not work;
 
  --->
 
@@ -16,7 +16,7 @@ Matching still does not work;
   debug( mock.debugMock() );
   actual = mock.foo( b=false , a='axel' );
   debug( actual );
-  assertEquals('bar', actual ) ;  
+  assertEquals('bar', actual ) ;
 </cfscript>
 </cffunction>
 
@@ -27,15 +27,15 @@ Matching still does not work;
   debug( mock.debugMock() );
   actual = mock.foo( 'axel', false );
   debug( actual );
-  assertEquals('bar', actual ) ;  
+  assertEquals('bar', actual ) ;
 </cfscript>
-</cffunction>	
-	
+</cffunction>
+
  <cffunction name="$mismatchedArgumentTypesShouldPass3">
  <cfscript>
   mock.reset();
   mock.foo(bar='{string}', foo='{numeric}' ).returns('bar');
-  assertEquals('bar',mock.foo( 'axel', 123 )) ;  
+  assertEquals('bar',mock.foo( 'axel', 123 )) ;
 </cfscript>
 </cffunction>
 
@@ -43,7 +43,7 @@ Matching still does not work;
  <cfscript>
   mock.reset();
   mock.foo(bar='{string}', foo='{boolean}' ).returns('bar');
-  assertEquals('bar', mock.foo( 'axel', false )) ;  
+  assertEquals('bar', mock.foo( 'axel', false )) ;
 </cfscript>
 </cffunction>
 
@@ -53,7 +53,7 @@ Matching still does not work;
  <cfscript>
   mock.reset();
   mock.foo(bar='{string}', foo='{string}' ).returns('bar');
-  assertEquals('bar',mock.foo( 'axel', 'baz' )) ;  
+  assertEquals('bar',mock.foo( 'axel', 'baz' )) ;
 </cfscript>
 </cffunction>
 

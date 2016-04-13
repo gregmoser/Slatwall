@@ -149,7 +149,7 @@
 
 		<!--- Get the current User   --->
 		<cfset var user = variables.ESAPI.authenticator().getCurrentUser() />
-   
+
 
 		<!--- Set a local variable to hold ColdFusions non-standard log levels --->
 		<cfset  var cfType = "" />
@@ -164,7 +164,7 @@
 		</cfswitch>
 
 
-  
+
 
 		<!--- Clean CRLF from the message --->
 		<cfset logMessage = replace(arguments.message,"\n", "_", "all") />
@@ -187,7 +187,7 @@
 		<cflog type="warn"
 			application="true"
 			file="security"
-			text="Level: #arguments.type# - Logger Name: #variables.name# - 
+			text="Level: #arguments.type# - Logger Name: #variables.name# -
             Username:  #user.getUserName()# - Host: #user.getLastHostAddress()# -
             Session Logging ID: #userSessionLoggingID# - Message: logMessage" />
 

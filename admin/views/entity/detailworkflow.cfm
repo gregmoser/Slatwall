@@ -10,5 +10,5 @@
 			<hb:HibachiEntityDetailItem view="admin:entity/workflowtabs/basic" open="true" text="#$.slatwall.rbKey('admin.define.basic')#" showOnCreateFlag=true />
 			<hb:HibachiEntityDetailItem view="admin:entity/workflowtabs/triggers" text="#$.slatwall.rbKey('entity.workflowTrigger_plural')#" showOnCreateFlag=true />
 			<hb:HibachiEntityDetailItem view="admin:entity/workflowtabs/tasks" text="#$.slatwall.rbKey('entity.workflowTask_plural')#" showOnCreateFlag=true />
-	</hb:HibachiEntityDetailGroup>	
+	</hb:HibachiEntityDetailGroup>
 </form>

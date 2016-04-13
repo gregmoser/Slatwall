@@ -22,7 +22,7 @@
 			<hb:HibachiPropertyDisplay object="#rc.product#" property="productType" edit="#rc.edit#">
 			<cfif rc.product.getBaseProductType() eq "productBundle" && !isNull(rc.product.getDefaultSku())>
 				<hb:HibachiPropertyDisplay object="#rc.product.getDefaultSku()#" fieldname="defaultSku.price" property="price" edit="#rc.edit#">
-				<input type="hidden" name="defaultSku.skuID" value="#rc.product.getDefaultSku().getSkuID()#" />            
+				<input type="hidden" name="defaultSku.skuID" value="#rc.product.getDefaultSku().getSkuID()#" />
 			</cfif>
 			<hb:HibachiFieldDisplay title="#$.slatwall.rbKey('define.qats.full')#" value="#rc.product.getQuantity('QATS')#">
 			<hb:HibachiFieldDisplay title="#$.slatwall.rbKey('define.qiats.full')#" value="#rc.product.getQuantity('QIATS')#">
@@ -32,8 +32,8 @@
 				<swa:SlatwallErrorDisplay object="#rc.product#" errorName="renewalSku" />
 				<hb:HibachiListingDisplay smartList="#rc.product.getSubscriptionSkuSmartList()#"
 										  selectValue="#rc.product.getRenewalSku().getSkuID()#"
-										  selectFieldName="renewalSku.skuID" 
-										  title="#$.slatwall.rbKey('define.renewalSku')#" 
+										  selectFieldName="renewalSku.skuID"
+										  title="#$.slatwall.rbKey('define.renewalSku')#"
 										  edit="#rc.edit#">
 					<hb:HibachiListingColumn propertyIdentifier="skuCode" />
 					<hb:HibachiListingColumn propertyIdentifier="skuName" />

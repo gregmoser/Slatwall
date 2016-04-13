@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-   
+
     Linking this program statically or dynamically with other modules is
     making a combined work based on this program.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
@@ -29,7 +29,7 @@
 
 - You also meet the terms and conditions of the license of each
   independent module
-- You must not alter the default display of the Slatwall name or logo from 
+- You must not alter the default display of the Slatwall name or logo from
   any part of the application
 - Your custom code must not alter or create any files inside Slatwall,
   except in the following directories:
@@ -39,7 +39,7 @@ You may copy and distribute the modified version of this program that meets
 the above guidelines as a combined work under the terms of GPL for this program,
 provided that you include the source code of that other code when and as the
 GNU GPL requires distribution of source code.
-   
+
     If you modify this program, you may extend this exception to your version
     of the program, but you are not obligated to do so.
 
@@ -68,7 +68,7 @@ Notes:
   recordProcessEntity="#rc.order#"
   recordProcessUpdateTableID="LD#replace(rc.order.getReturnItemSmartList().getSavedStateID(),'-','','all')#">
 
-<hb:HibachiListingColumn propertyIdentifier="location.locationName" filter="true" />    
+<hb:HibachiListingColumn propertyIdentifier="location.locationName" filter="true" />
 <hb:HibachiListingColumn propertyIdentifier="sku.skuCode" />
 <hb:HibachiListingColumn propertyIdentifier="sku.product.productCode" />
 <hb:HibachiListingColumn propertyIdentifier="sku.product.brand.brandName" />

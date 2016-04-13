@@ -170,4 +170,3 @@ component displayname="Attribute Option" entityname="SlatwallAttributeOption" ta
 	// ==================  END:  Deprecated Methods ========================
 
 }
-

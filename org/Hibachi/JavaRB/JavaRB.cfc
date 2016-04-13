@@ -1,9 +1,9 @@
 <cfcomponent displayname="javaRB" hint="reads and parses java resource bundle per locale" output="no">
-<!--- 
+<!---
 
 author:		paul hastings <paul@sustainableGIS.com>
 date:		08-december-2003
-revisions:	
+revisions:
 notes:		the purpose of this CFC is to extract text resources from a pure java resource bundle. these
 			resource bundles should be produced by a tools such as IBM's rbManager and consist of:
 				key=ANSI escaped string such as
@@ -12,28 +12,28 @@ notes:		the purpose of this CFC is to extract text resources from a pure java re
 				Go=Ok
 				(thai, ANSI escaped chars)
 				Cancel=\u0E22\u0E01\u0E40\u0E25\u0E34\u0E01
-				Go=\u0E44\u0E1B			
+				Go=\u0E44\u0E1B
 
 methods in this CFC:
-	- getResourceBundle returns a structure containing all key/messages value pairs in a given resource 
+	- getResourceBundle returns a structure containing all key/messages value pairs in a given resource
 	bundle file. required argument is rbFile containing absolute path to resource bundle file. optional
 	argument is rbLocale to indicate which locale's resource bundle to use, defaults to us_EN (american
 	english). PUBLIC
-	- getRBKeys returns an array holding all keys in given resource bundle. required argument is rbFile 
-	containing absolute path to resource bundle file. optional argument is rbLocale to indicate which 
+	- getRBKeys returns an array holding all keys in given resource bundle. required argument is rbFile
+	containing absolute path to resource bundle file. optional argument is rbLocale to indicate which
 	locale's resource bundle to use, defaults to us_EN (american english). PUBLIC
 	- getRBString returns string containing the text for a given key in a given resource bundle. required
-	arguments are rbFile containing absolute path to resource bundle file and rbKey a string holding the 
+	arguments are rbFile containing absolute path to resource bundle file and rbKey a string holding the
 	required key. optional argument is rbLocale to indicate which locale's resource bundle to use, defaults
 	to us_EN (american english). PUBLIC
- --->	
+ --->
 
 <!--- default init --->
 <cfscript>
 	rB = createObject("java", "java.util.PropertyResourceBundle");
-	fis = CreateObject("java", "java.io.FileInputStream"); 
+	fis = CreateObject("java", "java.io.FileInputStream");
 </cfscript>
- 
+
 <cffunction access="public" name="getResourceBundle" output="No" returntype="struct"
 	hint="reads and parses java resource bundle per locale">
 <cfargument name="rbFile" required="Yes" type="string">
@@ -74,7 +74,7 @@ methods in this CFC:
 	<cfelse>
 		<cfthrow message="Fatal error: resource bundle #thisRBfile# not found.">
 	</cfif>
-</cffunction> 
+</cffunction>
 
 <cffunction access="public" name="getRBKeys" output="No" returntype="array"
 	hint="returns array of keys in java resource bundle per locale">
@@ -108,7 +108,7 @@ methods in this CFC:
 	<cfelse>
 		<cfthrow message="Fatal error: resource bundle #thisRBfile# not found.">
 	</cfif>
-</cffunction> 
+</cffunction>
 
 <cffunction access="public" name="getRBString" output="No" returntype="string"
 	hint="returns text for given key in given java resource bundle per locale">
@@ -133,7 +133,7 @@ methods in this CFC:
 				rB.init(fis);
 				rbString=rB.handleGetObject(arguments.rbKey);
 				fis.close();
-		}	
+		}
 	</cfscript>
 	<cfif NOT isOK>
 		<cfthrow message="Fatal error: resource bundle #thisRBfile# not found.">
@@ -144,7 +144,7 @@ methods in this CFC:
 			<cfthrow message="Fatal error: resource bundle #thisRBfile# does not contain key #arguments.rbKEY#.">
 		</cfif>
 	</cfif>
-</cffunction> 
+</cffunction>
 
 <cffunction name="loadResourceBundle" access="public" output="no" returnType="void" hint="Loads a bundle">
 	<cfargument name="rbFile" required="yes" type="string">

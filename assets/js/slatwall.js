@@ -5,12 +5,12 @@ var ngSlatwall = angular.module('slatwallngapp', []);
 ngSlatwall.controller('admin-entity-preprocessaccount_addaccountpayment', function($scope, $compile) {
 	//Define the different payment types used here
 	var paymentType = {aptCharge:"444df32dd2b0583d59a19f1b77869025",aptCredit:"444df32e9b448ea196c18c66e1454c46", aptAdjustment:"68e3fb57d8102b47acc0003906d16ddd"};
-	
+
 	$scope.totalAmountToApply = 0; //Default value to show on new form
 	$scope.paymentTypeName = $.slatwall.rbKey('define.charge'); //Default payment type
 	$scope.paymentTypeLock = true; //Used to lock down the order payment type dropdowns
 	$scope.amount = 0;
-	
+
 	$scope.updatePaymentType = function() {
 		//Change all order payment types here
 		angular.forEach($scope.appliedOrderPayment, function(obj, key) {
@@ -18,7 +18,7 @@ ngSlatwall.controller('admin-entity-preprocessaccount_addaccountpayment', functi
 			if($scope.paymentType!=paymentType.aptAdjustment)
 				obj.paymentType=$scope.paymentType;
 		});
-		
+
 		if($scope.paymentType==paymentType.aptCharge) {
 			$scope.paymentTypeName = $.slatwall.rbKey('define.charge');
 			$scope.paymentTypeLock = true;
@@ -30,14 +30,14 @@ ngSlatwall.controller('admin-entity-preprocessaccount_addaccountpayment', functi
 			$scope.paymentTypeName = $.slatwall.rbKey('define.adjustment');
 			$scope.amount = 0;
 		}
-		
+
 		//Update the subtotal now that we changed the payment type
 		$scope.updateSubTotal();
 	}
 
 	$scope.updateSubTotal = function() {
 		$scope.totalAmountToApply = 0; //Reset the subtotal before we loop
-		
+
 		//Loop through all the amount fields and create a running subtotal
 		angular.forEach($scope.appliedOrderPayment, function(obj, key) {
 			//Don't count the field if its undefied or not a number
@@ -62,7 +62,7 @@ ngSlatwall.controller('admin-entity-preprocessaccount_addaccountpayment', functi
 		//The amount not applied to an order
 	    $scope.amountUnapplied = (Math.round(($scope.amount - $scope.totalAmountToApply) * 100) / 100);
 		$scope.accountBalanceChange = parseFloat($scope.amount);
-		
+
 		//Switch the account balance display amount to a negative if you are doing a charge
 		if($scope.paymentType==paymentType.aptCharge)
 			$scope.accountBalanceChange = parseFloat($scope.accountBalanceChange * -1); //If charge, change to neg since we are lowering account balance
@@ -94,10 +94,10 @@ ngSlatwall.factory('reloadService', ["$rootScope", "$compile", function ($rootSc
 function angularCompileModal() {
 	//get your angular controller
     var elem = angular.element(document.querySelector('[ng-controller]'));
-    
+
     //get the injector.
     var injector = elem.injector();
-    
+
     //get the service.
     var myService = injector.get('reloadService');
 

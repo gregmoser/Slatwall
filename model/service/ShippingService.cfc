@@ -53,7 +53,7 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 	property name="settingService" type="any";
 
 	public void function updateOrderFulfillmentShippingMethodOptions( required any orderFulfillment ) {
-		
+
 		// Container to hold all shipping integrations that are in all the usable rates
 		var integrations = [];
 		var responseBeans = {};
@@ -63,15 +63,15 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 
 		// Look up shippingMethods to use based on the fulfillment method
 		var smsl = arguments.orderFulfillment.getFulfillmentMethod().getShippingMethodsSmartList();
-		
+
 		smsl.addFilter('activeFlag', '1');
 		smsl.addOrder("sortOrder|ASC");
 		var shippingMethods = smsl.getRecords();
-		
+
 		// Loop over all of the shipping methods & their rates for
 		var shippingMethodsCount = arrayLen(shippingMethods);
-		
-		
+
+
 		for(var m=1; m<=shippingMethodsCount; m++) {
 
 			var shippingMethodRatesSmartList = shippingMethods[m].getShippingMethodRatesSmartList();
@@ -80,34 +80,34 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 			shippingMethodRatesSmartList.addWhereCondition('COALESCE(aslatwallshippingmethodrate.maximumShipmentItemPrice,100000000) >= #arguments.orderFulfillment.getSubtotalAfterDiscounts()#');
 			shippingMethodRatesSmartList.addWhereCondition('COALESCE(aslatwallshippingmethodrate.minimumShipmentWeight,0) <= #arguments.orderFulfillment.getTotalShippingWeight()#');
 			shippingMethodRatesSmartList.addWhereCondition('COALESCE(aslatwallshippingmethodrate.maximumShipmentWeight,100000000) >= #arguments.orderFulfillment.getTotalShippingWeight()#');
-			var shippingMethodRates = shippingMethodRatesSmartList.getRecords(); 
+			var shippingMethodRates = shippingMethodRatesSmartList.getRecords();
 			var shippingMethodRatesCount = arrayLen(shippingMethodRates);
-			
+
 			for(var r=1; r<=shippingMethodRatesCount; r++) {
-				
+
 				// check to make sure that this rate applies to the current orderFulfillment
 				if(
 					isShippingMethodRateUsable(
-						shippingMethodRates[r], 
-						arguments.orderFulfillment.getShippingAddress(), 
-						arguments.orderFulfillment.getTotalShippingWeight(), 
+						shippingMethodRates[r],
+						arguments.orderFulfillment.getShippingAddress(),
+						arguments.orderFulfillment.getTotalShippingWeight(),
 						arguments.orderFulfillment.getSubtotalAfterDiscounts())
 					) {
 					// Add any new shipping integrations in any of the rates the the shippingIntegrations array that we are going to query for rates later
 					if(
-						!isNull(shippingMethodRates[r].getShippingIntegration()) 
+						!isNull(shippingMethodRates[r].getShippingIntegration())
 						&& !arrayFind(integrations, shippingMethodRates[r].getShippingIntegration())
 					) {
 						arrayAppend(integrations, shippingMethodRates[r].getShippingIntegration());
 					}
 				}
-				
+
 			}
-			
+
 		}
-		
+
 		// Loop over all of the shipping integrations and add thier rates response to the 'responseBeans' struct that is key'd by integrationID
-		var integrationsCount = arrayLen(integrations); 
+		var integrationsCount = arrayLen(integrations);
 		for(var i=1; i<=integrationsCount; i++) {
 
 			// Get the integrations shipping.cfc object
@@ -133,8 +133,8 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 			}
 			logHibachi('#integrations[i].getIntegrationName()# Shipping Integration Rates Request - Finished');
 		}
-		
-		
+
+
 
 		// Loop over the shippingMethods again, and loop over each of the rates to find the quote in the response bean.
 		for(var m=1; m<=shippingMethodsCount; m++) {
@@ -144,9 +144,9 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 			shippingMethodRatesSmartList.addWhereCondition('COALESCE(aslatwallshippingmethodrate.maximumShipmentItemPrice,100000000) >= #arguments.orderFulfillment.getSubtotalAfterDiscounts()#');
 			shippingMethodRatesSmartList.addWhereCondition('COALESCE(aslatwallshippingmethodrate.minimumShipmentWeight,0) <= #arguments.orderFulfillment.getTotalShippingWeight()#');
 			shippingMethodRatesSmartList.addWhereCondition('COALESCE(aslatwallshippingmethodrate.maximumShipmentWeight,100000000) >= #arguments.orderFulfillment.getTotalShippingWeight()#');
-			var shippingMethodRates = shippingMethodRatesSmartList.getRecords(); 
+			var shippingMethodRates = shippingMethodRatesSmartList.getRecords();
 			var shippingMethodRatesCount = arrayLen(shippingMethodRates);
-			
+
 			var qualifiedRateOptions = [];
 			for(var r=1; r<=shippingMethodRatesCount; r++) {
 
@@ -165,7 +165,7 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 					// If we got a response bean from the shipping integration then find those details inside the response
 					} else if (structKeyExists(responseBeans, shippingMethodRates[r].getShippingIntegration().getIntegrationID())) {
 						var thisResponseBean = responseBeans[ shippingMethodRates[r].getShippingIntegration().getIntegrationID() ];
-						var shippingMethodResponseBeansCount = arrayLen(thisResponseBean.getShippingMethodResponseBeans()); 
+						var shippingMethodResponseBeansCount = arrayLen(thisResponseBean.getShippingMethodResponseBeans());
 						for(var b=1; b<=shippingMethodResponseBeansCount; b++) {
 
 							var methodResponse = thisResponseBean.getShippingMethodResponseBeans()[b];
@@ -193,7 +193,7 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 					}
 				}
 			}
-			
+
 
 			// Create an empty struct to put the rateToUse based on settings
 			var rateToUse = {};
@@ -264,10 +264,10 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 				}
 
 			}
-			
+
 		}
-		
-		
+
+
 
 		// If the previously selected shipping method does not exist in the options now, then we just remove it.
 		if( !isNull(arguments.orderFulfillment.getShippingMethod()) && !listFindNoCase(shippingMethodIDOptionsList, arguments.orderFulfillment.getShippingMethod().getShippingMethodID())) {
@@ -359,7 +359,7 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 		if(shipmentWeight lt lowerWeight || shipmentWeight gt higherWeight) {
 			return false;
 		}
-		
+
 		// Make sure that the address is in the address zone
 		if(!isNull(arguments.shippingMethodRate.getAddressZone()) && !getAddressService().isAddressInZone(arguments.shipToAddress, arguments.shippingMethodRate.getAddressZone())) {
 			return false;

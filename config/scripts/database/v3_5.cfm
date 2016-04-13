@@ -2,45 +2,45 @@
 
     Slatwall - An Open Source eCommerce Platform
     Copyright (C) ten24, LLC
-	
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-	
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-	
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this program statically or dynamically with other modules is
     making a combined work based on this program.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
-	
-    As a special exception, the copyright holders of this program give you
-    permission to combine this program with independent modules and your 
-    custom code, regardless of the license terms of these independent
-    modules, and to copy and distribute the resulting program under terms 
-    of your choice, provided that you follow these specific guidelines: 
 
-	- You also meet the terms and conditions of the license of each 
-	  independent module 
-	- You must not alter the default display of the Slatwall name or logo from  
-	  any part of the application 
-	- Your custom code must not alter or create any files inside Slatwall, 
+    As a special exception, the copyright holders of this program give you
+    permission to combine this program with independent modules and your
+    custom code, regardless of the license terms of these independent
+    modules, and to copy and distribute the resulting program under terms
+    of your choice, provided that you follow these specific guidelines:
+
+	- You also meet the terms and conditions of the license of each
+	  independent module
+	- You must not alter the default display of the Slatwall name or logo from
+	  any part of the application
+	- Your custom code must not alter or create any files inside Slatwall,
 	  except in the following directories:
 		/integrationServices/
 
-	You may copy and distribute the modified version of this program that meets 
-	the above guidelines as a combined work under the terms of GPL for this program, 
-	provided that you include the source code of that other code when and as the 
+	You may copy and distribute the modified version of this program that meets
+	the above guidelines as a combined work under the terms of GPL for this program,
+	provided that you include the source code of that other code when and as the
 	GNU GPL requires distribution of source code.
-    
-    If you modify this program, you may extend this exception to your version 
+
+    If you modify this program, you may extend this exception to your version
     of the program, but you are not obligated to do so.
 
 Notes:
@@ -51,9 +51,9 @@ Notes:
 
 <!--- Update SwAttribute to move attributeTypeID to attributeType --->
 <cftry>
-	
+
 	<cfdbinfo type="Columns" name="local.attributeColumns" table="SwAttribute" datasource="#getApplicationValue("datasource")#" username="#getApplicationValue("datasourceUsername")#" password="#getApplicationValue("datasourcePassword")#" />
-	
+
 	<cfquery name="local.hasColumn" dbtype="query">
 		SELECT
 			*
@@ -62,7 +62,7 @@ Notes:
 		WHERE
 			LOWER(COLUMN_NAME) = 'attributetypeid'
 	</cfquery>
-	
+
 	<cfif local.hasColumn.recordCount>
 		<cfquery name="local.updateData">
 			UPDATE SwAttribute SET attributeInputType = 'checkbox' WHERE attributeTypeID = '444df2aaed92cb33d16a83d2bde93e72'
@@ -110,20 +110,20 @@ Notes:
 			UPDATE SwAttribute SET attributeInputType = 'yesNo' WHERE attributeTypeID = '444df2d8eb236c42dbbef7ea66200f1b'
 		</cfquery>
 	</cfif>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update attribute to move attributeTypeID to attributeInputType">
 		<cfset local.scriptHasErrors = true />
 	</cfcatch>
-	
+
 </cftry>
 
 
 <!--- Update SwAttributeSet to move attributeSetTypeID to attributeSetType --->
 <cftry>
-	
+
 	<cfdbinfo type="Columns" name="local.attributeSetColumns" table="SwAttributeSet" datasource="#getApplicationValue("datasource")#" username="#getApplicationValue("datasourceUsername")#" password="#getApplicationValue("datasourcePassword")#" />
-	
+
 	<cfquery name="local.hasColumn" dbtype="query">
 		SELECT
 			*
@@ -132,7 +132,7 @@ Notes:
 		WHERE
 			LOWER(COLUMN_NAME) = 'attributesettypeid'
 	</cfquery>
-	
+
 	<cfif local.hasColumn.recordCount>
 		<cfquery name="local.updateData">
 			UPDATE SwAttributeSet SET attributeSetObject = 'Account' WHERE attributeSetTypeID = '444df2a3ebb07d6280c339a09c0d90d3'
@@ -186,12 +186,12 @@ Notes:
 			UPDATE SwAttributeSet SET attributeSetObject = 'VendorOrder' WHERE attributeSetTypeID = '444df329d293eeec641b805b68cca95f'
 		</cfquery>
 	</cfif>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update attributeSet to move attributeSetTypeID to attributeSetObject">
 		<cfset local.scriptHasErrors = true />
 	</cfcatch>
-	
+
 </cftry>
 
 <cfif local.scriptHasErrors>

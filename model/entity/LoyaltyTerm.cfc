@@ -15,12 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this library statically or dynamically with other modules is
     making a combined work based on this library.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
- 
+
     As a special exception, the copyright holders of this library give you
     permission to link this library with independent modules to produce an
     executable, regardless of the license terms of these independent
@@ -37,7 +37,7 @@ Notes:
 
 */
 component displayname="Loyalty Term" entityname="SlatwallLoyaltyTerm" table="SwLoyaltyTerm" persistent="true" accessors="true" extends="HibachiEntity" cacheuse="transactional" hb_serviceName="loyaltyService" {
-	
+
 	// Persistent Properties
 	property name="loyaltyTermID" ormtype="string" length="32" fieldtype="id" generator="uuid" unsavedvalue="" default="";
 	property name="loyaltyTermName" ormtype="string";
@@ -48,78 +48,78 @@ component displayname="Loyalty Term" entityname="SlatwallLoyaltyTerm" table="SwL
 	// Related Object Properties (many-to-one)
 	property name="loyalty" cfc="Loyalty" fieldtype="many-to-one" fkcolumn="loyaltyID";
 	property name="term" cfc="Term" fieldtype="many-to-one" fkcolumn="termID";
-		
+
 	// Related Object Properties (one-to-many)
-	
+
 	// Related Object Properties (many-to-many - owner)
 
 	// Related Object Properties (many-to-many - inverse)
-	
+
 	// Remote Properties
 	property name="remoteID" ormtype="string";
-	
+
 	// Audit Properties
 	property name="createdDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="createdByAccountID" hb_populateEnabled="false" ormtype="string";
 	property name="modifiedDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="modifiedByAccountID" hb_populateEnabled="false" ormtype="string";
-	
+
 	// Non-Persistent Properties
 	property name="nextLoyaltyTermEndDateTime" persistent="false";
 
 
-	
+
 	// ============ START: Non-Persistent Property Methods =================
-	
+
 	public any function getLoyaltyTermNextEndDateTime() {
 		return getTerm().getEndDate(now(), true);
 	}
-	
+
 	// ============  END:  Non-Persistent Property Methods =================
-		
+
 	// ============= START: Bidirectional Helper Methods ===================
-	
-	// Loyalty Program (many-to-one)    
-	public void function setLoyalty(required any loyalty) {    
-		variables.loyalty = arguments.loyalty;    
-		if(isNew() or !arguments.loyalty.hasLoyaltyTerm( this )) {    
-			arrayAppend(arguments.loyalty.getLoyaltyTerms(), this);    
-		}    
-	}    
-	public void function removeLoyalty(any loyalty) {    
-		if(!structKeyExists(arguments, "loyalty")) {    
-			arguments.loyalty = variables.loyalty;    
-		}    
-		var index = arrayFind(arguments.loyalty.getLoyaltyTerms(), this);    
-		if(index > 0) {    
-			arrayDeleteAt(arguments.loyalty.getLoyaltyTerms(), index);    
-		}    
-		structDelete(variables, "loyalty");    
+
+	// Loyalty Program (many-to-one)
+	public void function setLoyalty(required any loyalty) {
+		variables.loyalty = arguments.loyalty;
+		if(isNew() or !arguments.loyalty.hasLoyaltyTerm( this )) {
+			arrayAppend(arguments.loyalty.getLoyaltyTerms(), this);
+		}
 	}
-	
+	public void function removeLoyalty(any loyalty) {
+		if(!structKeyExists(arguments, "loyalty")) {
+			arguments.loyalty = variables.loyalty;
+		}
+		var index = arrayFind(arguments.loyalty.getLoyaltyTerms(), this);
+		if(index > 0) {
+			arrayDeleteAt(arguments.loyalty.getLoyaltyTerms(), index);
+		}
+		structDelete(variables, "loyalty");
+	}
+
 	// =============  END:  Bidirectional Helper Methods ===================
 
 	// =============== START: Custom Validation Methods ====================
-	
+
 	// ===============  END: Custom Validation Methods =====================
-	
+
 	// =============== START: Custom Formatting Methods ====================
-	
+
 	// ===============  END: Custom Formatting Methods =====================
-	
+
 	// ============== START: Overridden Implicet Getters ===================
-	
+
 	// ==============  END: Overridden Implicet Getters ====================
 
 	// ================== START: Overridden Methods ========================
-	
+
 	// ==================  END:  Overridden Methods ========================
-	
+
 	// =================== START: ORM Event Hooks  =========================
-	
+
 	// ===================  END:  ORM Event Hooks  =========================
-	
+
 	// ================== START: Deprecated Methods ========================
-	
+
 	// ==================  END:  Deprecated Methods ========================
 }

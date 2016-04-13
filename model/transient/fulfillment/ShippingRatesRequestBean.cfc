@@ -2,45 +2,45 @@
 
     Slatwall - An Open Source eCommerce Platform
     Copyright (C) ten24, LLC
-	
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-	
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-	
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this program statically or dynamically with other modules is
     making a combined work based on this program.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
-	
-    As a special exception, the copyright holders of this program give you
-    permission to combine this program with independent modules and your 
-    custom code, regardless of the license terms of these independent
-    modules, and to copy and distribute the resulting program under terms 
-    of your choice, provided that you follow these specific guidelines: 
 
-	- You also meet the terms and conditions of the license of each 
-	  independent module 
-	- You must not alter the default display of the Slatwall name or logo from  
-	  any part of the application 
-	- Your custom code must not alter or create any files inside Slatwall, 
+    As a special exception, the copyright holders of this program give you
+    permission to combine this program with independent modules and your
+    custom code, regardless of the license terms of these independent
+    modules, and to copy and distribute the resulting program under terms
+    of your choice, provided that you follow these specific guidelines:
+
+	- You also meet the terms and conditions of the license of each
+	  independent module
+	- You must not alter the default display of the Slatwall name or logo from
+	  any part of the application
+	- Your custom code must not alter or create any files inside Slatwall,
 	  except in the following directories:
 		/integrationServices/
 
-	You may copy and distribute the modified version of this program that meets 
-	the above guidelines as a combined work under the terms of GPL for this program, 
-	provided that you include the source code of that other code when and as the 
+	You may copy and distribute the modified version of this program that meets
+	the above guidelines as a combined work under the terms of GPL for this program,
+	provided that you include the source code of that other code when and as the
 	GNU GPL requires distribution of source code.
-    
-    If you modify this program, you may extend this exception to your version 
+
+    If you modify this program, you may extend this exception to your version
     of the program, but you are not obligated to do so.
 
 Notes:
@@ -58,7 +58,7 @@ component accessors="true" output="false" extends="Slatwall.model.transient.Requ
 	property name="shipToStateCode" type="string" default="";
 	property name="shipToPostalCode" type="string" default="";
 	property name="shipToCountryCode" type="string" default="";
-	
+
 	property name="shipFromName" type="string" default="";
 	property name="shipFromCompany" type="string" default="";
 	property name="shipFromStreetAddress" type="string" default="";
@@ -68,20 +68,20 @@ component accessors="true" output="false" extends="Slatwall.model.transient.Requ
 	property name="shipFromStateCode" type="string" default="";
 	property name="shipFromPostalCode" type="string" default="";
 	property name="shipFromCountryCode" type="string" default="";
-	
+
 	property name="shippingItemRequestBeans" type="array";
-	
+
 	public any function init() {
 		// Set defaults
 		variables.shippingItemRequestBeans = [];
-		
+
 		return super.init();
 	}
-	
+
 	public void function addShippingItem() {
 		arrayAppend(getShippingItemRequestBeans(), new ShippingItemRequestBean(argumentcollection=arguments));
 	}
-	
+
 	public void function populateShipToWithAddress(required any address) {
 		if(!isNull(arguments.address.getName())) {
 			setShipToName(arguments.address.getName());
@@ -111,7 +111,7 @@ component accessors="true" output="false" extends="Slatwall.model.transient.Requ
 			setShipToCountryCode(arguments.address.getCountryCode());
 		}
 	}
-	
+
 	public void function populateShipFromWithAddress(required any address) {
 		if(!isNull(arguments.address.getName())) {
 			setShipFromName(arguments.address.getName());
@@ -141,7 +141,7 @@ component accessors="true" output="false" extends="Slatwall.model.transient.Requ
 			setShipFromCountryCode(arguments.address.getCountryCode());
 		}
 	}
-	
+
 	public void function populateShippingItemsWithOrderFulfillmentItems(required array orderFulfillmentItems) {
 		for(var i=1; i <= arrayLen(arguments.orderFulfillmentItems); i++) {
 			addShippingItem(
@@ -152,7 +152,7 @@ component accessors="true" output="false" extends="Slatwall.model.transient.Requ
 			);
 		}
 	}
-	
+
 	public numeric function getTotalWeight( string unitCode="lb" ) {
 		var totalWeight = 0;
 		for(var i=1; i<=arrayLen(getShippingItemRequestBeans()); i++) {
@@ -166,7 +166,7 @@ component accessors="true" output="false" extends="Slatwall.model.transient.Requ
 		}
 		return totalWeight;
 	}
-	
+
 	public numeric function getTotalValue() {
 		var totalValue = 0;
 		for(var i=1; i<=arrayLen(getShippingItemRequestBeans()); i++) {
@@ -176,5 +176,5 @@ component accessors="true" output="false" extends="Slatwall.model.transient.Requ
 		}
 		return totalValue;
 	}
-	
+
 }

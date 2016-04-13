@@ -10,7 +10,7 @@ function $wilcardPatternSmokeTest(){
      p = reg.findByPattern('foo',args);
      debug( p );
      debug( reg );
-     
+
      v = mock.foo('asdasd');
      debug(v);
      assertEquals(mainRetVal,v);
@@ -30,11 +30,11 @@ function multipleParamsShouldWorkWithOneOrMoreWildCard(){
    v = mock.foo('asdasd',4564);
    debug(v);
    assertEquals(mainRetVal,v);
-   
+
    v = mock.foo('asdasd',4564,'dfgdfg',345345,this);
    debug(v);
    assertEquals(mainRetVal,v);
-      
+
 }
 
 
@@ -45,12 +45,12 @@ function multipleParamsShouldWorkWithZeroOrMoreWildCard(){
    v = mock.foo('asdasd',4564);
    debug(v);
    assertEquals(mainRetVal,v);
-   
+
    v = mock.foo(mainRetVal,4564,'dfgdfg',345345,this);
    debug(v);
    assertEquals(mainRetVal,v);
    debug(mock.debugMock());
-      
+
 }
 
 

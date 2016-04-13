@@ -4,7 +4,7 @@
 <cfparam name="rc.accountLoyalty" type="any" />
 <cfparam name="rc.edit" type="boolean" />
 
-<cfoutput>	
+<cfoutput>
 	<hb:HibachiPropertyRow>
 		<hb:HibachiPropertyList>
 			<hb:HibachiPropertyDisplay object="#rc.accountLoyalty#" property="loyalty" edit="#rc.edit#">

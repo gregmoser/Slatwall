@@ -6,23 +6,23 @@ component output="false" accessors="true" extends="HibachiTransient" {
 	public boolean function isProcessObject() {
 		return true;
 	}
-	
+
 	public void function setupDefaults() {
 		// Left Blank To Be Done By Each Process Object
 	}
-	
+
 	public boolean function getPreProcessDisplayedFlag() {
 		if(!structKeyExists(variables, "preProcessDisplayedFlag")) {
 			variables.preProcessDisplayedFlag = 0;
 		}
 		return variables.preProcessDisplayedFlag;
 	}
-	
+
 	public boolean function getPopulatedFlag() {
 		if(!structKeyExists(variables, "populatedFlag")) {
 			variables.populatedFlag = 0;
 		}
 		return variables.populatedFlag;
 	}
-	
+
 }

@@ -2,7 +2,7 @@
 <!--
 	Most of the currency symbols for this were found here: http://www.xe.com/symbols.php#section2
 	The currency codes were puller from here: http://www.xe.com/iso4217.php
-	
+
 	A secondary reference was used to add currencyISONumber that can be found here:
 	http://en.wikipedia.org/wiki/ISO_4217
 -->

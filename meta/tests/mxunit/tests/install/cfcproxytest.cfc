@@ -1,7 +1,7 @@
 <cfcomponent  extends="mxunit.framework.TestCase">
 
 <!--- 	<cffunction name="testSomething" access="public" returntype="void">
-	
+
   <cffunction name="init" output="true" returntype="any" hint="Creates a CFC using an absolute or a relative path">
 	<cfargument name="filePath" type="string" required="true" hint="The path to the CFC you wish to create.">
 	<cfargument name="isRelativePath" type="boolean" required="false" default="true" hint="Whether or not the path is a relative path.">
@@ -19,14 +19,14 @@
 	<cfloop collection="#proxy.getThisScope()#" item="func">
 		<cfset SetVariable("this.#func#", proxy.getMethod(func))>
 	</cfloop>
-	
-	<cfreturn this>	
+
+	<cfreturn this>
 </cffunction>
-  
-  
+
+
 	</cffunction> --->
 
-  
+
  <cffunction name="testPathFunctions">
   <cfoutput>
   <xmp style="font-size:11px">
@@ -37,10 +37,10 @@
    ExpandPath("../tests/framework/fixture/") == #ExpandPath("../tests/framework/fixture/")#<br />
    getPageContext().getRequest().getContextPath() == #getPageContext().getRequest().getContextPath()#
   </xmp>
-  </cfoutput> 
+  </cfoutput>
  </cffunction>
 
-  
+
 <cffunction name="testCFCProxy" access="public" returntype="void">
   <cfscript>
     //To Do (bill): Need to run /mxunit/index.cfm to create mxunit.MXunitInstallTest
@@ -55,7 +55,7 @@
   </cfscript>
 
 	</cffunction>
-  
+
   <cffunction name="testCFCProxy2" access="public" returntype="void">
   <cfscript>
     proxy = CreateObject("java", "coldfusion.cfc.CFCProxy").init(expandPath("/mxunit/tests/framework/fixture/NewCFComponent.cfc"));
@@ -64,7 +64,7 @@
     md = getMetaData(s);
     debug( md );
     assertEquals("mxunit.tests.framework.fixture.NewCFComponent", md.name);
-    
+
     proxy = CreateObject("java", "coldfusion.cfc.CFCProxy").init(expandPath("/mxunit/framework/ComponentUtils.cfc"));
    // proxy = CreateObject("java", "coldfusion.cfc.CFCProxy").init("C:\\ColdFusion8\\wwwroot\\mdist\\foo\\mxunit\\framework\\ComponentUtils.cfc");
     args = arrayNew(1);
@@ -73,12 +73,12 @@
     s = proxy.invoke("ComponentUtils",args);
     md = getMetaData(s);
     debug( md );
-    
+
   </cfscript>
 
 	</cffunction>
-	
 
-	
+
+
 
 </cfcomponent>

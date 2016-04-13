@@ -127,4 +127,3 @@ Notes:
 	<hb:HibachiProcessCaller entity="#rc.product#" action="admin:entity.preprocessproduct" processContext="addSkuBundle" class="btn btn-primary" modal="false" />
 
 </cfoutput>
-

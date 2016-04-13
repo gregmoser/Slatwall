@@ -6,19 +6,19 @@
 
 <cfoutput>
 	<hb:HibachiPropertyRow>
-		
+
 		<!--- Left Side Top --->
 		<hb:HibachiPropertyList divClass="col-md-6">
 			<hb:HibachiPropertyDisplay object="#rc.task#" property="activeFlag" edit="#rc.edit#">
 			<hb:HibachiPropertyDisplay object="#rc.task#" property="runningFlag" edit="false">
 			<hb:HibachiPropertyDisplay object="#rc.task#" property="taskName" edit="#rc.edit#">
 		</hb:HibachiPropertyList>
-		
+
 		<!--- Right Side Top --->
 		<hb:HibachiPropertyList divClass="col-md-6">
-			
+
 			<hb:HibachiPropertyDisplay object="#rc.task#" property="taskMethod" edit="false">
-			
+
 			<!--- Show the config for this task's process method --->
 			<cfif rc.task.hasProcessObject( rc.task.getTaskMethod() )>
 				<cfset processObject = rc.task.getProcessObject( rc.task.getTaskMethod() ) />
@@ -28,7 +28,7 @@
 					</cfif>
 				</cfloop>
 			</cfif>
-			
+
 		</hb:HibachiPropertyList>
 	</hb:HibachiPropertyRow>
 </cfoutput>

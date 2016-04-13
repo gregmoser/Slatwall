@@ -14,23 +14,23 @@ function doVerify(verifyMethod, target, args, expected, mockreg){
 	case 'verifyTimes':
       return verifyTimes(expected, target, args, mockreg);
     break;
-    
+
     case 'verifyAtLeast':
       return verifyAtLeast(expected, target, args, mockreg);
     break;
-    
+
     case 'verifyAtMost':
       return verifyAtMost(expected, target, args, mockreg);
     break;
-    
+
     case 'verifyNever':
       return verifyNever(target, args, mockreg);
     break;
-    
+
     case 'verifyOnce':
       return verifyOnce(target, args, mockreg);
     break;
-    
+
     default:
      _$throw('InvalidVerificationException','Method #verifyMethod# was not found', 'Make sure the method exists.');
     break;
@@ -43,7 +43,7 @@ function doVerify(verifyMethod, target, args, expected, mockreg){
    var actualCount = _$getActual(target,args, mockreg);
    var details = '';
    var isOk = actualCount == expected;
-     
+
      if(!isOk){
        calls = mockreg.getInvocationRecordsById(target,args).recordCount;
        details = _$buildMessage('verify(#expected#)',target, args, expected, mockreg);
@@ -63,7 +63,7 @@ function _$getActual(target,args,mockreg){
      var actualCount = _$getActual(target,args, mockreg);
      var details = '';
      var isOk = actualCount == 0;
-     
+
      if(!isOk){
        calls = mockreg.getInvocationRecordsById(target,args).recordCount;
        details = _$buildMessage('verifyNever()',target, args, 0, mockreg);
@@ -76,7 +76,7 @@ function _$getActual(target,args,mockreg){
      var actualCount = _$getActual(target,args, mockreg);
      var details = '';
      var isOk = actualCount <= expected;
-     
+
      if(!isOk){
        calls = mockreg.getInvocationRecordsById(target,args).recordCount;
        details = _$buildMessage('verifyAtMost(#expected#)',target, args, expected, mockreg);
@@ -89,7 +89,7 @@ function _$getActual(target,args,mockreg){
      var actualCount = _$getActual(target,args, mockreg);
      var details = '';
      var isOk = actualCount >= expected;
-     
+
      if(!isOk){
        calls = mockreg.getInvocationRecordsById(target,args).recordCount;
        details = _$buildMessage('verifyAtLeast(#expected#)',target, args, expected, mockreg);
@@ -102,7 +102,7 @@ function _$getActual(target,args,mockreg){
      var actualCount = _$getActual(target,args, mockreg);
      var details = '';
      var isOk = actualCount == 1;
-     
+
      if(!isOk){
        calls = mockreg.getInvocationRecordsById(target,args).recordCount;
        details = _$buildMessage('verifyOnce()',target, args, 1, mockreg);
@@ -116,7 +116,7 @@ function _$getActual(target,args,mockreg){
      var actualCount = _$getActual(target,args, mockreg);
      var details = '';
      var isOk = actualCount == expected;
-     
+
      if(!isOk){
        calls = mockreg.getInvocationRecordsById(target,args).recordCount;
        details = _$buildMessage('verifyTimes(#expected#)',target, args, expected, mockreg);
@@ -131,9 +131,9 @@ function _$getActual(target,args,mockreg){
   var details = '';
   details &= 'Expected #target#( w/#args.size()# arguments ) to be verfied using rule "#rule#" ';
   details &=  ': , but #target#(...) was called #calls# time(s).';
-  
+
   return details;
-  
+
  }
 
 

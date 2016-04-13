@@ -81,4 +81,3 @@ Notes:
 	</cfif>
 	<hb:HibachiActionCaller action="admin:entity.createaccountpaymentmethod" class="btn btn-default" icon="plus" querystring="sRedirectAction=admin:entity.detailaccount&accountID=#rc.account.getAccountID()#" modal=true disabled="#disabled#" disabledText="#disabledText#" />
 </cfoutput>
-

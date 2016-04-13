@@ -1,6 +1,6 @@
 <cfcomponent displayname="TestSuite" extends="Test" hint="Responsible for creating and running groups of Tests.">
 	<cfset cu = createObject("component","ComponentUtils") />
-	
+
 
 	<cfparam name="this.testSuites" default="#getMap()#" />
 	<cfparam name="this.tests" default="#arrayNew(1)#" />
@@ -107,7 +107,7 @@
 		<cfif isSimpleValue(arguments.ComponentObject)>
 			<cfset ComponentObject = createObject("component",arguments.ComponentName).TestCase() />
 		</cfif>
- 	
+
 		<cfset a_methods = ComponentObject.getRunnableMethods() />
 
 		<cfset add(arguments.ComponentName,ArrayToList(a_methods),ComponentObject) />
@@ -177,7 +177,7 @@
 	</cffunction>
 
 	<cffunction name="suites" access="public" returntype="any">
-		
+
 		<cfreturn this.testSuites />
 	</cffunction>
 

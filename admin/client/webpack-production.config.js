@@ -31,10 +31,10 @@ devConfig.plugins= [
             if (stats.compilation.errors && stats.compilation.errors.length)
             {
             	console.error(stats.compilation.errors);
-                
+
                 process.exit(1);
             }
-            
+
         });
     }
   ];

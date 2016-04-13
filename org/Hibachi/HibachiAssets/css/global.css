@@ -273,7 +273,7 @@ td .span3 {
 }
 
 .listing-display-header{
-	background-color:#efefef; 
+	background-color:#efefef;
 	border-bottom:1px solid #cccccc;
 }
 
@@ -360,7 +360,7 @@ td .span3 {
 					font-size:12px;
 					font-weight:bold;
 				}
-				
+
 			}
 			a:hover {
 				background-color: rgba(85, 170, 239, 0.04);
@@ -548,7 +548,7 @@ a.disabled > i.hibachi-ui-radio-checked {background-position:-16px -64px !import
 }
 
 .icon-red{background-image:url("../img/glyphicons-halflings-red.png");}
-	
+
 .dropdown-menu li a:hover {
 	background-color:#efefef;
 	color:#333333;
@@ -565,7 +565,7 @@ a.disabled > i.hibachi-ui-radio-checked {background-position:-16px -64px !import
 		top:-1px;
 		font-size:10px;
 		font-weight:bold;
-		
+
 		line-height:1em;
 		color:#999999;
 	}

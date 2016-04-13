@@ -8,11 +8,11 @@
  */
   CKEDITOR.editorConfig = function( config ) {
 	/**
-	 * Define changes to default display configuration here. 
+	 * Define changes to default display configuration here.
 	 */
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-	
+
 	/**
 	 * If using this custom ckeditor configuration file, un-comment lines 17-20 so that ckfinder may work with ckeditor
 	 */
@@ -20,7 +20,7 @@
 	 //config.filebrowserImageBrowseUrl = hibachiConfig['baseURL'] + '/org/Hibachi/ckfinder/ckfinder.html?Type=Images';
 	 //config.filebrowserUploadUrl      = hibachiConfig['baseURL'] + '/org/Hibachi/ckfinder/core/connector/cfm/connector.cfm?command=QuickUpload&type=Files';
 	 //config.filebrowserImageUploadUrl = hibachiConfig['baseURL'] + '/org/Hibachi/ckfinder/core/connector/cfm/connector.cfm?command=QuickUpload&type=Images';
-	
+
 	/**
 	 * Use the below option to change the tags that are allowed within the editor.
 	 */

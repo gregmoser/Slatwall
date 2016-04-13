@@ -55,27 +55,27 @@ component extends="Slatwall.meta.tests.unit.entity.SlatwallEntityTestBase" {
 		variables.entity = request.slatwallScope.newEntity( 'OrderItemGiftRecipient' );
 	}
 
-	public void function itest_order_item_relation(){ 
-		var orderItemGiftRecipientData = { 
+	public void function itest_order_item_relation(){
+		var orderItemGiftRecipientData = {
 			orderItemGiftRecipientID="",
 			firstName="Bobby",
 			lastName="Bot"
-		}; 
-		
-		var recipient1 = createPersistedTestEntity("OrderItemGiftRecipient", orderItemGiftRecipientData); 
-		
-		var orderItemData = { 
+		};
+
+		var recipient1 = createPersistedTestEntity("OrderItemGiftRecipient", orderItemGiftRecipientData);
+
+		var orderItemData = {
 			orderItemID=""
-		}; 	
-		
-		var orderItem = createPersistedTestEntity("orderItem", orderItemData); 
-		
-		recipient1.setOrderItem(orderItem); 
-		assertTrue(recipient1.hasOrderItem()); 
-		
-		recipient1.removeOrderItem(orderItem); 
+		};
+
+		var orderItem = createPersistedTestEntity("orderItem", orderItemData);
+
+		recipient1.setOrderItem(orderItem);
+		assertTrue(recipient1.hasOrderItem());
+
+		recipient1.removeOrderItem(orderItem);
 		assertFalse(recipient1.hasOrderItem());
-		
+
 	}
-	
+
 }

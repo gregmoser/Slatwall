@@ -67,4 +67,3 @@ Notes:
 	</hb:HibachiPropertyRow>
 
 </hb:HibachiEntityProcessForm>
-

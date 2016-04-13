@@ -8,6 +8,6 @@ exports.get = function(stepType) {
       }
     };
   }
-  
+
   return null;
 };

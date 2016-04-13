@@ -25,7 +25,7 @@ p {
 }
 
 label {
-	margin: .5em; 
+	margin: .5em;
 	line-height: 2em;
 	font-weight: bold;
 }
@@ -97,6 +97,4 @@ input {
 
 .clear {
 	clear: both;
-}   
-
-
+}

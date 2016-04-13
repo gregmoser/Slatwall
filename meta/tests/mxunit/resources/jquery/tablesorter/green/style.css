@@ -22,12 +22,12 @@ table.tablesorter .odd {
 table.tablesorter .header {
 	background-image: url(default.png);
 	background-repeat:no-repeat;
-	cursor: pointer; 
+	cursor: pointer;
 	border: 1px inset silver;
 	padding-left: 32px;
 	padding-top: 8px;
 	height: 32px;
-	
+
 }
 table.tablesorter .headerSortDown {
   background-image: url(up.png);

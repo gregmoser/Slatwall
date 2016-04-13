@@ -45,7 +45,7 @@
    <cfinvokeargument name="type" value="dir" />
    <cfinvokeargument name="value" value="#dir#" />
    <cfinvokeargument name="packagename" value="mxunit.tests.framework.fixture.fixturetests" />
-   <cfinvokeargument name="componentpath" value="mxunit.tests.framework.fixture.fixturetests" />	
+   <cfinvokeargument name="componentpath" value="mxunit.tests.framework.fixture.fixturetests" />
    <cfinvokeargument name="outputformat" value="xml" />
 	<cfinvokeargument name="recurse" value="false">
   </cfinvoke>

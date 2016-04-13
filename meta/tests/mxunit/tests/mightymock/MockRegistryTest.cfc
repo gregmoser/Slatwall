@@ -2,20 +2,20 @@
 <cfscript>
 
 
-/* 
+/*
  Still on todo list. Should record both literal and pattern for verification; e.g.
- 
+
  should be able to do this:
  my_mock.doSomething(123);
  my_mock.doSomething(456);
- 
- my_mock.verify(2).doSomething('{numeric}'); 
+
+ my_mock.verify(2).doSomething('{numeric}');
  or
- my_mock.verify(2).doSomething('{+}'); 
- my_mock.verify(2).doSomething('{*}'); 
+ my_mock.verify(2).doSomething('{+}');
+ my_mock.verify(2).doSomething('{*}');
 
 */
-//To Do: 
+//To Do:
 function $addInvocationRecordForBothPatternAndLiteral() {
 		mock.reset();
 		mock.foo('{+}').returns(123);

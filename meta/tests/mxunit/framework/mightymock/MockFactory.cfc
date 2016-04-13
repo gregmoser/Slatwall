@@ -5,7 +5,7 @@
 			return this;
 		</cfscript>
 	</cffunction>
-	
+
 	<cffunction name="createMock">
 		<cfargument name="mocked" required="false" default="" />
 		<cfargument name="mockType" required="false" default="fast" />

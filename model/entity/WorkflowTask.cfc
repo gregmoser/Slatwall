@@ -15,12 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this library statically or dynamically with other modules is
     making a combined work based on this library.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
- 
+
     As a special exception, the copyright holders of this library give you
     permission to link this library with independent modules to produce an
     executable, regardless of the license terms of these independent
@@ -37,7 +37,7 @@ Notes:
 
 */
 component entityname="SlatwallWorkflowTask" table="SwWorkflowTask" persistent="true" accessors="true" extends="HibachiEntity" hb_serviceName="workflowService" hb_permission="workflow.workflowTasks" {
-	
+
 	// Persistent Properties
 	property name="workflowTaskID" ormtype="string" length="32" fieldtype="id" generator="uuid" unsavedvalue="" default="";
 	property name="activeFlag" ormtype="boolean" hb_formatType="yesno";
@@ -48,41 +48,41 @@ component entityname="SlatwallWorkflowTask" table="SwWorkflowTask" persistent="t
 
 	// Related Object Properties (many-to-one)
 	property name="workflow" cfc="Workflow" fieldtype="many-to-one" fkcolumn="workflowID";
-	
+
 	// Related Object Properties (one-to-many)
 	property name="workflowTaskActions" type="array" cfc="WorkflowTaskAction" singularname="workflowTaskAction" fieldtype="one-to-many" fkcolumn="workflowTaskID" cascade="all-delete-orphan" inverse="true";
-	
+
 	// Related Object Properties (many-to-many - owner)
 
 	// Related Object Properties (many-to-many - inverse)
-	
+
 	// Remote Properties
 	property name="remoteID" hb_populateEnabled="false" ormtype="string";
-	
+
 	// Audit Properties
 	property name="createdDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="createdByAccountID" hb_populateEnabled="false" ormtype="string";
 	property name="modifiedDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="modifiedByAccountID" hb_populateEnabled="false" ormtype="string";
-	
+
 	// Non-Persistent Properties
-	
-	property name="taskConditionsConfigStruct" type="struct" persistent="false"; 
-	
+
+	property name="taskConditionsConfigStruct" type="struct" persistent="false";
+
 	// Deprecated Properties
 
 
 
-	
+
 	// ============ START: Non-Persistent Property Methods =================
-	
+
 	public any function getTaskConditionsConfigStruct(){
 		if(isNull(variables.taskConditionsConfigStruct)){
 			variables.taskConditionsConfigStruct = deserializeTaskConditionsConfig();
 		}
 		return variables.taskConditionsConfigStruct;
 	}
-	
+
 	public any function getTaskConditionsConfig(){
 		if(isNull(variables.taskConditionsConfig)){
 			variables.taskConditionsConfig = '';
@@ -95,11 +95,11 @@ component entityname="SlatwallWorkflowTask" table="SwWorkflowTask" persistent="t
 		}
 		return variables.taskConditionsConfig;
 	}
-	
+
 	public any function deserializeTaskConditionsConfig(){
 		return deserializeJSON(getTaskConditionsConfig());
 	}
-	
+
 	// WorkflowTask (one-to-many)
 	public void function addWorkflowTaskAction(required any WorkflowTaskAction) {
 		arguments.WorkflowTaskAction.setWorkflowTask( this );
@@ -107,11 +107,11 @@ component entityname="SlatwallWorkflowTask" table="SwWorkflowTask" persistent="t
 	public void function removeWorkflowTaskAction(required any WorkflowTaskAction) {
 		arguments.WorkflowTaskAction.removeWorkflowTask( this );
 	}
-	
+
 	// Workflow (many-to-one)
 	public void function setWorkflow(required any workflow) {
 		variables.workflow = arguments.workflow;
-		
+
 		if(isNew() or !arguments.workflow.hasWorkflowTask(this)) {
 			arrayAppend(arguments.Workflow.getWorkflowTasks(),this);
 		}
@@ -122,45 +122,45 @@ component entityname="SlatwallWorkflowTask" table="SwWorkflowTask" persistent="t
 			arguments.workflow = variables.workflow;
 		}
 		var index = arrayFind(arguments.workflow.getWorkflowTasks(),this);
-		
+
 		if(index > 0) {
 			arrayDeleteAt(arguments.workflow.getWorkflowTasks(),index);
 		}
 		structDelete(variables, "workflow");
     }
-	
-	
+
+
 	// ============  END:  Non-Persistent Property Methods =================
-		
+
 	// ============= START: Bidirectional Helper Methods ===================
-	
+
 	// =============  END:  Bidirectional Helper Methods ===================
 
 	// =============== START: Custom Validation Methods ====================
-	
+
 	// ===============  END: Custom Validation Methods =====================
-	
+
 	// =============== START: Custom Formatting Methods ====================
-	
+
 	// ===============  END: Custom Formatting Methods =====================
-	
+
 	// ============== START: Overridden Implicit Getters ===================
-	
+
 	// ==============  END: Overridden Implicit Getters ====================
-	
+
 	// ============= START: Overridden Smart List Getters ==================
-	
+
 	// =============  END: Overridden Smart List Getters ===================
 
 	// ================== START: Overridden Methods ========================
-	
+
 	// ==================  END:  Overridden Methods ========================
-	
+
 	// =================== START: ORM Event Hooks  =========================
-	
+
 	// ===================  END:  ORM Event Hooks  =========================
-	
+
 	// ================== START: Deprecated Methods ========================
-	
+
 	// ==================  END:  Deprecated Methods ========================
 }

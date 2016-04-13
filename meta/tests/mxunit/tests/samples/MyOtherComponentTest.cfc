@@ -1,4 +1,4 @@
-<!--- 
+<!---
  MXUnit TestCase Template
  @author
  @description
@@ -14,10 +14,10 @@
    addTrace("num == " & num );
    assertEquals(num,200);
   </cfscript>
-  
+
 	</cffunction>
 
-  
+
 	<cffunction name="testAdd2" access="public" returntype="void">
 	<cfscript>
    num = this.mycomp.add(0,-0);
@@ -25,7 +25,7 @@
    assertEquals(num,0);
   </cfscript>
 	</cffunction>
-	
+
 	<cffunction name="aTestFunctionThatDoesNotBeginWithTest" access="public" returntype="void">
 	<cfscript>
    a1 = arrayNew(1);
@@ -35,7 +35,7 @@
    assertEquals(a1,a2);
   </cfscript>
 	</cffunction>
-  
+
   	<cffunction name="anotherTestFunctionThatDoesNotBeginWithTest" access="public" returntype="void">
 	<cfscript>
    a1 = arrayNew(1);
@@ -53,13 +53,13 @@
 	  <!--- Place additional setUp and initialization code here --->
 		<cfscript>
 		 this.mycomp = createObject("component" ,"mxunit.samples.MyComponent");
-		
+
 		</cfscript>
 	</cffunction>
-	
+
 	<cffunction name="tearDown" access="public" returntype="void">
-	 <!--- Place tearDown/clean up code here --->	
+	 <!--- Place tearDown/clean up code here --->
 	</cffunction>
-	
+
 
 </cfcomponent>

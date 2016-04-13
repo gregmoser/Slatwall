@@ -10,7 +10,7 @@
 			var x = 1;
 			var len = arrayLen(theArray);
 			var value1 = "";
-			var value2 = ""; 
+			var value2 = "";
 
 			for(i = 1; i lte len; i = i + 1){
 
@@ -25,7 +25,7 @@
 						else{
 							value1 = 9999;
 						}
-						
+
 						if(isNumeric(theArray[x][theKey])){
 							value2 =  lsParseNumber(theArray[x][theKey]);
 						}

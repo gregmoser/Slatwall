@@ -57,4 +57,3 @@ Notes:
 		<hb:HibachiTab view="admin:entity/producttabs/alternateimages" text="#$.slatwall.rbKey('admin.entity.producttabs.images.alternateImages')#" count="#rc.product.getProductImagesCount()#"/>
 	</hb:HibachiTabGroup>
 </cfoutput>
-

@@ -13,12 +13,12 @@
 <cfcomponent displayname="Application" output="false" hint="Pre-page processing for the application">
 
 	<cftry><cfinclude template="configApplication.cfm" /><cfcatch></cfcatch></cftry>
-	
+
 	<cfscript>
 		this.sessionManagement = true;
 		THIS.mappings["/CKFinder_Connector"] = expandPath(getDirectoryFromPath(getCurrentTemplatePath()));
 	</cfscript>
-	
+
 	<!--- Include the CFC creation proxy. --->
 	<cfinclude template="createcfc.udf.cfm" />
 

@@ -2,57 +2,57 @@
 
     Slatwall - An Open Source eCommerce Platform
     Copyright (C) ten24, LLC
-	
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-	
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-	
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this program statically or dynamically with other modules is
     making a combined work based on this program.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
-	
-    As a special exception, the copyright holders of this program give you
-    permission to combine this program with independent modules and your 
-    custom code, regardless of the license terms of these independent
-    modules, and to copy and distribute the resulting program under terms 
-    of your choice, provided that you follow these specific guidelines: 
 
-	- You also meet the terms and conditions of the license of each 
-	  independent module 
-	- You must not alter the default display of the Slatwall name or logo from  
-	  any part of the application 
-	- Your custom code must not alter or create any files inside Slatwall, 
+    As a special exception, the copyright holders of this program give you
+    permission to combine this program with independent modules and your
+    custom code, regardless of the license terms of these independent
+    modules, and to copy and distribute the resulting program under terms
+    of your choice, provided that you follow these specific guidelines:
+
+	- You also meet the terms and conditions of the license of each
+	  independent module
+	- You must not alter the default display of the Slatwall name or logo from
+	  any part of the application
+	- Your custom code must not alter or create any files inside Slatwall,
 	  except in the following directories:
 		/integrationServices/
 
-	You may copy and distribute the modified version of this program that meets 
-	the above guidelines as a combined work under the terms of GPL for this program, 
-	provided that you include the source code of that other code when and as the 
+	You may copy and distribute the modified version of this program that meets
+	the above guidelines as a combined work under the terms of GPL for this program,
+	provided that you include the source code of that other code when and as the
 	GNU GPL requires distribution of source code.
-    
-    If you modify this program, you may extend this exception to your version 
+
+    If you modify this program, you may extend this exception to your version
     of the program, but you are not obligated to do so.
 
 	Notes:
-	
+
 --->
 <cfcomponent extends="Slatwall.model.service.HibachiService" output="false">
-	
+
 	<cffunction name="syncPush" access="public" returntype="Any" >
-		
+
 		<cfset var responseBean = new Slatwall.model.transient.ResponseBean() />
-		<cfset var integration = getService("integrationService").getIntegrationByIntegrationPackage("endicia") /> 
-		
+		<cfset var integration = getService("integrationService").getIntegrationByIntegrationPackage("endicia") />
+
 		<!--- Setup Remote Dropoff File Location --->
 		<cfset var remoteFullFilePath = integration.setting('syncFTPSiteDropoffDirectory') />
 		<cfif right(remoteFullFilePath, 1) eq "/" or right(remoteFullFilePath, 1) eq "\">
@@ -60,18 +60,18 @@
 		<cfelse>
 			<cfset remoteFullFilePath &= "/#integration.setting('syncFTPSiteDropoffFilename')#" />
 		</cfif>
-		
+
 		<!--- Get all of the order fulfillments we are going to export --->
 		<cfset var orderFulfillmentSmartList = getService("orderService").getOrderFulfillmentSmartList() />
 		<cfset orderFulfillmentSmartList.addInFilter("fulfillmentMethod.fulfillmentMethodType", "shipping") />
 		<cfset orderFulfillmentSmartList.addInFilter("order.orderStatusType.systemCode", "ostNew,ostProcessing,ostOnHold") />
-		
+
 		<!--- Setup Local File Name --->
 		<cfset localFullFilePath = getTempDirectory() & "endiciaPush.txt" />
-		
+
 		<!--- Create a line Array that will be used to write to the file --->
 		<cfset var lineArray = arrayNew(1) />
-		
+
 		<!--- 1 --->	<cfset arrayAppend(lineArray, "orderFulfillmentID") />
 		<!--- 2 --->	<cfset arrayAppend(lineArray, "fulfillmentCharge") />
 		<!--- 3 --->	<cfset arrayAppend(lineArray, "order_orderID") />
@@ -96,18 +96,18 @@
 		<!--- 22 --->	<cfset arrayAppend(lineArray, "shippingMethodRate_shippingMethodRateID") />
 		<!--- 23 --->	<cfset arrayAppend(lineArray, "shippingMethodRate_shippingIntegrationMethod") />
 		<!--- 24 --->	<cfset arrayAppend(lineArray, "shippingMethodRate_shippingIntegration_integrationPackage") />
-		
+
 		<!--- Write First Line Of New File --->
 		<cffile action="write" file="#localFullFilePath#" output="#arrayToList(lineArray, chr(9))#" />
-		
+
 		<!--- Loop over order fulfillments and append each one to a new line in the file --->
 		<cfset var orderFulfillment = "" />
 		<cfloop array="#orderFulfillmentSmartList.getRecords()#" index="orderFulfillment">
 			<cftry>
-				
+
 				<!--- Create fulfillment line --->
 				<cfset lineArray = arrayNew(1) />
-				
+
 				<!--- 1 --->	<cfset arrayAppend(lineArray, orderFulfillment.getOrderFulfillmentID()) />
 				<!--- 2 --->	<cfset arrayAppend(lineArray, nullReplace(orderFulfillment.getFulfillmentCharge(), 0)) />
 				<!--- 3 --->	<cfset arrayAppend(lineArray, orderFulfillment.getOrder().getOrderID()) />
@@ -142,18 +142,18 @@
 					<!--- 23 --->	<cfset arrayAppend(lineArray, "") />
 					<!--- 24 --->	<cfset arrayAppend(lineArray, "") />
 				</cfif>
-				
+
 				<!--- Write this line to the file --->
 				<cffile action="append" file="#localFullFilePath#" output="#arrayToList(lineArray, chr(9))#" addnewline="true" />
-				
+
 				<cfcatch>
 					<cfset responseBean.addError("line", "There was an error adding one of the order fulfillments to the export file, but others may have exported") />
 				</cfcatch>
 			</cftry>
 		</cfloop>
-		
+
 		<cftry>
-			
+
 			<!---[SEVER CONDITIONAL]--->
 			<cfif structKeyExists(server, "railo") || structKeyExists(server, "lucee")>
 				<cfftp action="putfile" server="#integration.setting('syncFTPSite')#" username="#integration.setting('syncFTPSiteUsername')#" password="#integration.setting('syncFTPSitePassword')#" port="#integration.setting('syncFTPSitePort')#" remotefile="#remoteFullFilePath#" localfile="#localFullFilePath#">
@@ -166,15 +166,15 @@
 				<cfset responseBean.addError("ftp", "There was an error connecting to the sync ftp server.  Please check your setting credentials and try again") />
 			</cfcatch>
 		</cftry>
-		
-		<cfreturn responseBean />	
+
+		<cfreturn responseBean />
 	</cffunction>
-	
+
 	<cffunction name="syncPull" access="public" returntype="Any" >
 		<cfset var responseBean = getTransient("ResponseBean") />
-		
+
 		<cfset responseBean.addError("test", "This is a test error") />
-		
-		<cfreturn responseBean />		
+
+		<cfreturn responseBean />
 	</cffunction>
 </cfcomponent>

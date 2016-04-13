@@ -34,7 +34,7 @@
 }
 
 .mxunitResults .summary .active {
-	background: #ffe77f; 
+	background: #ffe77f;
 }
 
 .mxunitResults table {
@@ -107,7 +107,7 @@
 	white-space: -pre-wrap; /* Opera 4-6 */
 	white-space: -o-pre-wrap; /* Opera 7 */
 	word-wrap: break-word; /* Internet Explorer 5.5+ */
-}                
+}
 
 
 .mxunitResults .tagcontext a  {
@@ -142,7 +142,7 @@ table.results th.output {
 
 .success,
 .passed,
-.success a, 
+.success a,
 .passed a {
 	color: #0d7008;
 }

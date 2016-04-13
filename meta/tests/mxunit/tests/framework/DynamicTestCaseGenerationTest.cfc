@@ -7,7 +7,7 @@ a = [1,2,3,4];
 
 
 function setUp(){
-	
+
 }
 
 
@@ -24,5 +24,3 @@ function setUp(){
 }
 
 </cfscript>
-
-

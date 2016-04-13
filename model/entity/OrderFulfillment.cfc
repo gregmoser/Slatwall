@@ -654,13 +654,13 @@ component displayname="Order Fulfillment" entityname="SlatwallOrderFulfillment" 
     // ==================  START: Validation Methods  ======================
     public boolean function hasQuantityOfOrderFulfillmentsWithinMaxOrderQuantity() {
         var settingVal = getService("settingService").getSettingValue(settingName='globalMaximumFulfillmentsPerOrder');
-        if (!isNull(settingVal) 
-        	&& !isNull(getOrder()) 
+        if (!isNull(settingVal)
+        	&& !isNull(getOrder())
         ){
-           return (arrayLen(getOrder().getOrderFulfillments()) <= settingVal);  
+           return (arrayLen(getOrder().getOrderFulfillments()) <= settingVal);
         }
         return false;
-    } 
+    }
     // ==================  END: Validation Methods  ========================
 
 	// =================== START: ORM Event Hooks  =========================
@@ -704,4 +704,3 @@ component displayname="Order Fulfillment" entityname="SlatwallOrderFulfillment" 
 
 	// ==================  END:  Deprecated Methods ========================
 }
-

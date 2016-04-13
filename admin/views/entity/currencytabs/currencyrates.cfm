@@ -15,12 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this library statically or dynamically with other modules is
     making a combined work based on this library.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
- 
+
     As a special exception, the copyright holders of this library give you
     permission to link this library with independent modules to produce an
     executable, regardless of the license terms of these independent
@@ -44,13 +44,13 @@ Notes:
 <cfparam name="rc.edit" type="boolean">
 
 <cfoutput>
-	
+
 	<cfset local.ratesSmartList = rc.currency.getCurrencyRatesSmartList() />
 	<cfset local.ratesSmartList.addOrder('effectiveStartDateTime|DESC') />
-	
+
 	<hb:HibachiListingDisplay smartList="#rc.currency.getCurrencyRatesSmartList()#"
 								<!---
-								Detail isn't needed because all data values are in the listing 
+								Detail isn't needed because all data values are in the listing
 								recordDetailAction="admin:entity.detailCurrencyRate"
 							   	recordDetailModal="true"
 							   	--->
@@ -61,12 +61,12 @@ Notes:
 							   	--->
 							   	recordDeleteAction="admin:entity.deleteCurrencyRate"
 							   	recordDeleteQueryString="currencyCode=#rc.currencyCode#&redirectAction=admin:entity.detailCurrency">
-							   
+
 		<hb:HibachiListingColumn propertyIdentifier="conversionCurrency.currencyCode" />
 		<hb:HibachiListingColumn propertyIdentifier="conversionRate" />
 		<hb:HibachiListingColumn propertyIdentifier="effectiveStartDateTime" />
 	</hb:HibachiListingDisplay>
-	
+
 	<hb:HibachiActionCaller action="admin:entity.createCurrencyRate" class="btn" icon="plus" queryString="currencyCode=#rc.currency.getCurrencyCode()#" modal="true"  />
 
 </cfoutput>

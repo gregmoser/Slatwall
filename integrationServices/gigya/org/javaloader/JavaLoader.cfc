@@ -101,7 +101,7 @@ Purpose:    Utlitity class for loading Java Classes
 	<cfreturn instance.classLoadPaths />
 </cffunction>
 
-	
+
 <cffunction name="switchThreadContextClassLoader" hint="Sometimes you will need to switch out the ThreadContextClassLoader with the classloader used by JavaLoader.<br/>
 			It has :
 			switchThreadContextClassLoader(function object, [classLoader=getURLClassLoader()])
@@ -170,7 +170,7 @@ Purpose:    Utlitity class for loading Java Classes
 		}
 	</cfscript>
 </cffunction>
-	
+
 <cffunction name="getVersion" hint="Retrieves the version of the loader you are using" access="public" returntype="string" output="false">
 	<cfreturn "1.1">
 </cffunction>

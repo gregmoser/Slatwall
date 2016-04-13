@@ -82,7 +82,7 @@ Notes:
 							</div>
 						</div>
 					</div>
-				</div> 
+				</div>
 			<cfelse>
 				<div class="col-xs-2 s-upload-image">
 					<div class="thumbnail">
@@ -113,7 +113,7 @@ Notes:
 						</div>
 					</div>
 				</div>
-				
+
 			</cfif>
 		</cfloop>
 	</div>
