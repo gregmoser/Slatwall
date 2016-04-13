@@ -11,7 +11,7 @@
 		<cfelse>
 			<cfset detailPageDivClass = "" />
 		</cfif>
-		
+
 		<hb:HibachiPropertyList divclass="#detailPageDivClass#">
 			<hb:HibachiPropertyDisplay object="#rc.attributeSet#" property="attributeSetObject" edit="#rc.attributeSet.isNew()#">
 			<hb:HibachiPropertyDisplay object="#rc.attributeSet#" property="activeFlag" edit="#rc.edit#">

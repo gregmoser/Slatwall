@@ -7,7 +7,7 @@
 		<column name="termDays" />
 		<column name="termMonths" />
 		<column name="termYears" />
-		<column name="sortOrder" update="false" />		
+		<column name="sortOrder" update="false" />
 	</Columns>
 	<Records>
 		<Record termID="23c6a8c4e605d0586869d7f3a8b36ba7" termName="10 Days" termDays="10" sortOrder="1" />

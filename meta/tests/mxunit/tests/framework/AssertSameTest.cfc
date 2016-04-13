@@ -10,14 +10,14 @@
      // debug(getHashCode(1));
      // debug(getHashCode(1.0));
      // debug(getHashCode(f1));
-     // debug(getHashCode(f2)); 
+     // debug(getHashCode(f2));
      ds = structNew();
      ds.foo = "bar";
      // debug(getHashCode(ds));
      // debug(getHashCode(myComponent1));
      ds.bar = s2;
      // debug(ds);
-     // debug(getHashCode(ds));   
+     // debug(getHashCode(ds));
     </cfscript>
 </cffunction>
 
@@ -40,7 +40,7 @@
 	<cffunction name="testHashEquals" returntype="void" access="public">
 		<cfscript>
      // debug( ar.hashCode() );
-     // debug( ar2.hashCode() ); 
+     // debug( ar2.hashCode() );
      assertEquals(ar.hashCode(),ar2.hashCode());
      //assertEquals(s.hashCode(), s2.hashCode());
      foo = 1;

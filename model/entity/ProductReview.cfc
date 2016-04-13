@@ -2,45 +2,45 @@
 
     Slatwall - An Open Source eCommerce Platform
     Copyright (C) ten24, LLC
-	
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-	
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-	
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this program statically or dynamically with other modules is
     making a combined work based on this program.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
-	
-    As a special exception, the copyright holders of this program give you
-    permission to combine this program with independent modules and your 
-    custom code, regardless of the license terms of these independent
-    modules, and to copy and distribute the resulting program under terms 
-    of your choice, provided that you follow these specific guidelines: 
 
-	- You also meet the terms and conditions of the license of each 
-	  independent module 
-	- You must not alter the default display of the Slatwall name or logo from  
-	  any part of the application 
-	- Your custom code must not alter or create any files inside Slatwall, 
+    As a special exception, the copyright holders of this program give you
+    permission to combine this program with independent modules and your
+    custom code, regardless of the license terms of these independent
+    modules, and to copy and distribute the resulting program under terms
+    of your choice, provided that you follow these specific guidelines:
+
+	- You also meet the terms and conditions of the license of each
+	  independent module
+	- You must not alter the default display of the Slatwall name or logo from
+	  any part of the application
+	- Your custom code must not alter or create any files inside Slatwall,
 	  except in the following directories:
 		/integrationServices/
 
-	You may copy and distribute the modified version of this program that meets 
-	the above guidelines as a combined work under the terms of GPL for this program, 
-	provided that you include the source code of that other code when and as the 
+	You may copy and distribute the modified version of this program that meets
+	the above guidelines as a combined work under the terms of GPL for this program,
+	provided that you include the source code of that other code when and as the
 	GNU GPL requires distribution of source code.
-    
-    If you modify this program, you may extend this exception to your version 
+
+    If you modify this program, you may extend this exception to your version
     of the program, but you are not obligated to do so.
 
 Notes:
@@ -60,7 +60,7 @@ component displayname="Product Review" entityname="SlatwallProductReview" table=
 	property name="product" hb_populateEnabled="public" cfc="Product" fieldtype="many-to-one" fkcolumn="productID";
 	property name="account" cfc="Account" fieldtype="many-to-one" fkcolumn="accountID";
 	property name="sku" hb_populateEnabled="public" cfc="Sku" fieldtype="many-to-one" fkcolumn="skuID";
-	
+
 	// Related Object Properties (one-to-many)
  	property name="attributeValues" singularname="attributeValue" cfc="AttributeValue" fieldtype="one-to-many" fkcolumn="productReviewID" inverse="true" cascade="all-delete-orphan";
 
@@ -72,7 +72,7 @@ component displayname="Product Review" entityname="SlatwallProductReview" table=
 	property name="createdByAccountID" hb_populateEnabled="false" ormtype="string";
 	property name="modifiedDateTime" hb_populateEnabled="false" ormtype="timestamp";
 	property name="modifiedByAccountID" hb_populateEnabled="false" ormtype="string";
-	
+
 	// Non-Persistent Properties
 	property name="ratingOptions" type="array" persistent="false";
 
@@ -88,8 +88,8 @@ component displayname="Product Review" entityname="SlatwallProductReview" table=
 
 		return super.init();
 	}
-	
-	
+
+
 
 	public string function getReviewerGravatarURL(numeric size=80) {
 		var server = "http://www.gravatar.com";
@@ -105,7 +105,7 @@ component displayname="Product Review" entityname="SlatwallProductReview" table=
 	}
 
 	// ============ START: Non-Persistent Property Methods =================
-	
+
 	public array function getRatingOptions() {
 		return [5,4,3,2,1];
 	}
@@ -149,7 +149,7 @@ component displayname="Product Review" entityname="SlatwallProductReview" table=
 		}
 		structDelete(variables, "account");
 	}
-	
+
 	// Sku (many-to-one)
 	public void function setSku(required any sku) {
 		variables.sku = arguments.sku;
@@ -167,7 +167,7 @@ component displayname="Product Review" entityname="SlatwallProductReview" table=
 		}
 		structDelete(variables, "sku");
 	}
-	
+
 	// Attribute Values (one-to-many)
  	public void function addAttributeValue(required any attributeValue) {
  		arguments.attributeValue.setProductReview( this );
@@ -187,7 +187,7 @@ component displayname="Product Review" entityname="SlatwallProductReview" table=
 	// ===============  END: Custom Formatting Methods =====================
 
 	// ============== START: Overridden Implicet Getters ===================
-	
+
 	// ==============  END: Overridden Implicet Getters ====================
 
 	// ================== START: Overridden Methods ========================
@@ -215,4 +215,3 @@ component displayname="Product Review" entityname="SlatwallProductReview" table=
 
 	// ==================  END:  Deprecated Methods ========================
 }
-

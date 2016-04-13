@@ -26,7 +26,7 @@
 	--->
 	<cffunction name="testMakePublicObject">
 		<cfset var proxy = this.maker.makePublic(this.objectWithPrivateMethod,"aPrivateMethod")>
-		
+
 		<cfset ret = proxy.aPrivateMethod("one","two","++")>
 		<cfset assertEquals("one++two",ret)>
 	</cffunction>
@@ -101,15 +101,15 @@
 		<cfset result = this.objectWithPrivateMethod.aPrivateMethod(arg1="one",arg2="two")>
 		<cfset assertEquals("one_two",result)>
 	</cffunction>
-	
-	<cffunction name="testMakePublicAddInts" returntype="void">    
+
+	<cffunction name="testMakePublicAddInts" returntype="void">
     	<cfset var result = "">
     	<cfset this.maker.makePublic(this.objectWithPrivateMethod, "privateAddition")>
     	<cfset result = this.objectWithPrivateMethod.privateAddition(2, 5)>
     	<cfset assertEquals( 7, result )>
     </cffunction>
-    
-	<cffunction name="testMakePublicComplexArgsWithDefaults" returntype="void">    
+
+	<cffunction name="testMakePublicComplexArgsWithDefaults" returntype="void">
     	<cfset var result = "">
     	<cfset var expected = {array=[]}>
     	<cfset this.maker.makePublic(this.objectWithPrivateMethod, "privateStructAndArrayArgs")>
@@ -136,7 +136,7 @@
 		<cfset var ret = "" />
 		<cfset this.maker.makePublic(this.objectWithPrivateMethod,"aPrivateMethodNoRT")>
 		<cfset ret = this.objectWithPrivateMethod.aPrivateMethodNoRT()>
-		
+
 		<cfset assertTrue(len(ret) GT 0)>
 	</cffunction>
 
@@ -176,57 +176,57 @@
 		<cfset result = obj.aPrivateMethod()>
 		<cfset assertTrue(result)>
 	</cffunction>
-	
-	
+
+
 	<!--- Test combinations of arguments passed, to ensure proxy method preserves arguments and properties of proxied method... --->
-	
+
 	<cffunction name="testMakePublicAllArgsPassed">
 		<cfset var actual = "">
 		<cfset var expected = structNew()>
-		
+
 		<cfset this.maker.makePublic(this.objectWithPrivateMethod,"aPrivateMethodVariedArguments")>
-		
+
 		<cfset expected.arg1 = "arg1_val">
 		<cfset expected.arg2 = "arg2_val">
 		<cfset expected.arg3 = "arg3_val">
-		
+
 		<cfset actual = this.objectWithPrivateMethod.aPrivateMethodVariedArguments("arg1_val", "arg2_val", "arg3_val")>
-		
+
 		<cfset assertEquals(expected,actual)>
 	</cffunction>
-	
+
 	<cffunction name="testMakePublicArgDefault" hint="Test not passing arg2 argument, which has a default attribute.">
 		<cfset var actual = "">
 		<cfset var expected = structNew()>
-		
+
 		<cfset this.maker.makePublic(this.objectWithPrivateMethod,"aPrivateMethodVariedArguments")>
-		
+
 		<cfset expected.arg1 = "arg1_val">
 		<cfset expected.arg2 = "arg2_val">
 		<cfset expected.arg3 = "arg3_val">
-		
+
 		<cfset actual = this.objectWithPrivateMethod.aPrivateMethodVariedArguments(arg1="arg1_val", arg3="arg3_val")>
-		
+
 		<cfset assertEquals(expected,actual)>
 	</cffunction>
-	
+
 	<cffunction name="testMakePublicMissingRequiredArg" mxunit:expectedException="Application">
 		<cfset this.maker.makePublic(this.objectWithPrivateMethod,"aPrivateMethodVariedArguments")>
 		<cfset this.objectWithPrivateMethod.aPrivateMethodVariedArguments()>
 	</cffunction>
-	
+
 	<cffunction name="testMakePublicRequiredArgOnly">
 		<cfset var actual = "">
 		<cfset var expected = structNew()>
-		
+
 		<cfset this.maker.makePublic(this.objectWithPrivateMethod,"aPrivateMethodVariedArguments")>
-		
+
 		<cfset expected.arg1 = "arg1_val">
 		<cfset expected.arg2 = "arg2_val">
-		
+
 		<cfset actual = this.objectWithPrivateMethod.aPrivateMethodVariedArguments("arg1_val")>
-		
+
 		<cfset assertEquals(expected,actual)>
 	</cffunction>
-	
+
 </cfcomponent>

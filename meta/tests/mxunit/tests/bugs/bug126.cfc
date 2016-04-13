@@ -3,39 +3,39 @@
   <cffunction name="testThisComponentCompleteAncestory" returntype="void" access="public">
     <cfscript>
       //itself
-      assertIsTypeOf(this,"mxunit.tests.bugs.bug126"); 
+      assertIsTypeOf(this,"mxunit.tests.bugs.bug126");
       //immediate parent
-      assertIsTypeOf(this,"mxunit.framework.TestCase"); 
+      assertIsTypeOf(this,"mxunit.framework.TestCase");
       // grandparent
-      assertIsTypeOf(this,"mxunit.framework.Assert"); 
+      assertIsTypeOf(this,"mxunit.framework.Assert");
       //last of the mohicans
-      assertIsTypeOf(this,"any"); 
+      assertIsTypeOf(this,"any");
     </cfscript>
-  </cffunction> 
-  
+  </cffunction>
+
   <cffunction name="testSimpleComponentAncestory" returntype="void" access="public">
     <cfscript>
       //itself
-      assertIsTypeOf(c,"mxunit.tests.bugs.fixture.93sample"); 
-      assertIsTypeOf(c,"any"); 
+      assertIsTypeOf(c,"mxunit.tests.bugs.fixture.93sample");
+      assertIsTypeOf(c,"any");
       try{
-       assertIsTypeOf(c,"mxunit.framework.TestCase"); 
+       assertIsTypeOf(c,"mxunit.framework.TestCase");
       } catch(mxunit.exception.AssertionFailedError e){}
      </cfscript>
-  </cffunction> 
-  
+  </cffunction>
+
    <cffunction name="breakIt" returntype="void" access="public">
     <cfscript>
-      assertIsTypeOf(webinf,"any"); 
+      assertIsTypeOf(webinf,"any");
       try{
-       assertIsTypeOf(webinf,"mxunit.bogus.cfc.package.I'm not here"); 
+       assertIsTypeOf(webinf,"mxunit.bogus.cfc.package.I'm not here");
       } catch(mxunit.exception.AssertionFailedError e){
-      
+
       }
      </cfscript>
-  </cffunction> 
-  
-  
+  </cffunction>
+
+
 <cffunction name="setUp">
   <cfscript>
     c = createObject("component","mxunit.tests.bugs.fixture.93sample");

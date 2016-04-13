@@ -100,4 +100,3 @@ component extends="Slatwall.meta.tests.unit.SlatwallUnitTestBase" {
 
 
 }
-

@@ -90,7 +90,7 @@
 	<!--- short-circuit logic --->
 	<cffunction name="onRequest" output="true" returntype="boolean">
 		<cfargument name="targetPage" type="string" required="true" />
-		
+
 		<cfset var _taffyRequest = {} />
 
 		<!--- enable/disable debug output per settings --->
@@ -105,7 +105,7 @@
 		</cfif>
 
 		<!--- get request details --->
-		
+
 		<cfset _taffyRequest = parseRequest() />
 
 		<!---
@@ -278,7 +278,7 @@
 	<cffunction name="parseRequest" access="private" output="false" returnType="struct">
 		<cfset var requestObj = {} />
 		<cfset var tmp = 0 />
-		
+
 		<!--- Check for method tunnelling by clients unable to send PUT/DELETE requests (e.g. Flash Player);
 					Actual desired method will be contained in a special header --->
  		<cfset var httpMethodOverride = GetPageContext().getRequest().getHeader("X-HTTP-Method-Override") />
@@ -325,7 +325,7 @@
 
 		<!--- grab request headers --->
 		<cfset requestObj.headers = getHTTPRequestData().headers />
-		
+
 		<!--- build the argumentCollection to pass to the cfc --->
 		<cfset requestObj.requestArguments = buildRequestArguments(
 			requestObj.matchingRegex,
@@ -409,7 +409,7 @@
 		<cfargument name="uri" type="string" required="true" hint="the requested uri" />
 		<cfargument name="queryString" type="string" required="true" hint="any query string parameters included in the request" />
 		<cfargument name="headers" type="struct" required="true" hint="any headers included in the request" />
-		
+
 		<cfset var local = StructNew() />
 		<cfset local.returnData = StructNew() /><!--- this will be used as an argumentCollection for the method that ultimately gets called --->
 		<!--- parse path_info data into key-value pairs --->
@@ -428,7 +428,7 @@
 			</cfif>
 			<!--- if input is json, deserialize it --->
 			<cfset local.tmp = deserializeJSON(arguments.queryString) />
-			
+
 			<cfif structKeyExists(local.tmp, "data")>
 				<cfset structAppend(local.returnData, local.tmp.data) />
 			<cfelse>

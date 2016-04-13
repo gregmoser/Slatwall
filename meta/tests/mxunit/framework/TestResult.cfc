@@ -108,11 +108,11 @@
 	--->
 	<cffunction name="setDebug" access="public" returntype="void" output="false">
 		<cfargument name="debugData" type="Any" required="true"/>
-	
+
 		<cfset var i = 1>
 		<cfset var tmp = arrayNew(1)>
 		<cfset this.resultItem.debug = arrayNew(1)>
-	
+
 		<cfif NOT isArray(debugData)>
 			<cfset arrayAppend(tmp, debugData)>
 			<cfset debugData = tmp>
@@ -234,7 +234,7 @@
 	<cffunction name="getResultsOutput" returntype="any" hint="" access="public" output="false">
 		<cfargument name="mode" required="true" default="" />
 		<cfargument name="mxunit_root" required="false" default=""/>
-		  
+
 		<cfset arguments.mode = listLast(arguments.mode) />
 
 		<cfswitch expression="#arguments.mode#">

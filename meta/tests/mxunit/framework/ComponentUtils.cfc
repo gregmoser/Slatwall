@@ -160,8 +160,8 @@
 			return mockFactoryInfo;
 		</cfscript>
 	</cffunction>
-	
-	<cffunction name="objectIsTypeOf" output="false" access="public" returntype="boolean" hint="returns true if the object 'type' as reported by getMetadata() matches the object's type or if the object is in the inheritance tree of the type">    
+
+	<cffunction name="objectIsTypeOf" output="false" access="public" returntype="boolean" hint="returns true if the object 'type' as reported by getMetadata() matches the object's type or if the object is in the inheritance tree of the type">
 		<cfargument name="object" required="yes" type="any" />
 		<cfargument name="type" required="yes" type="string" />
 		<cfset var md = getMetaData(object)>

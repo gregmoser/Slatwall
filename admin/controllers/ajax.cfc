@@ -2,45 +2,45 @@
 
     Slatwall - An Open Source eCommerce Platform
     Copyright (C) ten24, LLC
-	
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-	
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-	
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this program statically or dynamically with other modules is
     making a combined work based on this program.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
-	
-    As a special exception, the copyright holders of this program give you
-    permission to combine this program with independent modules and your 
-    custom code, regardless of the license terms of these independent
-    modules, and to copy and distribute the resulting program under terms 
-    of your choice, provided that you follow these specific guidelines: 
 
-	- You also meet the terms and conditions of the license of each 
-	  independent module 
-	- You must not alter the default display of the Slatwall name or logo from  
-	  any part of the application 
-	- Your custom code must not alter or create any files inside Slatwall, 
+    As a special exception, the copyright holders of this program give you
+    permission to combine this program with independent modules and your
+    custom code, regardless of the license terms of these independent
+    modules, and to copy and distribute the resulting program under terms
+    of your choice, provided that you follow these specific guidelines:
+
+	- You also meet the terms and conditions of the license of each
+	  independent module
+	- You must not alter the default display of the Slatwall name or logo from
+	  any part of the application
+	- Your custom code must not alter or create any files inside Slatwall,
 	  except in the following directories:
 		/integrationServices/
 
-	You may copy and distribute the modified version of this program that meets 
-	the above guidelines as a combined work under the terms of GPL for this program, 
-	provided that you include the source code of that other code when and as the 
+	You may copy and distribute the modified version of this program that meets
+	the above guidelines as a combined work under the terms of GPL for this program,
+	provided that you include the source code of that other code when and as the
 	GNU GPL requires distribution of source code.
-    
-    If you modify this program, you may extend this exception to your version 
+
+    If you modify this program, you may extend this exception to your version
     of the program, but you are not obligated to do so.
 
 Notes:
@@ -61,41 +61,41 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 	property name="hibachiService" type="any";
 	property name="hibachiRBService" type="any";
 	property name="hibachiTagService" type="any";
-	
+
 	this.publicMethods='';
-	
+
 	this.anyAdminMethods='';
 	this.anyAdminMethods=listAppend(this.anyAdminMethods,'updateListingDisplay');
 	this.anyAdminMethods=listAppend(this.anyAdminMethods,'updateGlobalSearchResults');
 	this.anyAdminMethods=listAppend(this.anyAdminMethods,'updateSortOrder');
-	
+
 	this.secureMethods='';
-	
+
 	public void function before(required struct rc) {
 		getFW().setView("admin:ajax.default");
 	}
-	
+
 	public void function updateListingDisplay(required struct rc) {
 		param name="arguments.rc.processObjectProperties" default="";
 		param name="arguments.rc.propertyIdentifiers" default="";
 		param name="arguments.rc.adminAttributes" default="";
 		param name="arguments.rc.fieldName" default="";
-	
+
 		var smartList = getHibachiService().getServiceByEntityName( entityName=rc.entityName ).invokeMethod( "get#getHibachiService().getProperlyCasedShortEntityName( rc.entityName )#SmartList", {1=rc} );
-		
+
 		if( arguments.rc.fieldName == "assignedAccountAccountID-autocompletesearch" ){
 			smartList.addWhereCondition('( EXISTS (SELECT p.permissionGroupID FROM SlatwallPermissionGroup p INNER JOIN p.accounts pa WHERE pa.accountID = aslatwallaccount.accountID) OR aslatwallaccount.superUserFlag = 1 )');
 		}
-		
+
 		var smartListPageRecords = smartList.getPageRecords();
 		var piArray = listToArray(rc.propertyIdentifiers);
 		var popArray = listToArray(rc.processObjectProperties);
-		
+
 		var admin = {};
 		if(len(arguments.rc.adminAttributes) && arguments.rc.adminAttributes neq "null" && isJSON(arguments.rc.adminAttributes)) {
 			admin = deserializeJSON(arguments.rc.adminAttributes);
 		}
-		
+
 		rc.ajaxResponse[ "recordsCount" ] = smartList.getRecordsCount();
 		rc.ajaxResponse[ "pageRecords" ] = [];
 		rc.ajaxResponse[ "pageRecordsCount" ] = arrayLen(smartList.getPageRecords());
@@ -105,18 +105,18 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 		rc.ajaxResponse[ "currentPage" ] = smartList.getCurrentPage();
 		rc.ajaxResponse[ "totalPages" ] = smartList.getTotalPages();
 		rc.ajaxResponse[ "savedStateID" ] = smartList.getSavedStateID();
-		
+
 		if(arrayLen(popArray)) {
 			var processEntity = getHibachiService().getServiceByEntityName( entityName=rc.processEntity ).invokeMethod( "get#getHibachiService().getProperlyCasedShortEntityName( rc.processEntity )#", {1=rc.processEntityID} );
 		}
-		
+
 		for(var i=1; i<=arrayLen(smartListPageRecords); i++) {
-			
+
 			var record = smartListPageRecords[i];
-			
+
 			// Create a record JSON container
 			var thisRecord = {};
-			
+
 			// Add the simple values from property identifiers
 			for(var p=1; p<=arrayLen(piArray); p++) {
 				var value = record.getValueByPropertyIdentifier( propertyIdentifier=piArray[p], formatValue=true );
@@ -126,7 +126,7 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 					thisRecord[ piArray[p] ] = value;
 				}
 			}
-			
+
 			// Add any process object values
 			if(arrayLen(popArray)) {
 				var processObject = getTransient("#arguments.rc.processEntity#_#arguments.rc.processContext#");
@@ -143,9 +143,9 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 					thisRecord[ popArray[p] ] = getHibachiTagService().cfmodule(template="./HibachiTags/HibachiPropertyDisplay.cfm", attributeCollection=attributes);
 				}
 			}
-			
+
 			thisRecord[ "admin" ] = "";
-			
+
 			if( isStruct(admin) ){
 				// Add the admin buttons
 				if(structKeyExists(admin, "detailAction")) {
@@ -224,18 +224,18 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 					thisRecord[ "admin" ] &= getHibachiTagService().cfmodule(template="./HibachiTags/HibachiProcessCaller.cfm", attributeCollection=attributes);
 				}
 			}
-			
+
 			arrayAppend(rc.ajaxResponse[ "pageRecords" ], thisRecord);
 		}
 	}
-	
+
 	public void function updateGlobalSearchResults(required struct rc) {
-		
+
 		rc['P:Show'] = 10;
-		
+
 		var smartLists = {};
 		if(rc.$.slatwall.authenticateEntity("Read", "Product")) {
-			smartLists['product'] = getProductService().getProductSmartList(data=rc);	
+			smartLists['product'] = getProductService().getProductSmartList(data=rc);
 		}
 		if(rc.$.slatwall.authenticateEntity("Read", "ProductType")) {
 			smartLists['productType'] = getProductService().getProductTypeSmartList(data=rc);
@@ -247,7 +247,7 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 			smartLists['promotion'] = getPromotionService().getPromotionSmartList(data=rc);
 		}
 		if(rc.$.slatwall.authenticateEntity("Read", "Order")) {
-			smartLists['order'] = getOrderService().getOrderSmartList(data=rc);	
+			smartLists['order'] = getOrderService().getOrderSmartList(data=rc);
 		}
 		if(rc.$.slatwall.authenticateEntity("Read", "Account")) {
 			smartLists['account'] = getAccountService().getAccountSmartList(data=rc);
@@ -258,37 +258,37 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 		if(rc.$.slatwall.authenticateEntity("Read", "Vendor")) {
 			smartLists['vendor'] = getVendorService().getVendorSmartList(data=rc);
 		}
-		
+
 		for(var key in smartLists) {
 			rc.ajaxResponse[ key ] = {};
 			rc.ajaxResponse[ key ][ 'records' ] = [];
 			rc.ajaxResponse[ key ][ 'recordCount' ] = smartLists[key].getRecordsCount();
-			
+
 			for(var i=1; i<=arrayLen(smartLists[key].getPageRecords()); i++) {
 				var thisRecord = {};
 				thisRecord['value'] = smartLists[key].getPageRecords()[i].getPrimaryIDValue();
 				thisRecord['name'] = smartLists[key].getPageRecords()[i].getSimpleRepresentation();
-				
+
 				arrayAppend(rc.ajaxResponse[ key ][ 'records' ], thisRecord);
 			}
 		}
 	}
-	
+
 	public void function updateSortOrder(required struct rc) {
 		getHibachiService().updateRecordSortOrder(argumentCollection=rc);
 	}
-	
+
 	public void function swCollectionDisplay(required struct rc) {
 		param name="rc.collectionID" type="string" default="";
 		param name="rc.propertyIdentifiers" type="string" default="";
-		
+
 		var collection = rc.$.slatwall.getEntity('Collection', rc.collectionID);
 		var smartList = rc.$.slatwall.getSmartList( collection.getCollectionObject(), arguments.rc );
 		var piArray = ['skuCode', 'product.productName', 'price'];
-		
-		
+
+
 		var smartListPageRecords = smartList.getPageRecords();
-		
+
 		rc.ajaxResponse[ "recordsCount" ] = smartList.getRecordsCount();
 		rc.ajaxResponse[ "pageRecords" ] = [];
 		rc.ajaxResponse[ "pageRecordsCount" ] = arrayLen( smartListPageRecords );
@@ -299,14 +299,14 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 		rc.ajaxResponse[ "totalPages" ] = smartList.getTotalPages();
 		rc.ajaxResponse[ "savedStateID" ] = smartList.getSavedStateID();
 		rc.ajaxResponse[ "propertyIdentifiers" ] = piArray;
-		
+
 		for(var i=1; i<=arrayLen(smartListPageRecords); i++) {
-			
+
 			var record = smartListPageRecords[i];
-			
+
 			// Create a record JSON container
 			var thisRecord = {};
-			
+
 			// Add the simple values from property identifiers
 			for(var p=1; p<=arrayLen(piArray); p++) {
 				var value = record.getValueByPropertyIdentifier( propertyIdentifier=piArray[p] );
@@ -316,22 +316,22 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 					thisRecord[ piArray[p] ] = value;
 				}
 			}
-			
+
 			arrayAppend(rc.ajaxResponse[ "pageRecords" ], thisRecord);
 		}
-		
+
 	}
-	
-	// Called from Sku Inventory to assist in building hierarchical location inventory table  
+
+	// Called from Sku Inventory to assist in building hierarchical location inventory table
 	public function updateInventoryTable(required struct rc) {
 		param name="arguments.rc.locationID" default="";
 		param name="arguments.rc.skuID" default="";
-		
+
 		// Get all locations where parentID is rc.locationID, if rc.locationID is null then return null parents
 		var sku = getSkuService().getSku({skuID=arguments.rc.skuID});
 		var smartList = getLocationService().getLocationSmartList();
 		if(len(arguments.rc.locationID)) {
-			smartList.addFilter('parentLocation.locationID', arguments.rc.locationID);	
+			smartList.addFilter('parentLocation.locationID', arguments.rc.locationID);
 		} else {
 			smartList.addWhereCondition('aslatwalllocation.parentLocation is null');
 		}
@@ -358,11 +358,11 @@ component persistent="false" accessors="true" output="false" extends="Slatwall.o
 			ArrayAppend(thisDataArr,thisData);
 		}
 		arguments.rc.ajaxResponse["inventoryData"] = thisDataArr;
-		
+
 	}
 
 	public void function rbData( required struct rc ) {
 		arguments.rc.ajaxResponse['rbData'] = getHibachiRBService().getAggregateResourceBundle(getHibachiScope().getRBLocale());
 	}
-	
+
 }

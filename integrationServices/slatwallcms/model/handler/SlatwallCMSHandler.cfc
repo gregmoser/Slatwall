@@ -1,15 +1,15 @@
 component extends="Slatwall.org.Hibachi.HibachiEventHandler" {
-	
+
 	variables.fullSitePaths = {};
 	variables.slatwallApplications = {};
-	
+
 	public any function getSlatwallAdminApplication() {
 		if(!structKeyExists(variables.slatwallApplications,'slatwallAdmin')){
 			variables.slatwallApplications['slatwallAdmin'] = createObject("component", "Slatwall.Application");
 		}
 		return variables.slatwallApplications["slatwallAdmin"];
 	}
-	
+
 	public any function getSlatwallCMSApplication(required any site) {
 		if(!structKeyExists(variables.slatwallApplications,arguments.site.getApp().getAppID())){
 			var applicationDotPath = rereplace(arguments.site.getApp().getAppRootPath(),'/','.','all');
@@ -17,16 +17,16 @@ component extends="Slatwall.org.Hibachi.HibachiEventHandler" {
 		}
 		return variables.slatwallApplications[arguments.site.getApp().getAppID()];
 	}
-	
+
 	public any function getFullSitePath(required any site){
 		if(!structKeyExists(variables.fullSitePaths,arguments.site.getSiteID())){
 			variables.fullSitePaths[site.getSiteID()] = site.getSitePath();
 		}
 		return variables.fullSitePaths[site.getSiteID()];
 	}
-	
+
 	//public any function get
-	
+
 	// This event handler will always get called
 	public void function setupGlobalRequestComplete() {
 		if ( len( getContextRoot() ) ) {
@@ -47,18 +47,18 @@ component extends="Slatwall.org.Hibachi.HibachiEventHandler" {
         //take path and  parse it
         var pathArray = listToArray(pathInfo,'/');
         var pathArrayLen = arrayLen(pathArray);
-        
+
         //Make sure this isn't a call to the api, if it is, return without using CMS logic
 		if(pathArrayLen && pathArray[1] == 'api' || (structkeyExists(request,'context') && structKeyExists(request.context,'doNotRender'))){
         		return;
         }
         //try to get a site form the domain name
 		var domainNameSite = arguments.slatwallScope.getService('siteService').getCurrentRequestSite();
-      
+
        	if(!isNull(domainNameSite)){
    			//render site via apps route
 	        if(pathArrayLen && pathArray[1] == 'apps'){
-	        	
+
 	        	if(pathArrayLen > 1){
 	        		arguments.appCode = pathArray[2];
 	        	}
@@ -87,12 +87,12 @@ component extends="Slatwall.org.Hibachi.HibachiEventHandler" {
 	        			}
 	        		}
 	        	}
-	        	
+
 				if(!isnull(arguments.appCode)){
 					if(!isnull(domainNameSite)){
-						
+
 						var app = arguments.slatwallScope.getService('appService').getAppByAppCode(arguments.appCode);
-						
+
 						//if siteid is not specified then try to get the first site from the app
 						if(isNull(arguments.siteID)){
 							if(arraylen(app.getSites())){
@@ -105,7 +105,7 @@ component extends="Slatwall.org.Hibachi.HibachiEventHandler" {
 				}
 			//if we are not using apps path
 			}else if(pathArrayLen && pathArray[1] != 'apps'){
-					
+
 				var urlTitlePathStartPosition = 1;
         		if(
         			arguments.slatwallScope.setting('globalURLKeyBrand') == pathArray[1]
@@ -132,7 +132,7 @@ component extends="Slatwall.org.Hibachi.HibachiEventHandler" {
 				var app = domainNameSite.getApp();
 				var site = domainNameSite;
        		}
-       		
+
 	        //if we obtained a site and it is allowed by the domain name then prepare to render content
 			if(!isNull(site) && domainNameSite.getSiteID() == site.getSiteID()){
 				prepareSlatwallScope(arguments.slatwallScope,app,site);
@@ -150,25 +150,25 @@ component extends="Slatwall.org.Hibachi.HibachiEventHandler" {
        		}
        	}
 	}
-	
+
 	public void function prepareSlatwallScope(required any slatwallScope, required any app, required any site){
 		// Setup the correct local in the request object for the current site
 		arguments.slatwallScope.setRBLocale( arguments.slatwallScope.getRBLocale() );
-		
+
 		// Setup the correct app in the request object
 		arguments.slatwallScope.setApp( app );
-		
+
 		// Setup the correct site in the request object
 		arguments.slatwallScope.setSite( site );
 	}
-	
+
 	public void function prepareSiteForRendering(required any site, required struct argumentsCollection){
 		//declare sitePath
 		var sitePath = getFullSitePath(site);
-		
+
 		//if a site does exist then check that site directory for the template
 		//are we rendering a basic content node or have we been provided with an entityURL type?
-		
+
 		if(directoryExists(sitePath)) {
 			var slatwallCMSApplication = getSlatwallCMSApplication(site);
 			slatwallCMSApplication.onRequestStart(argumentCollection=arguments.argumentsCollection);
@@ -176,20 +176,20 @@ component extends="Slatwall.org.Hibachi.HibachiEventHandler" {
 			throw('site directory does not exist for ' & site.getSiteName());
 		}
 	}
-	
+
 		/*
-		
-        
+
+
 	}
-	
-	
-		
-	
-	
-	
+
+
+
+
+
+
 	// Special Function to relay all events called in Slatwall over to mura
 	//announced event should send eventdata of appid,siteid,contentURL
 	public void function onEvent( required any slatwallScope, required any eventName) {
-		
+
 	}*/
 }

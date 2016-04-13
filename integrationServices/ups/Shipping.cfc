@@ -2,45 +2,45 @@
 
     Slatwall - An Open Source eCommerce Platform
     Copyright (C) ten24, LLC
-	
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-	
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-	
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this program statically or dynamically with other modules is
     making a combined work based on this program.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
-	
-    As a special exception, the copyright holders of this program give you
-    permission to combine this program with independent modules and your 
-    custom code, regardless of the license terms of these independent
-    modules, and to copy and distribute the resulting program under terms 
-    of your choice, provided that you follow these specific guidelines: 
 
-	- You also meet the terms and conditions of the license of each 
-	  independent module 
-	- You must not alter the default display of the Slatwall name or logo from  
-	  any part of the application 
-	- Your custom code must not alter or create any files inside Slatwall, 
+    As a special exception, the copyright holders of this program give you
+    permission to combine this program with independent modules and your
+    custom code, regardless of the license terms of these independent
+    modules, and to copy and distribute the resulting program under terms
+    of your choice, provided that you follow these specific guidelines:
+
+	- You also meet the terms and conditions of the license of each
+	  independent module
+	- You must not alter the default display of the Slatwall name or logo from
+	  any part of the application
+	- Your custom code must not alter or create any files inside Slatwall,
 	  except in the following directories:
 		/integrationServices/
 
-	You may copy and distribute the modified version of this program that meets 
-	the above guidelines as a combined work under the terms of GPL for this program, 
-	provided that you include the source code of that other code when and as the 
+	You may copy and distribute the modified version of this program that meets
+	the above guidelines as a combined work under the terms of GPL for this program,
+	provided that you include the source code of that other code when and as the
 	GNU GPL requires distribution of source code.
-    
-    If you modify this program, you may extend this exception to your version 
+
+    If you modify this program, you may extend this exception to your version
     of the program, but you are not obligated to do so.
 
 Notes:
@@ -48,10 +48,10 @@ Notes:
 */
 
 component accessors="true" output="false" displayname="UPS" implements="Slatwall.integrationServices.ShippingInterface" extends="Slatwall.integrationServices.BaseShipping" {
-	
+
 	variables.testRateURL = "https://wwwcie.ups.com/ups.app/xml/Rate";
 	variables.liveRateURL = "https://www.ups.com/ups.app/xml/Rate";
-	
+
 	// Variables Saved in this application scope, but not set by end user
 	variables.shippingMethods = {};
 
@@ -71,66 +71,66 @@ component accessors="true" output="false" displayname="UPS" implements="Slatwall
 			59="UPS 2nd Day Air A.M.",
 			65="UPS Saver"
 		};
-		
+
 		return this;
 	}
-	
+
 	public struct function getShippingMethods() {
 		return variables.shippingMethods;
 	}
-	
+
 	public string function getTrackingURL() {
 		return "http://wwwapps.ups.com/WebTracking/track?loc=en_US&track.x=Track&trackNums=${trackingNumber}";
 	}
-	
+
 	public any function getRates(required any requestBean) {
 		var responseBean = new Slatwall.model.transient.fulfillment.ShippingRatesResponseBean();
-		
+
 		// Insert Custom Logic Here
 		var totalItemsWeight = 0;
 		var totalItemsValue = 0;
-		
+
 		// Loop over all items to get a price and weight for shipping
 		for(var i=1; i<=arrayLen(arguments.requestBean.getShippingItemRequestBeans()); i++) {
 			if(isNumeric(arguments.requestBean.getShippingItemRequestBeans()[i].getWeight())) {
 				totalItemsWeight +=	arguments.requestBean.getShippingItemRequestBeans()[i].getWeight() * arguments.requestBean.getShippingItemRequestBeans()[i].getQuantity();
 			}
-			 
+
 			totalItemsValue += arguments.requestBean.getShippingItemRequestBeans()[i].getValue() * arguments.requestBean.getShippingItemRequestBeans()[i].getQuantity();
 		}
-		
+
 		if(totalItemsWeight < 1) {
 			totalItemsWeight = 1;
 		}
-		
+
 		// Build Request XML
 		var xmlPacket = "";
-		
+
 		savecontent variable="xmlPacket" {
 			include "RatesRequestTemplate.cfm";
         }
-        
+
         // Setup Request to push to UPS
-        
+
         var httpRequest = new http();
         httpRequest.setMethod("POST");
 		httpRequest.setPort("443");
 		httpRequest.setTimeout(45);
-		
+
 		if(setting('testingFlag')) {
 			httpRequest.setUrl(variables.testRateURL);
 		} else {
 			httpRequest.setUrl(variables.liveRateURL);
 		}
-		
+
 		httpRequest.setResolveurl(false);
 		httpRequest.addParam(type="xml", name="data",value="#trim(xmlPacket)#");
-		
+
 		var xmlResponse = XmlParse(REReplace(httpRequest.send().getPrefix().fileContent, "^[^<]*", "", "one"));
-		
+
 		var responseBean = new Slatwall.model.transient.fulfillment.ShippingRatesResponseBean();
 		responseBean.setData(xmlResponse);
-		
+
 		if(isDefined('xmlResponse.Fault')) {
 			responseBean.addMessage(messageName="communicationError", message="An unexpected communication error occured, please notify system administrator.");
 			// If XML fault then log error
@@ -153,7 +153,7 @@ component accessors="true" output="false" displayname="UPS" implements="Slatwall
 					);
 				}
 			}
-			
+
 			if(!responseBean.hasErrors()) {
 				for(var i=1; i<=arrayLen(xmlResponse.RatingServiceSelectionResponse.RatedShipment); i++) {
 					responseBean.addShippingMethod(
@@ -166,7 +166,6 @@ component accessors="true" output="false" displayname="UPS" implements="Slatwall
 
 		return responseBean;
 	}
-	
-	
-}
 
+
+}

@@ -70,7 +70,7 @@ component displayname="Option Group" entityname="SlatwallOptionGroup" table="SwO
 	// Related Object Properties (one-many)
 	property name="options" singularname="option" cfc="Option" fieldtype="one-to-many" fkcolumn="optionGroupID" inverse="true" cascade="all-delete-orphan" orderby="sortOrder";
 	property name="attributeValues" singularname="attributeValue" cfc="AttributeValue" fieldtype="one-to-many" fkcolumn="optionGroupID" inverse="true" cascade="all-delete-orphan";
-	
+
 	// Related Object Properties (many-to-many - owner)
 	property name="productTypes" singularname="productType" cfc="ProductType" type="array" fieldtype="many-to-many" linktable="SwOptionGroupProductType" fkcolumn="optionGroupID" inversejoincolumn="productTypeID";
 
@@ -85,7 +85,7 @@ component displayname="Option Group" entityname="SlatwallOptionGroup" table="SwO
     public any function getOptionsSmartList() {
     	return getPropertySmartList(propertyName="options");
     }
-    
+
     // ============ START: Non-Persistent Property Methods =================
 
 	// ============  END:  Non-Persistent Property Methods =================
@@ -107,24 +107,24 @@ component displayname="Option Group" entityname="SlatwallOptionGroup" table="SwO
 	public void function removeAttributeValue(required any attributeValue) {
 		arguments.attributeValue.removeOptionGroup( this );
 	}
-	
+
 	// Product Types (many-to-many - owner)
-	public void function addProductType(required any productType) {    
-		if(arguments.productType.isNew() or !hasProductType(arguments.productType)) {    
-			arrayAppend(variables.productTypes, arguments.productType);    
+	public void function addProductType(required any productType) {
+		if(arguments.productType.isNew() or !hasProductType(arguments.productType)) {
+			arrayAppend(variables.productTypes, arguments.productType);
 		}
-		if(isNew() or !arguments.productType.hasOptionGroup( this )) {    
-			arrayAppend(arguments.productType.getOptionGroups(), this);    
-		}    
+		if(isNew() or !arguments.productType.hasOptionGroup( this )) {
+			arrayAppend(arguments.productType.getOptionGroups(), this);
+		}
 	}
-	public void function removeProductType(required any productType) {    
-		var thisIndex = arrayFind(variables.productTypes, arguments.productType);    
-		if(thisIndex > 0) {    
-			arrayDeleteAt(variables.productTypes, thisIndex);    
-		}    
-		var thatIndex = arrayFind(arguments.productType.getOptionGroups(), this);    
-		if(thatIndex > 0) {    
-			arrayDeleteAt(arguments.productType.getOptionGroups(), thatIndex);    
+	public void function removeProductType(required any productType) {
+		var thisIndex = arrayFind(variables.productTypes, arguments.productType);
+		if(thisIndex > 0) {
+			arrayDeleteAt(variables.productTypes, thisIndex);
+		}
+		var thatIndex = arrayFind(arguments.productType.getOptionGroups(), this);
+		if(thatIndex > 0) {
+			arrayDeleteAt(arguments.productType.getOptionGroups(), thatIndex);
 		}
 	}
 
@@ -136,14 +136,13 @@ component displayname="Option Group" entityname="SlatwallOptionGroup" table="SwO
 		if(!structKeyExists(variables, "globalFlag")) {
 			variables.globalFlag = 1;
 		}
-		
+
 		return variables.globalFlag;
 	}
-	
+
 	// ==================  END:  Overridden Methods ========================
 
 	// =================== START: ORM Event Hooks  =========================
 
 	// ===================  END:  ORM Event Hooks  =========================
 }
-

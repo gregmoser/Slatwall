@@ -13,16 +13,16 @@
 			<hb:HibachiPropertyDisplay object="#rc.account#" property="superUserFlag" edit="#rc.edit and $.slatwall.getAccount().getSuperUserFlag()#">
 			<hb:HibachiPropertyDisplay object="#rc.account#" property="taxExemptFlag" edit="#rc.edit#">
 		</hb:HibachiPropertyList>
-		
+
 		<!--- Overview --->
 		<hb:HibachiPropertyList divclass="col-md-6">
 			<hb:HibachiPropertyTable>
-				
+
 				<!--- Term Payment Details --->
 				<hb:HibachiPropertyTableBreak header="#$.slatwall.rbKey('admin.entity.detailaccount.termPaymentDetails')#" />
 				<hb:HibachiPropertyDisplay object="#rc.account#" property="termAccountBalance" edit="false" displayType="table">
 				<hb:HibachiPropertyDisplay object="#rc.account#" property="termAccountAvailableCredit" edit="false" displayType="table">
-				
+
 				<!--- Authentication Details --->
 				<hb:HibachiPropertyTableBreak header="#$.slatwall.rbKey('admin.entity.detailaccount.authenticationDetails')#" hint="#$.slatwall.rbKey("admin.entity.detailaccount.authenticationDetails_hint")#" />
 				<hb:HibachiPropertyDisplay object="#rc.account#" property="guestAccountFlag" edit="false" displayType="table">
@@ -30,7 +30,7 @@
 					<cfsavecontent variable="thisValue">
 						<hb:HibachiActionCaller text="#$.slatwall.rbKey('define.remove')#" action="admin:entity.deleteAccountAuthentication" queryString="accountAuthenticationID=#accountAuthentication.getAccountAuthenticationID()#&redirectAction=admin:entity.detailAccount&accountID=#rc.account.getAccountID()#" />
 					</cfsavecontent>
-					<hb:HibachiFieldDisplay title="#accountAuthentication.getSimpleRepresentation()#" value="#thisValue#" edit="false" displayType="table">	
+					<hb:HibachiFieldDisplay title="#accountAuthentication.getSimpleRepresentation()#" value="#thisValue#" edit="false" displayType="table">
 				</cfloop>
 			</hb:HibachiPropertyTable>
 		</hb:HibachiPropertyList>

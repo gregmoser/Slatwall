@@ -79,4 +79,3 @@ Notes:
 
 	</hb:HibachiEntityDetailForm>
 </cfoutput>
-

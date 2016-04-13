@@ -835,4 +835,3 @@ component entityname="SlatwallOrderPayment" table="SwOrderPayment" persistent="t
 
 	// ===================  END:  ORM Event Hooks  =========================
 }
-

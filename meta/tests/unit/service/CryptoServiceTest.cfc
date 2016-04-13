@@ -53,7 +53,7 @@ component  extends="Slatwall.meta.tests.unit.SlatwallUnitTestBase" hint="Tests t
 	 */
 	public void function setUp() {
 		super.setup();
-		
+
 		var accountData = {
 			accountID="",
 			accountAuthentications=[
@@ -64,7 +64,7 @@ component  extends="Slatwall.meta.tests.unit.SlatwallUnitTestBase" hint="Tests t
 			]
 		};
 		var account = createPersistedTestEntity('account',accountData);
-		
+
 		variables.crypto = request.slatwallScope.getBean("cryptoService");
 		variables.key = "A1E4E94C-D2A6-3462-235FFD1EF3339E0C";
 		variables.keyBase64 = "QTFFNEU5NEMtRDJBNi0zNDYyLTIzNUZGRDFFRjMzMzlFMEM=";//This is the clients secret key

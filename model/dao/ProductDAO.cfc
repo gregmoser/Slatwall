@@ -2,62 +2,62 @@
 
     Slatwall - An Open Source eCommerce Platform
     Copyright (C) ten24, LLC
-	
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-	
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-	
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this program statically or dynamically with other modules is
     making a combined work based on this program.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
-	
-    As a special exception, the copyright holders of this program give you
-    permission to combine this program with independent modules and your 
-    custom code, regardless of the license terms of these independent
-    modules, and to copy and distribute the resulting program under terms 
-    of your choice, provided that you follow these specific guidelines: 
 
-	- You also meet the terms and conditions of the license of each 
-	  independent module 
-	- You must not alter the default display of the Slatwall name or logo from  
-	  any part of the application 
-	- Your custom code must not alter or create any files inside Slatwall, 
+    As a special exception, the copyright holders of this program give you
+    permission to combine this program with independent modules and your
+    custom code, regardless of the license terms of these independent
+    modules, and to copy and distribute the resulting program under terms
+    of your choice, provided that you follow these specific guidelines:
+
+	- You also meet the terms and conditions of the license of each
+	  independent module
+	- You must not alter the default display of the Slatwall name or logo from
+	  any part of the application
+	- Your custom code must not alter or create any files inside Slatwall,
 	  except in the following directories:
 		/integrationServices/
 
-	You may copy and distribute the modified version of this program that meets 
-	the above guidelines as a combined work under the terms of GPL for this program, 
-	provided that you include the source code of that other code when and as the 
+	You may copy and distribute the modified version of this program that meets
+	the above guidelines as a combined work under the terms of GPL for this program,
+	provided that you include the source code of that other code when and as the
 	GNU GPL requires distribution of source code.
-    
-    If you modify this program, you may extend this exception to your version 
+
+    If you modify this program, you may extend this exception to your version
     of the program, but you are not obligated to do so.
 
 Notes:
 
 --->
 <cfcomponent accessors="true" extends="HibachiDAO">
-	
+
 	<cfscript>
 		public numeric function getProductRating(required any product){
 			return OrmExecuteQuery('
-				SELECT avg(pr.rating) 
-				FROM SlatwallProductReview pr 
+				SELECT avg(pr.rating)
+				FROM SlatwallProductReview pr
 				where pr.product = :product
 				',{product=arguments.product},true
 			);
 		}
-		
+
 		public void function loadDataFromFile(required string fileURL, string textQualifier = ""){
 			var fileType = listLast(arguments.fileURL,".");
 			var delimiter = "";
@@ -66,12 +66,12 @@ Notes:
 			} else if(fileType == 'txt'){
 				delimiter = chr(9);
 			}
-			
+
 			var data = queryNew("");
 			if(fileType == "xls"){
 				//Read xls
 			} else{
-				
+
 				data = getService("utilityTagService").cfhttp(method="get",url=arguments.fileURL,delimiter=delimiter,textQualifier=arguments.textQualifier);
 				// script based http method doens't work for tab delimiter
 				/*
@@ -95,7 +95,7 @@ Notes:
 				}
 			}
 			var skuLookupColumn = "sku_skucode";
-	
+
 			//get db info for the table
 			/*
 			var dbinfo = new dbinfo();
@@ -107,7 +107,7 @@ Notes:
 			dbinfo.setTable("SlatwallSku");
 			var skuMetaData = dbinfo.columns();
 			*/
-			
+
 			var columnList = listToArray(data.columnList);
 			// columns will be specified as [tableName].[columnName]
 			var productColumns = [];
@@ -134,17 +134,17 @@ Notes:
 			if(!arrayFindNoCase(columnList,"product_publishedFlag")){
 				arrayAppend(productExtraData,{name="publishedFlag",value="1"});
 			}
-	
+
 			var skuExtraData = [];
-			
+
 			var timeStamp = now();
 			var administratorID = getSlatwallScope().getCurrentAccount().getAccountID();
-			
+
 			var dataQuery = new Query();
 			dataQuery.setDatasource(application.configBean.getDatasource());
 			dataQuery.setUsername(application.configBean.getDBUsername());
 			dataQuery.setPassword(application.configBean.getDBPassword());
-			
+
 			//loop through all the option groups and check if it exists
 			for(var i=arrayLen(optionGroups); i >= 1; i--){
 				var optionGroup = optionGroups[i];
@@ -159,7 +159,7 @@ Notes:
 					optionGroupIDs[optionGroup] = lookupResult.optionGroupID;
 				}
 			}
-			
+
 			// Loop over each record to insert or update
 			for(var r=1; r <= data.recordcount; r++) {
 				transaction{
@@ -179,7 +179,7 @@ Notes:
 					arrayAppend(thisExtraData,{name="productTypeID",value=productTypeID});
 					//save product
 					var productID = saveImportData(data,r,"SlatwallProduct",productColumns,productLookupColumn,"productID",thisExtraData);
-	
+
 					//Create array of extra data to be saved with sku
 					var thisExtraData = [];
 					thisExtraData.addAll(skuExtraData);
@@ -271,7 +271,7 @@ Notes:
 					}
 				}
 			}
-			
+
 			//set default sku for all the new products to the first sku
 			if(getApplicationValue("databaseType") eq "mySQL") {
 				dataQuery.setSql("
@@ -279,7 +279,7 @@ Notes:
 					SET defaultSkuID = (SELECT skuID FROM SlatwallSku WHERE SlatwallSku.productID = SlatwallProduct.productID LIMIT 1)
 					WHERE SlatwallProduct.defaultSkuID IS NULL
 				");
-			} else {	
+			} else {
 				dataQuery.setSql("
 					UPDATE SlatwallProduct
 					SET defaultSkuID = (SELECT top 1 skuID FROM SlatwallSku WHERE SlatwallSku.productID = SlatwallProduct.productID)
@@ -295,14 +295,14 @@ Notes:
 					SET imageFile = (SELECT concat(productCode, '.#setting("globalImageExtension")#') FROM SlatwallProduct WHERE SlatwallSku.productID = SlatwallProduct.productID)
 					WHERE SlatwallSku.imageFile IS NULL
 				");
-			} else if(getApplicationValue("databaseType") eq "Oracle10g") {	
+			} else if(getApplicationValue("databaseType") eq "Oracle10g") {
 				dataQuery.setSql("
 					UPDATE SlatwallSku
 					SET imageFile = (SELECT productCode || '.' || '#setting("globalImageExtension")#' FROM SlatwallProduct WHERE SlatwallSku.productID = SlatwallProduct.productID)
 					FROM SlatwallProduct INNER JOIN SlatwallSku ON SlatwallProduct.productID = SlatwallSku.productID
 					WHERE SlatwallSku.imageFile IS NULL
 				");
-			} else {	
+			} else {
 				dataQuery.setSql("
 					UPDATE SlatwallSku
 					SET imageFile = (SELECT productCode + '.' + '#setting("globalImageExtension")#' FROM SlatwallProduct WHERE SlatwallSku.productID = SlatwallProduct.productID)
@@ -312,29 +312,29 @@ Notes:
 			}
 			dataQuery.execute();
 		}
-		
+
 		private string function saveImportData(required query data,required numeric rowNumber,required string tableName,required array columnList,required string lookupColumn,required string idColumn,array extraData = []){
 			var dataQuery = new Query();
 			dataQuery.setDataSource(application.configBean.getDatasource());
 			dataQuery.setUsername(application.configBean.getDBUsername());
 			dataQuery.setPassword(application.configBean.getDBPassword());
-	
+
 			var lookupColumnValue = createObject( "java", "java.lang.StringBuilder" ).init();
 			var updateSetString = createObject( "java", "java.lang.StringBuilder" ).init();
 			var insertColumns = createObject( "java", "java.lang.StringBuilder" ).init();
 			var insertValues = createObject( "java", "java.lang.StringBuilder" ).init();
 			var value = createObject( "java", "java.lang.StringBuilder" ).init();
-	
+
 			var timeStamp = now();
 			var administratorID = getSlatwallScope().getCurrentAccount().getAccountID();
-			
+
 			if(arrayFindNoCase(arguments.columnList,arguments.lookupColumn)){
 				lookupColumnValue = arguments.data[arguments.lookupColumn][arguments.rowNumber];
 			}
 			//loop through column and prepare save statement
 			for(var thisColumn in arguments.columnList) {
 				value = arguments.data[thisColumn][arguments.rowNumber];
-				
+
 				if(listLast(thisColumn,'_').endsWith('Flag') || listLast(thisColumn,'_').endsWith('Weight')) {
 					updateSetString &= " #listLast(thisColumn,'_')#=#value#,";
 				} else {
@@ -342,7 +342,7 @@ Notes:
 				}
 				insertColumns &= " #listLast(thisColumn,'_')#,";
 				if(isNumeric(value)) {
-					insertValues &= " '#value#',";	
+					insertValues &= " '#value#',";
 				} else {
 					insertValues &= " '#value#',";
 				}
@@ -352,7 +352,7 @@ Notes:
 			updateSetString &= " modifiedByAccountID='#administratorID#',";
 			insertColumns &= " createdDatetime,modifiedDatetime,CreatedByAccountID,modifiedByAccountID,";
 			insertValues &= " #timeStamp#,#timeStamp#,'#administratorID#','#administratorID#',";
-			
+
 			for(var item in extraData){
 				insertColumns &= " #item.name#,";
 				if(item.name.endsWith('Flag') || item.name.endsWith('Weight')){
@@ -364,19 +364,19 @@ Notes:
 					lookupColumnValue = item.value;
 				}
 			}
-	
+
 			//Remove the last , from the update string, for insert we will append primary key
 			if(len(updateSetString)) {
 				updateSetString = left(updateSetString, len(updateSetString)-1);
 			}
-	
+
 			dataQuery.setSql("
 					SELECT #arguments.idColumn# FROM #arguments.tableName# WHERE #listLast(arguments.lookupColumn,'_')# = '#lookupColumnValue#';
 				");
 			var lookupResult = dataQuery.execute().getResult();
 			var exists = lookupResult.recordcount;
 			var idColumnValue = lookupResult[arguments.idColumn];
-	
+
 			if(exists){
 				dataQuery.setSql("
 					UPDATE #arguments.tableName# SET #updateSetString# WHERE #arguments.idColumn# = '#idColumnValue#';
@@ -390,7 +390,7 @@ Notes:
 						SELECT productID FROM SlatwallProduct WHERE urlTitle = '#fileName#';
 					");
 					if(dataQuery.execute().getResult().recordCount){
-						fileName &= "_#arguments.data['product_productCode'][arguments.rowNumber]#"; 
+						fileName &= "_#arguments.data['product_productCode'][arguments.rowNumber]#";
 					}
 					insertColumns &= " urlTitle,";
 					insertValues &= " '#fileName#',";
@@ -403,11 +403,11 @@ Notes:
 			}
 			return idColumnValue;
 		}
-		
+
 		public any function searchProductsByProductType(string term,string productTypeIDs) {
 			var q = new Query();
 			var sql = "select productID,productName from SlatwallProduct where productName like :prodName";
-			q.addParam(name="prodName",value="%#arguments.term#%",cfsqltype="cf_sql_varchar");		
+			q.addParam(name="prodName",value="%#arguments.term#%",cfsqltype="cf_sql_varchar");
 			if(structKeyExists(arguments,"productTypeIDs") && len(arguments.productTypeIDs)) {
 				sql &= " and productTypeID in (:productTypeIDs)";
 				q.addParam(name="productTypeIDs",value=arguments.productTypeIDs,cfsqltype="cf_sql_varchar",list="true");
@@ -424,12 +424,12 @@ Notes:
 			return result;
 		}
 	</cfscript>
-	
+
 	<cffunction name="removeProductFromRelatedProducts">
 		<cfargument name="productID" type="string" required="true" >
-		
+
 		<cfset var rs = "" />
-		
+
 		<cfquery name="rs">
 			DELETE FROM
 				SwRelatedProduct
@@ -439,16 +439,15 @@ Notes:
 			  	relatedProductID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.productID#" />
 		</cfquery>
 	</cffunction>
-	 
+
 	<cffunction name="updateProductProductType" hint="Moves all products from one product type to another">
 		<cfargument name="fromProductTypeID" type="string" required="true" >
 		<cfargument name="toProductTypeID" type="string" required="true" >
 		<cfquery name="updateProduct" >
-			UPDATE SwProduct 
+			UPDATE SwProduct
 			SET productTypeID = <cfqueryparam value="#arguments.toProductTypeID#" cfsqltype="cf_sql_varchar" >
 			WHERE productTypeID = <cfqueryparam value="#arguments.fromProductTypeID#" cfsqltype="cf_sql_varchar" >
 		</cfquery>
 	</cffunction>
-	
-</cfcomponent>
 
+</cfcomponent>

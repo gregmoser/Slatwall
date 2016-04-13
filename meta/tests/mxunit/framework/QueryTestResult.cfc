@@ -2,7 +2,7 @@
  Extension of TestResult
  --->
  <cfcomponent displayname="QueryTestResult" output="true" extends="TestResult" hint="Responsible for generating CFQuery representation of a TestResult">
-  <cfparam name="this.testResults" type="any" default="" /> 
+  <cfparam name="this.testResults" type="any" default="" />
 
 
  <cffunction name="QueryTestResult" hint="Constructor" access="public" returntype="QueryTestResult">
@@ -11,7 +11,7 @@
    <cfset this.failures = arguments.testResults.testFailures />
    <cfset this.errors = arguments.testResults.testErrors />
    <cfset this.successes = arguments.testResults.testSuccesses />
-   <cfset this.totalExecutionTime = arguments.testResults.totalExecutionTime /> 
+   <cfset this.totalExecutionTime = arguments.testResults.totalExecutionTime />
    <cfset this.testResults = arguments.testResults.results />
    <cfreturn  this />
  </cffunction>
@@ -26,9 +26,9 @@
     queryAddRow(q);
      for(test in this.testResults[i]){
       querySetCell(q, test, this.testResults[i][test]);
-     } 
+     }
     }
-    return q;   
+    return q;
    </cfscript>
  </cffunction>
 

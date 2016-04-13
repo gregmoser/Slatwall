@@ -3,8 +3,8 @@
  --->
 <cfcomponent displayname="MXUnitAssertionExtensions" extends="Assert" output="false" hint="Extends core mxunit assertions.">
 
-	
-	
+
+
 	<cfparam name="request.__mxunitInheritanceTree__" type="string" default="" />
 
 	<cffunction name="assertIsXMLDoc" access="public" returntype="boolean">
@@ -100,7 +100,7 @@
 	<cffunction name="assertIsTypeOf" access="public" returntype="boolean" hint="returns true if 'type' argument matches the object's type or if the object is in the inheritance tree of the type.">
 		<cfargument name="o" required="yes" type="any" />
 		<cfargument name="type" required="yes" type="string" />
-		
+
 		<cfif NOT componentUtils.objectIsTypeOf( o, type )>
 			<cfset fail( "The object [#getMetadata(o).name#] is not of type #arguments.type#. Searched inheritance tree: [#componentUtils.buildInheritanceTree(getMetadata(o))#]" )>
 		</cfif>

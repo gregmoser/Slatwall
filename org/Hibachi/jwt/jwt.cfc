@@ -2,10 +2,10 @@
 	jwt.cfc
 	DESCRIPTION: Component for encoding and decoding JSON Web Tokens.
 		Based on jwt-simple node.js library (https://github.com/hokaccha/node-jwt-simple)
-	PARAMETERS: 
+	PARAMETERS:
 		key - HMAC key used for token signatures
-	
-			
+
+
 --->
 
 <cfcomponent accessors="true" output="false" persistent="false" extends="Slatwall.org.Hibachi.HibachiObject">
@@ -14,10 +14,10 @@
 	<cfproperty name="header" persistent="false"/>
 	<cfproperty name="signature" persistent="false"/>
 	<cfproperty name="tokenString" persistent="false"/>
-	
+
 	<cffunction name="init" output="false">
 		<cfargument name="key" required="true">
-		
+
 		<cfset variables.key = arguments.key>
 		<!--- Supported algorithms --->
 		<cfset variables.algorithmMap = {
@@ -29,7 +29,7 @@
 
 		<cfreturn this>
 	</cffunction>
-	
+
 	<cffunction name="getPayload" output="false">
 		<cfif !structKeyExists(variables,'payload')>
 			<cftry>
@@ -39,27 +39,27 @@
 		</cfif>
 		<cfreturn variables.payload>
 	</cffunction>
-	
+
 	<cffunction name="getHeader" output="false">
 		<cfif !structKeyExists(variables,'header')>
 			<cfset decode(variables.TokenString)>
 		</cfif>
 		<cfreturn variables.header>
 	</cffunction>
-	
+
 	<cffunction name="getSignature" output="false">
 		<cfif !structKeyExists(variables,'signature')>
 			<cfset decode(variables.TokenString)>
 		</cfif>
 		<cfreturn variables.signature>
 	</cffunction>
-	
+
 
 	<!--- 	decode(string) as struct
 			Description:  Decode a JSON Web TokenString
-	---> 
+	--->
 	<cffunction name="decode" output="false">
-		
+
 		<!--- TokenString should contain 3 segments --->
 		<cfif listLen(getTokenString(),".") neq 3>
 			<cfthrow type="Invalid Token" message="Token should contain 3 segments">
@@ -80,28 +80,28 @@
 		<cfif signature neq sign(signInput,getAlgorithmMap()[getHeader().alg])>
 			<cfthrow type="Invalid Token" message="signature verification failed">
 		</cfif>
-		
+
 		<!--- need valid iat --->
 		<cfif !structKeyExists(getPayload(),'iat')>
 			<cfthrow type="No Valid issue at time date">
 		</cfif>
-		
+
 		<!--- need valid exp --->
 		<cfif !structKeyExists(getPayload(),'exp')>
 			<cfthrow type="No Valid expiration time date">
 		</cfif>
-		
+
 		<cfset var currentTime = getService('hibachiUtilityService').getCurrentUtcTime()/>
 		<cfif currentTime lt getPayload().iat || currentTime gt getPayload().exp>
 			<cfthrow type="Token is expired"/>
 		</cfif>
-		
+
 		<cfreturn this>
 	</cffunction>
-	
+
 	<!--- 	encode(struct,[string]) as String
 			Description:  encode a data structure as a JSON Web TokenString
-	---> 
+	--->
 	<cffunction name="encode" output="false">
 		<cfargument name="payload" required="true">
 		<cfargument name="algorithm" default="HS">
@@ -126,7 +126,7 @@
 
 	<!--- 	verify(token) as Boolean
 			Description:  Verify the token signature
-	---> 
+	--->
 	<cffunction name="verify" output="false">
 		<cfset var isValid = true>
 		<cftry>
@@ -141,7 +141,7 @@
 
 	<!--- 	sign(string,[string]) as String
 			Description: Create an hash of provided string using the secret key and algorithm
-	---> 
+	--->
 	<cffunction name="sign" output="false" access="private">
 		<cfargument name="msg" type="string" required="true">
 		<cfargument name="algorithm" default="SHA">
@@ -153,7 +153,7 @@
 
 	<!--- 	base64UrlEscape(String) as String
 			Description:  Escapes unsafe url characters from a base64 string
-	---> 
+	--->
 	<cffunction name="base64UrlEscape" output="false" access="private">
 		<cfargument name="str" required="true">
 
@@ -161,8 +161,8 @@
 	</cffunction>
 
 	<!--- 	base64UrlUnescape(String) as String
-			Description: restore base64 characters from an url escaped string 
-	---> 
+			Description: restore base64 characters from an url escaped string
+	--->
 	<cffunction name="base64UrlUnescape" output="false" access="private">
 		<cfargument name="str" required="true">
 
@@ -176,12 +176,12 @@
 
 	<!--- 	base64UrlDecode(String) as String
 			Description:  Decode a url encoded base64 string
-	---> 
+	--->
 	<cffunction name="base64UrlDecode" output="false" access="private">
 		<cfargument name="str" required="true">
 
 		<cfreturn toString(toBinary(base64UrlUnescape(arguments.str)))>
 	</cffunction>
 
-	
+
 </cfcomponent>

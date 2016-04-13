@@ -781,4 +781,3 @@ component displayname="Attribute Value" entityname="SlatwallAttributeValue" tabl
 	// ==================  END:  Deprecated Methods ========================
 
 }
-

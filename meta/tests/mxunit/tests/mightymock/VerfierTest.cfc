@@ -6,15 +6,15 @@ function doVerifyShouldExecuteTargets(){
   verifier.doVerify('verify', 'foo', args, 1, mr );
 
   verifier.doVerify('verifyTimes', 'foo', args, 1, mr );
-  
+
   verifier.doVerify('verifyAtLeast', 'foo', args, 1, mr );
-  
+
   verifier.doVerify('verifyAtMost', 'foo', args, 1, mr );
-  
+
   verifier.doVerify('verifyNever', 'bah', args, 0, mr );
-  
+
   verifier.doVerify('verifyOnce', 'foo', args, 1, mr );
-  
+
 }
 
 function verifyShouldActAsVerifyTimes(){

@@ -4,5 +4,5 @@
 		<cfset mxunit = "cool">
 		<cfset debug(mxunit)>
 	</cffunction>
-	
+
 </cfcomponent>

@@ -2,45 +2,45 @@
 
     Slatwall - An Open Source eCommerce Platform
     Copyright (C) ten24, LLC
-	
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-	
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-	
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this program statically or dynamically with other modules is
     making a combined work based on this program.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
-	
-    As a special exception, the copyright holders of this program give you
-    permission to combine this program with independent modules and your 
-    custom code, regardless of the license terms of these independent
-    modules, and to copy and distribute the resulting program under terms 
-    of your choice, provided that you follow these specific guidelines: 
 
-	- You also meet the terms and conditions of the license of each 
-	  independent module 
-	- You must not alter the default display of the Slatwall name or logo from  
-	  any part of the application 
-	- Your custom code must not alter or create any files inside Slatwall, 
+    As a special exception, the copyright holders of this program give you
+    permission to combine this program with independent modules and your
+    custom code, regardless of the license terms of these independent
+    modules, and to copy and distribute the resulting program under terms
+    of your choice, provided that you follow these specific guidelines:
+
+	- You also meet the terms and conditions of the license of each
+	  independent module
+	- You must not alter the default display of the Slatwall name or logo from
+	  any part of the application
+	- Your custom code must not alter or create any files inside Slatwall,
 	  except in the following directories:
 		/integrationServices/
 
-	You may copy and distribute the modified version of this program that meets 
-	the above guidelines as a combined work under the terms of GPL for this program, 
-	provided that you include the source code of that other code when and as the 
+	You may copy and distribute the modified version of this program that meets
+	the above guidelines as a combined work under the terms of GPL for this program,
+	provided that you include the source code of that other code when and as the
 	GNU GPL requires distribution of source code.
-    
-    If you modify this program, you may extend this exception to your version 
+
+    If you modify this program, you may extend this exception to your version
     of the program, but you are not obligated to do so.
 
 Notes:
@@ -54,16 +54,16 @@ Notes:
 <!--- Update payment methods to use the new paymentIntegrationID value instead of provider gateway --->
 <cftry>
 	<cfdbinfo datasource="#getApplicationValue("datasource")#" username="#getApplicationValue("datasourceUsername")#" password="#getApplicationValue("datasourcePassword")#" type="Columns" table="SwPaymentMethod" name="local.infoColumns" />
-	
+
 	<cfquery name="local.hasColumn" dbtype="query">
 		SELECT
-			* 
+			*
 		FROM
 			infoColumns
 		WHERE
 			COLUMN_NAME = 'providerGateway'
 	</cfquery>
-	
+
 	<cfif local.hasColumn.recordCount>
 		<cfquery name="local.updateData">
 			UPDATE
@@ -76,7 +76,7 @@ Notes:
 			  	providerGateway IS NOT NULL
 		</cfquery>
 	</cfif>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update paymentIntegrationID on SlatwallPaymentMethod Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -87,13 +87,13 @@ Notes:
 <cftry>
 	<cfquery name="local.hasTable" dbtype="query">
 		SELECT
-			* 
+			*
 		FROM
 			infoTables
 		WHERE
 			TABLE_NAME = 'SlatwallCreditCardTransaction'
 	</cfquery>
-	
+
 	<cfif local.hasTable.recordCount>
 		<cfquery name="local.updateData">
 			SELECT
@@ -116,7 +116,7 @@ Notes:
 				SlatwallCreditCardTransaction
 			WHERE NOT EXISTS( SELECT paymentTransactionID FROM SlatwallPaymentTransaction WHERE SlatwallPaymentTransaction.paymentTransactionID = SlatwallCreditCardTransaction.creditCardTransactionID )
 		</cfquery>
-		
+
 		<cfloop query="local.updateData">
 			<cfquery name="local.change">
 				INSERT INTO SwPaymentTransaction (
@@ -157,7 +157,7 @@ Notes:
 			</cfquery>
 		</cfloop>
 	</cfif>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - move credit card transactions to payment transactions has error">
 		<cfset local.scriptHasErrors = true />
@@ -173,7 +173,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallOrder Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -189,7 +189,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallOrderFulfillment Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -205,7 +205,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallOrderReturn Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -221,7 +221,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallOrderPayment Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -237,7 +237,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallPaymentTransaction Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -253,7 +253,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallPromotionApplied Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -269,7 +269,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallShippingMethodOption Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -285,7 +285,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallStockReceiverItem Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -301,7 +301,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallSubscriptionUsage Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -317,7 +317,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallTaxApplied Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -333,7 +333,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallVendorOrder Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -349,7 +349,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallVendorOrderItem Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -365,7 +365,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallVendorSkuStock Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -381,7 +381,7 @@ Notes:
 		WHERE
 			currencyCode is null
 	</cfquery>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update currencyCode on SlatwallOrderItem Has Error">
 		<cfset local.scriptHasErrors = true />
@@ -391,16 +391,16 @@ Notes:
 <!--- Move amountCharged into amountReceived --->
 <cftry>
 	<cfdbinfo datasource="#getApplicationValue("datasource")#" username="#getApplicationValue("datasourceUsername")#" password="#getApplicationValue("datasourcePassword")#" type="Columns" table="SwPaymentTransaction" name="local.infoColumns" />
-	
+
 	<cfquery name="local.hasColumn" dbtype="query">
 		SELECT
-			* 
+			*
 		FROM
 			infoColumns
 		WHERE
 			COLUMN_NAME = 'amountCharged'
 	</cfquery>
-	
+
 	<cfif local.hasColumn.recordCount>
 		<cfquery name="local.updateData">
 			UPDATE
@@ -416,7 +416,7 @@ Notes:
 	<cfelse>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - WHAT!!!!">
 	</cfif>
-	
+
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update amountCharged column into amountReceived column Has Error">
 		<cfset local.scriptHasErrors = true />

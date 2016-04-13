@@ -51,7 +51,7 @@ Notes:
 
 <!--- Update SwContent create materialized paths for title called titlePath based on existing title --->
 <cftry>
-		
+
 	<cffunction name="getTitleFromParent">
 		<cfargument name="titlePath">
 		<cfargument name="contentQuery">
@@ -60,35 +60,35 @@ Notes:
 		<cfquery name="local.parentContentRecord" dbtype="query">
 			SELECT * FROM arguments.contentQuery where contentID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.contentRecord.parentContentID#">
 		</cfquery>
-		
+
 		<cfif !isnull(arguments.contentRecord.parentContentID) && len(arguments.contentRecord.parentContentID)>
 			<cfset arguments.titlePath = local.parentContentRecord.title & ' > ' & arguments.titlePath />
 			<cfset arguments.titlePath = getTitleFromParent(arguments.titlePath,arguments.contentQuery,local.parentContentRecord)>
 		</cfif>
-		
+
 		<cfreturn arguments.titlePath />
 	</cffunction>
-		
+
 	<cfquery name="local.getContent">
 		SELECT title,parentContentID,contentID FROM SwContent
 	</cfquery>
-			
+
 	<cfloop query="local.getContent">
 		<cfset local.titlePath = title>
 		<cfif !isnull(local.getContent.parentContentID) && len(local.getContent.parentContentID)>
-			
+
 			<cfset local.record = {
 				parentContentID=local.getContent.parentContentID,
 				contentID=local.getContent.contentID,
 				title=local.getContent.title
 			}>
 			<cfset local.titlePath = getTitleFromParent(local.titlePath,local.getContent,local.record)>
-			
+
 		</cfif>
 		<cfquery name="local.updateContent">
 			UPDATE SwContent SET titlePath = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.titlePath#"> WHERE contentID = <cfqueryparam cfsqltype="cf_sql_varchar" value="#local.getContent.contentID#">
 		</cfquery>
-	</cfloop>	
+	</cfloop>
 
 	<cfcatch>
 		<cflog file="Slatwall" text="ERROR UPDATE SCRIPT - Update site to set sitecode to siteID">

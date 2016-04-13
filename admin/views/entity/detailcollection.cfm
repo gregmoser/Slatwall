@@ -9,7 +9,7 @@
 	<hb:HibachiEntityDetailGroup object="#rc.collection#">
 		<hb:HibachiEntityDetailItem view="admin:entity/collectiontabs/basic" open="true" text="#$.slatwall.rbKey('admin.define.basic')#" showOnCreateFlag=true />
 		<hb:HibachiEntityDetailItem view="admin:entity/collectiontabs/options" open="true" text="#$.slatwall.rbKey('admin.define.configuration')#" />
-	</hb:HibachiEntityDetailGroup>		
+	</hb:HibachiEntityDetailGroup>
 </hb:HibachiEntityDetailForm>
 
 <script charset="utf-8">

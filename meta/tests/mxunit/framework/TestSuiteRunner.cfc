@@ -29,25 +29,25 @@
 		<cfset var currentTestSuiteName = "" />
 		<cfset var currentSuite = "" />
 		<cfset var iterator = arguments.allSuites.keySet().iterator() />
-	
+
 		<cfloop condition="#iterator.hasNext()# eq true">
 			<cfset currentTestSuiteName = iterator.next() />
 			<cfset currentSuite = allSuites.get(currentTestSuiteName) />
-			
-			
+
+
 			<cfset testCase = createTestCaseFromComponentOrComponentName(currentSuite.ComponentObject) />
-			
+
 			<!--- set the MockingFramework if one has been set for the TestSuite --->
 			<cfif len(variables.MockingFramework)>
 				<cfset testCase.setMockingFramework(variables.MockingFramework) />
 			</cfif>
-			
+
 			<!--- Invoke prior to tests. Class-level setUp --->
 			<cfif testCase.okToRunBeforeTests()>
 				<cfset testCase.beforeTests() />
 				<cfset testCase.disableBeforeTests()>
 			</cfif>
-			
+
 			<cfif len(arguments.testMethod)>
 				<cfset runTestMethod(testCase, testMethod, results, currentTestSuiteName) />
 			<cfelse>
@@ -55,7 +55,7 @@
 					<cfset runTestMethod(testCase, currentSuite.methods[methodIndex], results, currentTestSuiteName) />
 				</cfloop>
 			</cfif>
-			
+
 			<!--- Invoke after tests. Class-level tearDown --->
 			<cfif testCase.okToRunAfterTests()>
 				<cfset testCase.afterTests() />

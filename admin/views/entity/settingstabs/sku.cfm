@@ -80,4 +80,3 @@ Notes:
 		<swa:SlatwallSetting settingName="skuTaxCategory" />
 	</swa:SlatwallSettingTable>
 </cfoutput>
-

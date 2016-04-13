@@ -205,7 +205,7 @@ component extends="Slatwall.meta.tests.unit.SlatwallUnitTestBase" {
 		};
 
 		var product = createPersistedTestEntity('Product', productData);
-		
+
 		return product;
 	}
 

@@ -4,7 +4,7 @@
 function mockShouldBeCaseInsensitive(){
    m = $('bar');
    m.foo('bar').returns(true);
-   
+
    m.foo('bar');
    m.foo('Bar');
    m.fOo('BaR');
@@ -14,7 +14,7 @@ function mockShouldBeCaseInsensitive(){
 
 
   function setUp(){
-   
+
   }
 
   function tearDown(){

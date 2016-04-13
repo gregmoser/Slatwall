@@ -257,4 +257,3 @@ component accessors="true" output="false" displayname="Authorize.net" implements
 	}
 
 }
-

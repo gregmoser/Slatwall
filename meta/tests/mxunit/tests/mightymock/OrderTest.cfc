@@ -7,9 +7,9 @@
     order.one().four( ).three( ).verify();
    }
    catch(mxunit.exception.AssertionFailedError e){
-     debug(e); 
+     debug(e);
    }
-  
+
   debug( order.getInvocations() );
   debug( order.getExpectations() );
 

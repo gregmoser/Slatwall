@@ -8,23 +8,23 @@
 
 <cfoutput>
 	<hb:HibachiPropertyRow>
-		
+
 		<hb:HibachiPropertyList divclass="col-md-6">
 			<div class="s-image-wrapper">
 				#rc.sku.getImage(width=200, height=200)#
 			</div>
 			<hr />
 			<cfif !isnull(rc.orderItem.getAppliedPriceGroup())>
-				<hb:HibachiPropertyDisplay object="#rc.orderItem#" property="appliedPriceGroup" edit="false" />	
+				<hb:HibachiPropertyDisplay object="#rc.orderItem#" property="appliedPriceGroup" edit="false" />
 			</cfif>
 			<hb:HibachiPropertyDisplay object="#rc.orderItem#" property="price" edit="#rc.edit#" />
 			<hb:HibachiPropertyDisplay object="#rc.orderItem#" property="quantity" edit="#rc.edit#" />
-			
-			
+
+
 		</hb:HibachiPropertyList>
-		
+
 		<hb:HibachiPropertyList divclass="col-md-6">
-			
+
 			<!--- Totals --->
 			<hb:HibachiPropertyTable>
 				<hb:HibachiPropertyTableBreak header="Order Details" />
@@ -33,7 +33,7 @@
 				<hb:HibachiPropertyDisplay object="#rc.orderItem.getSku().getProduct()#" property="productName" valuelink="?slatAction=admin:entity.detailproduct&productID=#rc.orderItem.getSku().getProduct().getProductID()#" edit="false" displayType="table" />
 				<hb:HibachiPropertyDisplay object="#rc.sku#" property="skuCode" valuelink="?slatAction=admin:entity.detailsku&skuID=#rc.orderItem.getSku().getSkuID()#" edit="false" displayType="table">
 				<cfloop array="#rc.sku.getAlternateSkuCodes()#" index="asc">
-					<hb:HibachiPropertyDisplay object="#asc#" title="#asc.getAlternateSkuCodeType().getTypeName()#" property="alternateSkuCode" edit="false" displayType="table">	
+					<hb:HibachiPropertyDisplay object="#asc#" title="#asc.getAlternateSkuCodeType().getTypeName()#" property="alternateSkuCode" edit="false" displayType="table">
 				</cfloop>
 				<cfloop array="#rc.sku.getOptions()#" index="option">
 					<hb:HibachiPropertyDisplay object="#option#" title="#option.getOptionGroup().getOptionGroupName()#" property="optionName" edit="false" displayType="table">
@@ -59,10 +59,10 @@
 				<hb:HibachiPropertyDisplay object="#rc.orderItem#" property="extendedPriceAfterDiscount" edit="false" displayType="table" />
 				<hb:HibachiPropertyDisplay object="#rc.orderItem#" property="taxAmount" edit="false" displayType="table" />
 				<hb:HibachiPropertyTableBreak />
-				<hb:HibachiPropertyDisplay object="#rc.orderItem#" property="itemTotal" edit="false" displayType="table" titleClass="table-total" valueClass="table-total" />	
-				
+				<hb:HibachiPropertyDisplay object="#rc.orderItem#" property="itemTotal" edit="false" displayType="table" titleClass="table-total" valueClass="table-total" />
+
 			</hb:HibachiPropertyTable>
-			
+
 		</hb:HibachiPropertyList>
 	</hb:HibachiPropertyRow>
 </cfoutput>

@@ -153,9 +153,9 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 	public any function getCategoryByCMSCategoryIDAndCMSSiteID( required string cmsCategoryID, required string cmsSiteID ) {
 		return getContentDAO().getCategoryByCMSCategoryIDAndCMSSiteID( argumentCollection=arguments );
 	}
-	
+
 	// ===================== END: DAO Passthrough ===========================
-	
+
 
 	// ===================== START: Process Methods ===========================
 
@@ -239,4 +239,3 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 
 	// =====================  END: Delete Overrides ===========================
 }
-

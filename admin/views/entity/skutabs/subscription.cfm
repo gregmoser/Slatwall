@@ -102,5 +102,3 @@ Notes:
 
 	</hb:HibachiPropertyList>
 </hb:HibachiPropertyRow>
-
-

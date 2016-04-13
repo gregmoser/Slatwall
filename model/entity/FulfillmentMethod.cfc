@@ -122,4 +122,3 @@ component displayname="Fulfillment Method" entityname="SlatwallFulfillmentMethod
 
 	// ===================  END:  ORM Event Hooks  =========================
 }
-

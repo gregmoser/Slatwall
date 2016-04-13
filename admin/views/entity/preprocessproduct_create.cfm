@@ -273,5 +273,3 @@ Notes:
 		</hb:HibachiEntityProcessForm>
 	</span>
 </cfoutput>
-
-

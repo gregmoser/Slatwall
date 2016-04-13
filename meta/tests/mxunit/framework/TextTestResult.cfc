@@ -62,9 +62,9 @@ To Do: Add debug data [12.16.07::bill]
 			<cfif teststatus eq 'Error'>
 			  <cfset builder.append('Error: #lf# #printStackTrace(error)#  #lf#') />
 			</cfif>
-			
+
 		</cfif>
-	   <cfset builder.append('*Trace/Debug:  #lf# #trace#  #lf#') />	
+	   <cfset builder.append('*Trace/Debug:  #lf# #trace#  #lf#') />
       <cfset builder.append(linesep) />
     </cfoutput>
     <cfscript>

@@ -15,12 +15,12 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
+
     Linking this library statically or dynamically with other modules is
     making a combined work based on this library.  Thus, the terms and
     conditions of the GNU General Public License cover the whole
     combination.
- 
+
     As a special exception, the copyright holders of this library give you
     permission to link this library with independent modules to produce an
     executable, regardless of the license terms of these independent
@@ -45,24 +45,24 @@ Notes:
 <cfparam name="rc.edit" type="boolean" />
 
 <cfoutput>
-	<hb:HibachiEntityDetailForm object="#rc.skuBundle#" edit="#rc.edit#" 
+	<hb:HibachiEntityDetailForm object="#rc.skuBundle#" edit="#rc.edit#"
 								saveActionQueryString="skuID=#rc.sku.getSkuID()#"
 								saveActionHash="tabbundledskus">
-								
+
 		<hb:HibachiEntityActionBar type="detail" object="#rc.skuBundle#" edit="#rc.edit#"
-					backAction="admin:entity.detailSku" 
+					backAction="admin:entity.detailSku"
 					backQueryString="skuID=#rc.sku.getSkuID()#"
 					cancelAction="admin:entity.detailSku"
 					cancelQueryString="skuID=#rc.sku.getSkuID()#"  />
-		
+
 		<input type="hidden" name="sku.SkuID" value="#rc.sku.getSkuID()#" />
-		
+
 		<hb:HibachiPropertyRow>
 			<hb:HibachiPropertyList>
 				<hb:HibachiPropertyDisplay object="#rc.skuBundle#" property="bundledSku" edit="#rc.edit#">
 				<hb:HibachiPropertyDisplay object="#rc.skuBundle#" property="bundledQuantity" edit="#rc.edit#">
 			</hb:HibachiPropertyList>
 		</hb:HibachiPropertyRow>
-		
+
 	</hb:HibachiEntityDetailForm>
 </cfoutput>

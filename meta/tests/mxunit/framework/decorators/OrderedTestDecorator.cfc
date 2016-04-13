@@ -3,7 +3,7 @@
 	<cffunction name="getRunnableMethods" output="false" access="public" returntype="any" hint="">
     	<cfscript>
     		var methods = getTarget().getRunnableMethods();
-    		var i = 1; 
+    		var i = 1;
     		var order = 0;
     		var tests = arrayNew(1);
     		var test = "";
@@ -24,7 +24,7 @@
     		for(i = 1; i LTE arrayLen(sortedTests); i = i + 1){
     			arrayAppend(returnArray,sortedTests[i].name);
     		}
-    	
+
     		return returnArray;
     	</cfscript>
     </cffunction>

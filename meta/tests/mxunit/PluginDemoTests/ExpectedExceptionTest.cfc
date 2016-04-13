@@ -2,7 +2,7 @@
 
 
 	<cffunction name="thisShouldFail_BecauseExpectedExceptionIsNotThrown" returntype="void" mxunit:expectedexception="Database">
-		<cfthrow type="MyCustomException" message="hi mom!">	
+		<cfthrow type="MyCustomException" message="hi mom!">
 	</cffunction>
 
 

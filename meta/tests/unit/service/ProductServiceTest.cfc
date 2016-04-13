@@ -52,7 +52,7 @@ component extends="Slatwall.meta.tests.unit.SlatwallUnitTestBase" {
 		super.setup();
 		variables.service = request.slatwallScope.getService("productService");
 	}
-	
+
 	public void function getProductCollectionListTest(){
 		var collection = variables.service.getProductCollectionList();
 		assertEquals(collection.getCollectionObject(),'Product');
@@ -137,5 +137,3 @@ component extends="Slatwall.meta.tests.unit.SlatwallUnitTestBase" {
 		assertEquals(yetAnotherProduct.getDefaultSku().getRedemptionAmount(),2);
 	}
 }
-
-

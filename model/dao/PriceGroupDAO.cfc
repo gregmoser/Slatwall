@@ -174,6 +174,3 @@ Notes:
 		<cfreturn>
 	</cffunction>
 </cfcomponent>
-
-
-

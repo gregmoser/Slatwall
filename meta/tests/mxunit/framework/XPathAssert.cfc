@@ -32,7 +32,7 @@ mssage to display when this assertion fails" default="The XPath expression,
        <cfelse>
                <cfset dom = buildXmlDom(arguments.data,isUrl) />
        </cfif>
-	
+
        <cfset results = xmlSearch(dom,arguments.xpath)>
        <cfif len(arguments.text) gt 0>
          <cfset assertEquals(arguments.text, results[1].xmlText, message) />
@@ -40,7 +40,7 @@ mssage to display when this assertion fails" default="The XPath expression,
        <cfif arrayLen(results) lt 1>
          <cfset fail(message) />
        </cfif>
-	
+
        <cfreturn results />
       <cfcatch type="any">
        <cfthrow object="#cfcatch#">
@@ -68,7 +68,7 @@ mssage to display when this assertion fails" default="The XPath expression,
      soup = loader.create("org.ccil.cowan.tagsoup.Parser").init();
      soup.setFeature("http://xml.org/sax/features/namespace-prefixes", false);
      soup.setFeature("http://xml.org/sax/features/namespaces", false);
-     
+
      doc = loader.create("nu.xom.Document");
      builder = loader.create("nu.xom.Builder").init(soup);
 
@@ -79,10 +79,10 @@ mssage to display when this assertion fails" default="The XPath expression,
      } else {
        doc = builder.build(data); //load the doc from the url. Nice!
      }
-     
+
      // Removing the xmlns since xmlSearch is not liking it being there
      dom = xmlParse(replace(doc.toXml(), ' xmlns="http://www.w3.org/1999/xhtml"', ''));
-     
+
      return dom;
     </cfscript>
   </cffunction>

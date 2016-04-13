@@ -18,7 +18,7 @@
 			<!--- no such function exists --->
 			<cfset actual = blender.foo()>
 	</cffunction>
-	
+
 	<cffunction name="testMixin" returntype="void" access="public">
 		<cfset var actual = "" />
 		 <cfset blender._mixin("foo",foo)>
@@ -74,28 +74,28 @@
 		<cfset result =  this._isComponentVariableDefined("_MixIn")>
 		<cfset assertTrue(result,"")>
 	</cffunction>
-	
+
 	<cffunction name="testMixinPropertyDefaultScopes" mxunit:expectedException="expression">
 		<!--- this should not work b/c internalVar is private --->
 		<cfset tmp = mycfc.internalVar>
 	</cffunction>
-	
+
 	<cffunction name="mixedInPropertyIsOverwritten">
 		<cfset blender._mixinAll(mycfc,blender)>
 		<cfset mycfc._mixinProperty(propertyName="internalVar",property="goo")>
 		<cfset assertEquals("goo",mycfc.internalVar)>
 	</cffunction>
-	
+
 	<cffunction name="testMixinPropertyInstanceScope">
 		<cfset blender._mixinAll(mycfc,blender)>
 		<cfset mycfc._mixinProperty(propertyName="internalVar",property="goo",scope="instance")>
 		<cfset assertEquals("goo",mycfc.getInstance().internalVar)>
 	</cffunction>
-	
+
 	<cffunction name="testGetComponentVariables">
 		<cfset blender._mixinAll(mycfc,blender,"_getComponentVariables")>
 		<cfset vars = mycfc._getComponentVariables()>
-		
+
 		<cfset assertTrue(StructKeyExists(vars,"internalvar"),"internalvar should exist")>
 		<cfset assertTrue(StructKeyExists(vars,"internalvar2"),"internalvar2 should exist")>
 		<cfset assertTrue(StructKeyExists(vars,"instance"),"instance should exist")>
