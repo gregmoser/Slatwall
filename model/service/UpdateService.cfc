@@ -55,9 +55,18 @@ Notes:
 		<cfsetting requesttimeout="600" />
 		<cftry>
 			<cfset var updateCopyStarted = false />
-			<cfset var downloadURL = "https://github.com/ten24/Slatwall/zipball/#arguments.branch#" />
+			<cfset var zipName  = ''/> 		
+			<cfif arguments.branch eq 'master'>
+				<cfset zipName  = 'slatwall-latest'/> 		
+			<cfelseif arguments.branch eq 'develop'>
+				<cfset zipName  = 'slatwall-be'/> 		
+			</cfif>
+			<cfset var downloadURL = "https://s3.amazonaws.com/slatwall-releases/#zipName#.zip" />
+			<cfset var downloadHashURL = "https://s3.amazonaws.com/slatwall-releases/#zipName#.md5.txt" />
 			<cfset var slatwallRootPath = expandPath("/Slatwall") />
-			<cfset var downloadFileName = "slatwall#createUUID()#.zip" />
+			<cfset var downloadUUID = createUUID() />
+			<cfset var downloadFileName = "slatwall-#downloadUUID#.zip" />
+			<cfset var downloadHashFileName = "slatwall-#downloadUUID#.md5.txt" />
 			<cfset var deleteDestinationContentExclusionList = '/.git,/apps,/integrationServices,/custom,/WEB-INF,/.project,/setting.xml,/.htaccess,/web.config,/.settings,/.gitignore' />
 			<cfset var copyContentExclusionList = "" />
 			<cfset var slatwallDirectoryList = "" />
@@ -84,24 +93,32 @@ Notes:
 				</cfloop>
 			</cfzip>
 
-			<!--- start download --->
+			<!--- start download of zip & hash --->
 			<cfhttp url="#downloadURL#" method="get" path="#getTempDirectory()#" file="#downloadFileName#" throwonerror="true" />
+			<cfhttp url="#downloadHashURL#" method="get" path="#getTempDirectory()#" file="#downloadHashFileName#" throwonerror="true" />
 
+			<!--- Get the MD5 hash of the downloaded file --->
+			<cfset var downloadedZipHash = hash(fileReadBinary("#getTempDirectory()##downloadFileName#"), "MD5") />
+			<cfset var hashFileValue = listFirst(fileRead("#getTempDirectory()##downloadHashFileName#"), " ") />
+
+			<cfif downloadedZipHash eq hashFileValue>
 			<!--- now read and unzip the downloaded file --->
 			<cfset var dirList = "" />
 			<cfzip action="unzip" destination="#getTempDirectory()#" file="#getTempDirectory()##downloadFileName#" >
 			<cfzip action="list" file="#getTempDirectory()##downloadFileName#" name="dirList" >
-			<cfset var sourcePath = getTempDirectory() & "#listFirst(dirList.name[1],'/')#" />
+				<cfset var sourcePath = getTempDirectory() />
 			<cfif fileExists( "#slatwallRootPath#/custom/config/lastFullUpdate.txt.cfm" )>
 				<cffile action="delete" file="#slatwallRootPath#/custom/config/lastFullUpdate.txt.cfm" >
 			</cfif>
 			<cfset updateCopyStarted = true />
-			<cfset getHibachiUtilityService().duplicateDirectory(source=sourcePath, destination=slatwallRootPath, overwrite=true, recurse=true, copyContentExclusionList=copyContentExclusionList, deleteDestinationContent=true, deleteDestinationContentExclusionList=deleteDestinationContentExclusionList ) />
+				<cfset getHibachiUtilityService().duplicateDirectory(source=sourcePath, destination=slatwallRootPath&'\', overwrite=true, recurse=true, copyContentExclusionList=copyContentExclusionList, deleteDestinationContent=true, deleteDestinationContentExclusionList=deleteDestinationContentExclusionList ) />
 
 			<!--- Delete .zip file and unzipped folder --->
 			<cffile action="delete" file="#getTempDirectory()##downloadFileName#" >
 			<cfdirectory action="delete" directory="#sourcePath#" recurse="true">
 			<cfset updateCMSApplications()>
+			</cfif>
+
 			<!--- if there is any error during update, restore the old files and throw the error --->
 			<cfcatch type="any">
 				<cfif updateCopyStarted>
