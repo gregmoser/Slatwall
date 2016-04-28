@@ -89,15 +89,15 @@ Notes:
 					<hb:HibachiPropertyDisplay object="#rc.shippingMethodRate#" property="minimumShipmentItemPrice" edit="#rc.edit#" fieldAttributes="ng-model='shippingMethodRate.minimumShipmentItemPrice'">
 					<hb:HibachiPropertyDisplay object="#rc.shippingMethodRate#" property="maximumShipmentItemPrice" edit="#rc.edit#" fieldAttributes="ng-model='shippingMethodRate.maximumShipmentItemPrice'">
 					<hb:HibachiPropertyDisplay object="#rc.shippingMethodRate#" property="defaultAmount" edit="#rc.edit#" fieldAttributes="ng-model='shippingMethodRate.defaultAmount'">
-					<hb:HibachiPropertyDisplay object="#rc.shippingMethodRate#" property="surchargeAmount" edit="#rc.edit#" fieldAttributes="ng-model='shippingMethodRate.surchargeAmount'">
+					<hb:HibachiPropertyDisplay object="#rc.shippingMethodRate#" property="rateMultiplierAmount" edit="#rc.edit#" fieldAttributes="ng-model='shippingMethodRate.rateMultiplierAmount'">
 					
 					<!--- display a sample of the calculations that will be used with the upcharge --->
-					<div ng-if="shippingMethodRate.surchargeAmount && (shippingMethodRate.minimumShipmentWeight || shippingMethodRate.minimumShipmentQuantity)" class="ng-cloak">
-						<b>When using a surcharge the charge is calculated as follows: (surcharge * quantity) + base amount = charge</b><br>
+					<div ng-if="shippingMethodRate.rateMultiplierAmount && (shippingMethodRate.minimumShipmentWeight || shippingMethodRate.minimumShipmentQuantity)" class="ng-cloak">
+						<b>When using a rateMultiplierAmount the charge is calculated as follows: (rateMultiplierAmount * quantity) + base amount = charge</b><br>
 						 
 						<span ng-if="shippingMethodRate.minimumShipmentQuantity" ng-repeat="n in [1,2,3] track by $index">
-							<br><span><b>Quantity</b> [{{(shippingMethodRate.minimumShipmentQuantity*1*n+1)}}] X <b>Surcharge</b> [{{shippingMethodRate.surchargeAmount|currency}}] + default amount [{{shippingMethodRate.defaultAmount|currency}}] = </span>
-							<span>{{((shippingMethodRate.defaultAmount * 1)+((shippingMethodRate.minimumShipmentQuantity*1*n+1)*(shippingMethodRate.surchargeAmount*1))|currency)}}</span></b>
+							<br><span><b>Quantity</b> [{{(shippingMethodRate.minimumShipmentQuantity*1*n+1)}}] X <b>rateMultiplierAmount</b> [{{shippingMethodRate.rateMultiplierAmount|currency}}] + default amount [{{shippingMethodRate.defaultAmount|currency}}] = </span>
+							<span>{{((shippingMethodRate.defaultAmount * 1)+((shippingMethodRate.minimumShipmentQuantity*1*n+1)*(shippingMethodRate.rateMultiplierAmount*1))|currency)}}</span></b>
 						</span>		
 					</div>
 					

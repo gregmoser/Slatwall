@@ -174,21 +174,21 @@ component extends="HibachiService" persistent="false" accessors="true" output="f
 					// If this rate is a manual one, then use the default amount
 					if(isNull(shippingMethodRates[r].getShippingIntegration())) {
 						
-						//check if there is a surcharge being added and if there is, multiply that by quantity or weight and add it to the defaultAmount.
+						//check if there is a rateMultiplierAmount being added and if there is, multiply that by quantity or weight and add it to the defaultAmount.
 						var defaultAmount = shippingMethodRates[r].getDefaultAmount();
-						var surchargeAmount = shippingMethodRates[r].getSurchargeAmount();
+						var rateMultiplierAmountAmount = shippingMethodRates[r].getrateMultiplierAmountAmount();
 						var shipmentItemMultiplier = 0;
 						
-						//if we have weight, use that, otherwise use quantity if and only if we have a surcharge amount
-						if(arguments.orderFulfillment.getTotalShippingWeight() > 0 && surchargeAmount){
+						//if we have weight, use that, otherwise use quantity if and only if we have a rateMultiplierAmount amount
+						if(arguments.orderFulfillment.getTotalShippingWeight() > 0 && rateMultiplierAmountAmount){
 							shipmentItemMultiplier = ceiling(arguments.orderFulfillment.getTotalShippingWeight()); //round up.	
 						}
-						else if (arguments.orderFulfillment.getTotalShippingQuantity() > 0 && surchargeAmount){
+						else if (arguments.orderFulfillment.getTotalShippingQuantity() > 0 && rateMultiplierAmountAmount){
 							shipmentItemMultiplier = arguments.orderFulfillment.getTotalShippingQuantity();
 						}
 						
-						if (!isNull(shipmentItemMultiplier) && shipmentItemMultiplier > 0 && !isNull(surchargeAmount) && surchargeAmount > 0){
-							var calculatedChargeAmount = shippingMethodRates[r].getDefaultAmount() + (surchargeAmount * shipmentItemMultiplier);
+						if (!isNull(shipmentItemMultiplier) && shipmentItemMultiplier > 0 && !isNull(rateMultiplierAmountAmount) && rateMultiplierAmountAmount > 0){
+							var calculatedChargeAmount = shippingMethodRates[r].getDefaultAmount() + (rateMultiplierAmountAmount * shipmentItemMultiplier);
 							if (isNull(calculatedChargeAmount) || calculatedChargeAmount == 0){
 								calculatedChargeAmount = shippingMethodRates[r].getDefaultAmount();
 							}
