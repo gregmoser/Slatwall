@@ -93,7 +93,7 @@ Notes:
 					
 					<!--- display a sample of the calculations that will be used with the upcharge --->
 					<div ng-if="shippingMethodRate.rateMultiplierAmount && (shippingMethodRate.minimumShipmentWeight || shippingMethodRate.minimumShipmentQuantity)" class="ng-cloak">
-						<b>When using a rate multiplier the charge is calculated as follows: (rate multiplier amount * quantity) + base amount = charge</b><br>
+						<b>When using a rate multiplier the charge is calculated as follows: rate multiplier * {quantity or weight} + base amount = charge</b><br>
 						 
 						<span ng-if="shippingMethodRate.minimumShipmentQuantity" ng-repeat="n in [1,2,3] track by $index">
 							<br><span><b>Quantity</b> [{{(shippingMethodRate.minimumShipmentQuantity*1*n+1)}}] X <b>rate multiplier amount</b> [{{shippingMethodRate.rateMultiplierAmount|currency}}] + default amount [{{shippingMethodRate.defaultAmount|currency}}] = </span>
