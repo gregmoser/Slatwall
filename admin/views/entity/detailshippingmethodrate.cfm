@@ -93,12 +93,16 @@ Notes:
 					
 					<!--- display a sample of the calculations that will be used with the upcharge --->
 					<div ng-if="shippingMethodRate.rateMultiplierAmount && (shippingMethodRate.minimumShipmentWeight || shippingMethodRate.minimumShipmentQuantity)" class="ng-cloak">
-						<b>When using a rateMultiplierAmount the charge is calculated as follows: (rateMultiplierAmount * quantity) + base amount = charge</b><br>
+						<b>When using a rate multiplier the charge is calculated as follows: (rate multiplier amount * quantity) + base amount = charge</b><br>
 						 
 						<span ng-if="shippingMethodRate.minimumShipmentQuantity" ng-repeat="n in [1,2,3] track by $index">
-							<br><span><b>Quantity</b> [{{(shippingMethodRate.minimumShipmentQuantity*1*n+1)}}] X <b>rateMultiplierAmount</b> [{{shippingMethodRate.rateMultiplierAmount|currency}}] + default amount [{{shippingMethodRate.defaultAmount|currency}}] = </span>
+							<br><span><b>Quantity</b> [{{(shippingMethodRate.minimumShipmentQuantity*1*n+1)}}] X <b>rate multiplier amount</b> [{{shippingMethodRate.rateMultiplierAmount|currency}}] + default amount [{{shippingMethodRate.defaultAmount|currency}}] = </span>
 							<span>{{((shippingMethodRate.defaultAmount * 1)+((shippingMethodRate.minimumShipmentQuantity*1*n+1)*(shippingMethodRate.rateMultiplierAmount*1))|currency)}}</span></b>
-						</span>		
+						</span>
+						<span ng-if="shippingMethodRate.minimumShipmentWeight" ng-repeat="n in [1,2,3] track by $index">
+							<br><span><b>Weight</b> [{{(shippingMethodRate.minimumShipmentWeight*1*n+1)}}] X <b>rate multiplier amount</b> [{{shippingMethodRate.rateMultiplierAmount|currency}}] + default amount [{{shippingMethodRate.defaultAmount|currency}}] = </span>
+							<span>{{((shippingMethodRate.defaultAmount * 1)+((shippingMethodRate.minimumShipmentWeight*1*n+1)*(shippingMethodRate.rateMultiplierAmount*1))|currency)}}</span></b>
+						</span>			
 					</div>
 					
 				</cfif>

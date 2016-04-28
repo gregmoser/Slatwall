@@ -61,6 +61,7 @@ component entityname="SlatwallShippingMethodRate" table="SwShippingMethodRate" p
 	property name="rateMultiplierAmount" ormtype="big_decimal" hb_formatType="currency" hb_nullRBKey="define.0";
 	property name="shippingIntegrationMethod" ormtype="string";
 	property name="activeFlag" ormtype="boolean";
+	property name="useWeightFlag" ormtype="boolean";
 	
 	// Related Object Properties (many-to-one)
 	property name="shippingIntegration" cfc="Integration" fieldtype="many-to-one" fkcolumn="shippingIntegrationID";
